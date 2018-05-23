@@ -1,0 +1,27 @@
+{
+  "name": "summit_broomball",
+  "version": "1.0.0",
+  "description": "An app that allows to manage players, games, and stats + drafts teams associated to the \"Summit\" broomball group",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guiguipp/summit_broomball.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guiguipp/summit_broomball/issues"
+  },
+  "homepage": "https://github.com/guiguipp/summit_broomball#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.37.8"
+  }
+}
