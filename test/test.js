@@ -1,13 +1,13 @@
 const expect = require("chai").expect;
-const app = require("../public/assets/js/app");
+const serpentineDraft = require("../public/assets/js/app");
+// console.log("serpentineDraft: ", serpentineDraft);
 
-describe("#app", () => {
-    it("The two output arrays should not have any element in common"),() => {
-        // expect(indexof.outputArray[]).to.equal(indexof(outputArray2[-1])
-    }
-})
 
-/*
-Basically if indexOf.inputArray1[x] > 0 then 
-indexOf.inputArray1[x] should be === -1
-*/
+
+describe("#serpentineDraft",() => {
+    it("The two output arrays should not have any element in common",() => {
+        for (let i = 0; i < rosterTeam1.length; i++){
+            expect(rosterTeam2.indexOf(rosterTeam1[i].fullname)).to.equal(-1);
+        }
+    })
+});
