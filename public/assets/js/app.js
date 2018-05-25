@@ -135,40 +135,20 @@ const alternateDraft = function(team1, team2) {
         // console.log("mixedRosters: ", mixedRosters);
         }
         filterTeams(mixedRosters)
-    /*
-        for (let i = 0; i < mixedRosters.length; i++) {
-            // pushing every other pick to respective teams
-            // note that we could filter too, since each player object has a team assigned
-            if (i %2 === 0) {
-                rosterTeam1.push(mixedRosters[i])
-                }
-            else {
-                rosterTeam2.push(mixedRosters[i])
-                }
-            }
-            console.log("rosterTeam1: ", rosterTeam1);
-            console.log("\n******\n******\n");
-            
-            console.log("rosterTeam2: ", rosterTeam2);
-    */
 }
 // function to filter array of player objects into teams
 // (each player object has been assigned a team name)
 const filterTeams = (arrayOfPlayerObjects) => {
     // filter player objects according to name of the team #1
     rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.team === team1Name)
-    console.log("\n************");
-    console.log(team1Name,": ")
-    console.log("************\n");
+    console.log(`\n************\n${team1Name}":\n************\n`);
     // display the shortname of the player objects for the whole team
     rosterTeam1.forEach((e) => {
         console.log(`${e.shortname} (${e.level})`);
     })
     // filter player objects according to name of the team #2
     rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.team === team2Name)
-    console.log("\n************");
-    console.log(team2Name,": ");
-    console.log("************\n");
+    console.log(`\n************\n${team2Name}":\n************\n`);
     // display the shortname of the player objects for the whole team
     rosterTeam2.forEach((e) => {
         console.log(`${e.shortname} (${e.level})`);
@@ -236,7 +216,7 @@ const autoDraft = (arrayOfAvailablePlayers) => {
 // autoDraft(availablePlayers)
 
 /* 
-=> do not draft the goalies (can end up in the same team, duh...)
+=> better autodraft of the goalies (they should not end up in the same team, duh...)
 => double check that pick is available, before drafting
 */
 
