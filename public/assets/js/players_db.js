@@ -441,5 +441,6 @@ const player1 = new FakePlayer (
     )
 
 module.exports = {
-    player1, player2, player3, player4, player5, player6, player7, player8, player9, player10, player11, player12, player13, player14, player15, player16, player17, player18, player19, player20, player21, player22, player23, player24, player25, player26, player27, player28, player29, player30
+    player1, player2, player3, player4, player5, player6, player7, player8, player9, player10, player11, player12, player13, player14, player15, player16, player17, player18, player19, player20, player21, player22, player23, player24, player25, player26, player27, player28, player29, player30,
+    carity, weddie, grant, foss, karissa, kiemo, matt, vilks, barry, becca, ben, moore, chad, dane, graham, gui, joe, paul, shalanah, sheila, steve, todd, tony, schawnski, stan, jamie, jason, jen, kim, sui
 }
