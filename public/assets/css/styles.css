@@ -32,3 +32,12 @@ header {
 img {
     width: 75px;
 }
+
+.menu-items {
+    color: black;
+    margin-top: 30px;
+}
+
+.list-items {
+    margin-top: 7px;
+}
