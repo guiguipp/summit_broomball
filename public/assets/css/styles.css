@@ -1,0 +1,34 @@
+body {
+    background-image: url("../../../views/images/background.jpg")
+}
+
+header {
+
+}
+
+.btn-group {
+    position: relative;
+    float: right;
+    right: 5%;
+    margin-top: 2.5%;
+    background-color: transparent;
+}
+
+.dropdown-menu.show {
+    margin-right: 20px;
+    margin-top: 10px;
+    background-color: transparent;
+    border-style: none;
+
+}
+
+.site-logo {
+    position: relative;
+    float: left;
+    left: 5%;
+    margin-top: 2.5%;
+}
+
+img {
+    width: 75px;
+}
