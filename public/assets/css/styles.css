@@ -41,3 +41,28 @@ img {
 .list-items {
     margin-top: 7px;
 }
+
+#flavicons {
+    float: right;
+    margin-top: 30%;
+    position: relative;
+    left: 90px;
+}
+
+.flavicon-icons {
+    list-style-type: none;
+    margin-top: 20%;
+}
+
+.flavicon-images {
+    width: 30px;
+}
+
+.flavicon-images:hover {
+    width: 70px;
+}
+
+#center-container {
+   margin-top: 33%;
+
+}
