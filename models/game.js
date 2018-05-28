@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = function(sequelize, DataTypes) {
     var Game = sequelize.define("Game", {
         date: {
@@ -7,14 +9,17 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1]
                 }
             },
-        goals_team1: {
+        goals_dark: {
             type: DataTypes.INTEGER(2),
             },
-        goals_team2: {
+        goals_white: {
             type: DataTypes.INTEGER(2),
             },
         summary: {
             type: DataTypes.TEXT
+            },
+        author: {
+            type: DataTypes.STRING
             }
         });
         return Game;

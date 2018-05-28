@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = function(sequelize, DataTypes) {
     var Player = sequelize.define("Player", {
         shortname: {
@@ -11,36 +13,25 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1]
+                len: [1],
                 }
             },
         level: {
-            type: DataTypes.STRING(1),
-            allowNull: false,
-            validate: {
-                is: /^[a-z]+$/i,
-                } 
+            type: DataTypes.STRING,
+            allowNull: false
             },
         preferred_position: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM,
+            values: ['forward','defense','goalie'],
             allowNull: false,
             validate: {
                 len: [1]
                 }
             },
         status: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isIn: [['member', 'ten_bucker']],
-                }
-            },
-        preferred_position: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1]
-                }
+            type: DataTypes.ENUM,
+            values: ['member','ten_bucker'],
+            allowNull: false
             },
         email: {
             type: DataTypes.STRING,
