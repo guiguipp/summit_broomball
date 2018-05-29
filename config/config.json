@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "GuiGuiPP18",
+    "password": "In$iderO1",
     "database": "summit",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "GuiGuiPP18",
+    "password": "In$iderO1",
     "database": "summit_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "GuiGuiPP18",
+    "password": "In$iderO1",
     "database": "summit_production",
     "host": "127.0.0.1",
     "dialect": "mysql"

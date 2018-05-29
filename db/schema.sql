@@ -10,20 +10,21 @@ CREATE TABLE player_table(
     preferred_position VARCHAR(255) NOT NULL,
     player_status VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    created_at DATE NOT NULL
-    updated_at DATE NOT NULL
+    created_at DATE NOT NULL,
+    updated_at DATE NOT NULL,
     PRIMARY KEY(ID)
 );
 
 CREATE TABLE game_table(
-    ID int NOT NULL AUTO_INCREMENT,,
+    ID int NOT NULL AUTO_INCREMENT,
     game_date DATETIME NOT NULL,
     goals_dark VARCHAR(255) NOT NULL,
     goals_white VARCHAR(255) NOT NULL,
     summary VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     created_at DATE NOT NULL,
-    updated_at DATE NOT NULL
+    updated_at DATE NOT NULL,
+    PRIMARY KEY(ID)
 );
 
 CREATE TABLE stats_table(
@@ -33,7 +34,8 @@ CREATE TABLE stats_table(
     goal_assist VARCHAR(255) NOT NULL,
     team int NOT NULL,
     created_at DATE NOT NULL,
-    updated_at DATE NOT NULL
+    updated_at DATE NOT NULL,
+    PRIMARY KEY(ID)
 );
 
 CREATE TABLE roster_table (
@@ -48,5 +50,6 @@ CREATE TABLE roster_table (
     availabilty int NOT NULL,
     team VARCHAR(255) NOT NULL,
     created_at DATE NOT NULL,
-    updated_at DATE NOT NULL
+    updated_at DATE NOT NULL,
+    PRIMARY KEY(ID)
 );
