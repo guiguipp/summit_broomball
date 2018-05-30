@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1],
                 }
             },
-        level: {
+        player_level: {
             type: DataTypes.STRING,
             allowNull: false
             },
@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1]
                 }
             },
-        status: {
+        player_status: {
             type: DataTypes.ENUM,
             values: ['member','ten_bucker'],
             allowNull: false
