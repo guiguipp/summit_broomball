@@ -51,14 +51,14 @@ const carity = new Player (
     `Ben MacLean`,
     `Goalie`,
     `benjamin.maclean23@gmail.com`,
-    `B`
+    `Goalie`
     )
     const moore = new Player (
     `Moore`,
     `Bill Moore`,
     `Goalie`,
     `samlexi33@gmail.com`,
-    `B`
+    `Goalie`
     )
     const stan = new Player (
     `Stan`,
@@ -304,14 +304,14 @@ const player1 = new FakePlayer (
     `Ben MacLean`,
     `Goalie`,
     `benjamin.maclean23@gmail.com`,
-    `B`
+    `Goalie`
     )
     const player12 = new FakePlayer (
     `12`,
     `Bill Moore`,
     `Goalie`,
     `samlexi33@gmail.com`,
-    `B`
+    `Goalie`
     )
     const player13 = new FakePlayer (
     `13`,
