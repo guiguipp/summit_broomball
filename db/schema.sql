@@ -1,5 +1,4 @@
 CREATE DATABASE summit; 
-
 USE summit;
 
 CREATE TABLE player_table(

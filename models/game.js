@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Game = sequelize.define("Game", {
-        date: {
+        game_date: {
             type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {

@@ -41,7 +41,7 @@ INSERT INTO Games (game_date, goals_dark, goals_white, summary, author, createdA
 
     10 came out to JJ's!", "Adjunct Scorekeeper", 20180511, 20180525);
 
-    INSERT INTO Players (shortname, full_name, player_level, preferred_position, status, email, createdAt, updatedAt) VALUES ('Swords', 'Matt Swords', 'A', 'Defense', 'Member', 'mswords@bellbanks.com', 20180501, 20180528); 
+    INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Swords', 'Matt Swords', 'A', 'Defense', 'Member', 'mswords@bellbanks.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
