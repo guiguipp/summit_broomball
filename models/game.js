@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
         game_date: {
             type: DataTypes.DATEONLY,
             allowNull: false,
+            unique: true,
             validate: {
                 len: [1]
                 }
