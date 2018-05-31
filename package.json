@@ -4,7 +4,8 @@
   "description": "An app that allows to manage players, games, and stats + drafts teams associated to the \"Summit\" broomball group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",

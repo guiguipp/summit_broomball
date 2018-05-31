@@ -1,3 +1,4 @@
+
 // *****************************************************************************
 // Server.js - This file is the initial starting point for the Node/Express server.
 //
@@ -31,6 +32,9 @@ require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/game-api-routes.js")(app);
 require("./routes/player-api-routes.js")(app);
+require("./routes/roster-api-routes.js")(app);
+require("./routes/stat-api-routes.js")(app);
+
 
 /*
 require("./routes/post-api-routes.js")(app);
