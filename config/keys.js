@@ -1,5 +1,7 @@
+require("dotenv").config();
 console.log("keys loaded\n\n");
 
-exports.password = {
-	pw: process.env.PASSWORD
+exports.keys = {
+	password: process.env.DB_PASSWORD,
+	user: process.env.DB_USER
 };
