@@ -9,6 +9,8 @@ var config    = require(__dirname + '/../config/config.js')[env];
 var db        = {};
 
 const keys    = require("../config/keys")
+console.log("keys: ", keys);
+
 
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable], config);
