@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "root",
-    "password": "xxx",
+    "password": "null",
     "database": "summit",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "xxx",
-    "database": "summit_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+      "username": "root",
+      "password": "null",
+      "database": "summit_test",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "xxx",
-    "database": "summit_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+      "username": "root",
+      "password": "null",
+      "database": "summit_production",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
   }
 }
