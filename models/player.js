@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     var Player = sequelize.define("Player", {
         shortname: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
             validate: {
                 len: [1]
@@ -11,19 +12,16 @@ module.exports = function(sequelize, DataTypes) {
             },
         full_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1],
-                }
+            allowNull: true,
             },
         player_level: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
             },
         preferred_position: {
             type: DataTypes.ENUM,
             values: ['forward','defense','goalie'],
-            allowNull: false,
+            allowNull: true,
             validate: {
                 len: [1]
                 }
@@ -35,8 +33,7 @@ module.exports = function(sequelize, DataTypes) {
             },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
-            len: [1],
+            allowNull: true,
             validate: {
                 isEmail: true
                 }
