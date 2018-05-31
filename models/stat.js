@@ -9,8 +9,9 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING
             },
         team: {
+            allowNull: false,
             type: DataTypes.ENUM,
-            values: ['white','dark'],
+            values: ['white','dark']
             }
         });
     Stat.associate = function(models) {

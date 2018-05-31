@@ -1,9 +1,16 @@
 'use strict'
 
 module.exports = function(sequelize, DataTypes) {
+    // should the name of the player be a foreign key from players?
+    // or won't it matter because of javascript validation?
     var Roster = sequelize.define("Roster", {
         player: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                len: [1]
+                }
             },
         goals: {
             type: DataTypes.INTEGER
