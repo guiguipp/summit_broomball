@@ -41,9 +41,7 @@ INSERT INTO Games (game_date, goals_dark, goals_white, summary, author, createdA
 
     10 came out to JJ's!", "Adjunct Scorekeeper", 20180511, 20180525);
 
-    INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Swords', 'Matt Swords', 'A', 'Defense', 'Member', 'mswords@bellbanks.com', 20180501, 20180528); 
-INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
-INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
+INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Swords', 'Matt Swords', 'A', 'Defense', 'Member', 'mswords@bellbanks.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Carity', 'Aaron Carity', 'A -', 'Forward', 'Member', 'aaron@sdksoft.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Foss', 'Justus Foss', 'A +', 'Forward', 'Member', 'justfoss@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Grant', 'Grant Dawson', 'A', 'Forward', 'Member', 'gwilliamdawson@gmail.com', 20180501, 20180528); 
@@ -74,7 +72,7 @@ INSERT INTO Players (shortname, full_name, player_level, preferred_position, pla
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Kim', 'Kim Kotila', 'C -', 'Forward', 'Member', 'kkotila@hotmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Stan', 'Bobby Ebertz', 'C', 'Forward', 'Member', 'robertebertz@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Jaunty', 'Jonathan Jaunty', 'A +', 'Defense', 'Ten_Bucker', 'jaunty57@gmail.com', 20180501, 20180528); 
-INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Ben', 'Ben Sharratt', 'A', 'Defense', 'Ten_Bucker', 'bensharratt6@gmail.com', 20180501, 20180528); 
+INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Ben S', 'Ben Sharratt', 'A', 'Defense', 'Ten_Bucker', 'bensharratt6@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Kirk', 'Kirk Knutson', 'B', 'Forward', 'Ten_Bucker', 'k.d.knutson@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Knudsen', 'Chris Knudsen', 'A', 'Forward', 'Ten_Bucker', 'knudsen@bogus.com', 20180501, 20180528); 
 INSERT INTO Stats (GameId, goal_scorer, goal_assist, team, createdAt, updatedAt) VALUES (1, 'Sheila','', 'white', 20180525, 20180528);
