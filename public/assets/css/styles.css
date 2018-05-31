@@ -1,5 +1,14 @@
 body {
-    background-image: url("../../../views/images/ice.jpg")
+    background: #ACADB2;
+}
+
+#sidebarCollapse {
+    width: 100px;
+    position: relative;
+    left: 125px;
+    bottom: 150px;
+    background-color: #EA8D47;
+    border-color: #000;
 }
 
 h1 {
@@ -11,13 +20,24 @@ h1 {
 }
 h2 {
     font-family: 'Yellowtail', cursive;
-    margin-left: 25%;
+    font-size: 50px;
     color: white;
+    position: relative;
+    bottom: 50px;
+    left: 120px;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 p {
-    color: #999;
+    color: black;
     font-family: 'Yellowtail', cursive;
+    position: relative;
+    bottom: 20px;
+    left: 175px;
 }
 
 .wrapper {
@@ -39,7 +59,7 @@ a, a:hover, a:focus {
     left: 0;
     /* top layer */
     z-index: 9999;
-    background: rgb(62, 157, 240);
+    background: #EA8D47;
     color: #fff;
     transition: all 0.3s;
 
@@ -66,17 +86,16 @@ a, a:hover, a:focus {
     /* top right corner of siebar */
     top: 10px;
     right: 10px;
-    background: black;
 }
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #f54845;
+    background: #DE733A;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #EA8D47;
 }
 
 #sidebar ul p {
@@ -97,13 +116,13 @@ a, a:hover, a:focus {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #f54845;
+    background: #DE733A;
 }
 
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #f54845;
+    background: #DE733A;
 }
 
 #sidebar.active {
@@ -132,43 +151,40 @@ a[aria-expanded="true"]::before {
     margin-top: 2.5%;
 }
 
-#flavicons {
-    float: right;
-    margin-top: 30%;
-    position: relative;
-    left: 90px;
-}
-
-.flavicon-icons {
-    list-style-type: none;
-    margin-top: 20%;
-}
-
-.flavicon-images {
-    width: 30px;
-}
-
-.flavicon-images:hover {
-    width: 70px;
-}
-
-#center-container {
-   margin-top: 33%;
-
-}
-
 #main {
-    background: #f54845;
-    margin-left: 33%;
-    margin-top: 15%;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
     padding: 50px;
+    margin: 0;
+    left: 300px;
 }
 
-#main2 {
-    background: #f54845;
-    margin-left: 25%;
-    margin-top: 5%;
-    padding: 50px;
+#inner-main {
+    background: #EA8D47;
+    padding: 100px;
+    margin: 0
+}
+
+img {
+    width: 205px;
+    margin-left: 1175px;
+    margin-top: 1%;
+}
+
+#button-one {
+    position: relative;
+    width: 150px;
+    height: 50px;
+    left: 75px;
+}
+
+#button-two {
+    position: relative;
+    width: 150px;
+    height: 50px;
+    left: 175px;
 }
 
 @media (max-width: 768px) {
