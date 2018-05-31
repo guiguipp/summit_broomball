@@ -4,7 +4,8 @@
   "description": "An app that allows to manage players, games, and stats + drafts teams associated to the \"Summit\" broomball group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "mysql2": "^1.5.3",
+    "nodemon": "^1.17.5",
     "path": "^0.12.7",
     "sequelize": "^4.37.10",
     "sequelize-cli": "^4.0.0"
