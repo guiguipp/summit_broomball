@@ -7,7 +7,7 @@ $(document).ready(function() {
     // when opening the sidebar
     $("#sidebarCollapse").on("click", function() {
         //open sidebar
-        $("#sidebar").addClass("active");
+        $("#sidebar").toggleClass("active");
         //fade in the overlay
         $(".overlay").fadeIn();
         $(".collapse.in").toggleClass("in");
@@ -16,8 +16,9 @@ $(document).ready(function() {
 
     //if dismiss or overlay was clicked
     $("#dismiss, .overlay").on("click", function() {
+        console.log(this)
         // hide sidebar
-        $("#sidebar").removeClass('active');
+        $("#sidebar").addClass('active');
         // fade out overlay
         $(".overlay").fadeOut();
     })
