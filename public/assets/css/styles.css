@@ -5,7 +5,7 @@ body {
 #sidebarCollapse {
     width: 100px;
     position: relative;
-    left: 125px;
+    /* left: 125px; */
     bottom: 150px;
     background-color: #EA8D47;
     border-color: #000;
@@ -18,13 +18,23 @@ h1 {
     left: 1100px;
     margin-top: 1%;
 }
+h2.draft_page {
+    color: black;
+    text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
+}
+
 h2 {
     font-family: 'Yellowtail', cursive;
+    text-align: center;
     font-size: 50px;
     color: white;
     position: relative;
     bottom: 50px;
-    left: 120px;
+    /* left: 120px; */
     text-shadow:
     -1px -1px 0 #000,
     1px -1px 0 #000,
@@ -147,7 +157,7 @@ a[aria-expanded="true"]::before {
 
 .site-logo {
     position: relative;
-    left: 900%;
+    /* right: 900%; */
     margin-top: 2.5%;
 }
 
@@ -169,7 +179,7 @@ a[aria-expanded="true"]::before {
 
 img {
     width: 205px;
-    margin-left: 1175px;
+    /* margin-left: 1175px; */
     margin-top: 1%;
 }
 

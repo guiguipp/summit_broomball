@@ -19,57 +19,73 @@
 
         <!-- Header -->
 
-        <img src="./images/logo.jpg" alt="logo">
-
-        <!-- Sidebar -->
-        <nav id="sidebar" class="active">
-
-            <div id="dismiss">
-                <i class="glyphicon glyphicon-arrow-left"></i>
+        <div class="row"> <!-- Positioning the logo via bootstrap grid properties -->
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                    <img src="./images/logo.jpg" id="site-logo" alt="logo">
             </div>
+            <div class="col"></div>
+        </div>
 
-            <div class="sidebar-header">
-                <h3>Menu</h3>
-            </div>
+<!-- Sidebar -->
+<nav id="sidebar" class="active">
 
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="#">HOME</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
+        <div id="dismiss">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+        </div>
 
-                <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                    </ul>
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+        </div>
 
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#">HOME</a>
+            </li>
+            <li>
+                <a href="#">About</a>
+            </li>
+
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                <ul>
                     <li>
-                        <a href="#">Portfolio</a>
+                        <a href="#">PAGE</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#">PAGE</a>
                     </li>
-            </ul>
+                    <li>
+                        <a href="#">PAGE</a>
+                    </li>
+                </ul>
 
-        </nav>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+        </ul>
 
-        <!-- Page Content -->
-        <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
-                Menu
-            </button>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="row">
+    <div class="col-md-2">
+        
+    </div>
+    <div class="col-md-8" id="content">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+            <i class="glyphicon glyphicon-align-left"></i>
+            Menu
+        </button>
+        
+            </div>
+        </div>
 
 
                 <div class="row">
