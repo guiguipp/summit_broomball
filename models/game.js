@@ -23,5 +23,13 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING
             }
         });
+        Game.associate = function(models) {
+            // Associating Game with Roster
+            // When a game is deleted, should also delete any associated Roster
+            Game.hasMany(models.Roster, {
+              onDelete: "cascade"
+            });
+          };
+        
         return Game;
     };

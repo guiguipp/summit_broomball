@@ -10,7 +10,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-    <link rel="stylesheet" type="text/html" href="../public/assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
     <title>Summit Broomball</title>
 </head>
 
@@ -135,11 +135,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="../public/assets/js/navigation.js"></script>
-        <script src="../public/assets/js/app.js"></script>
-        <script src="../public/assets/js/players_db.js"></script>
+        <script src="./assets/js/navigation.js"></script>
+        <!-- <script src="./assets/js/app.js"></script> -->
+        <!-- <script src="./assets/js/players_db.js"></script> -->
         <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src="../public/assets/js/draft.js"></script>
+        <!-- <script src="../public/assets/js/draft.js"></script> -->
         <script>
 $(document).ready(function() {
     console.log("ready to grind human meat...")
@@ -177,6 +177,7 @@ $(document).ready(function() {
         $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
         .then(function(dataFromAPI) {
             let players = [];
+            // will see if we need this array in the constructor
             function PlayerObj (game,name) {
                 this.game = game,
                 this.name = name,
@@ -189,38 +190,24 @@ $(document).ready(function() {
                 console.log("this is the array of players: ", players)
                 
                 
-
-                players.forEach((e) => {
-
-
-                })
-                    // need two things: push them to the rosters table
-                // show the array of players in the HTML (right now, it's JSON data, so that won't work)
-                // fromPlayerToRoster(players)
+                // need to show the array of players in the HTML (right now, it's JSON data, so that won't work)
+                // or show database data instead?
+                // could add logic to go to the game page and show all available players
                 $("#js_content").append(players)
             
             })
         }
+    // helper function to push players to the roster table    
     const fromPlayerToRoster = (player) => {
         var currentURL = window.location.origin;
         console.log("getting the data: ", player)
         $.ajax({ 
                 url: currentURL + "/api/rosters", 
                 method: "POST",
-                data: jQuery.param({GameId: player.game,player:player.name}) 
+                data: jQuery.param({GameId: player.game,player:player.name,availability: true}) 
             })
         }
     // addMembersToDraft()
-
-
-
-
-
-
-
-
-
-
 
     });
         
