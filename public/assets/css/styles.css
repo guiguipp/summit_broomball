@@ -1,7 +1,6 @@
 body {
     background: #ACADB2;
 }
-
 #sidebarCollapse {
     width: 100px;
     position: relative;
@@ -205,5 +204,37 @@ img {
         margin-left: 0;
     }
 }
+.player_button {
+    background-color: #EA8D47;
+    width: 150px;
+    margin-top: 10px;
+}
+.player_button:hover {
+    background-color: #EA8D47;
+}
+.arrows {
+    font-size: 30px;
+    position: relative;
+    top: 5px;   
+    }
+.arrows:hover {
+    color: #DE733A;
+    /* from: #EA8D47; */
+    }
+.right {
+    left: -15px;
+}
+.remove {
+    position: relative;
+    top: -12px;
+    left: -12px;   
+}
+.remove:hover {
+    color: red;
+}
 
-
+/* 
+<i class="fa fa-arrow-circle-left"></i>
+            <button class="btn btn-info navbar-btn player_button"> Dictator Cheng</button>
+            <i class="fa fa-times-circle"></i>
+            <i class="fa fa-arrow-circle-o-right"></i> */
