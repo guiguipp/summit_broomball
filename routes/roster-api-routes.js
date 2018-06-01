@@ -18,26 +18,14 @@ module.exports = function(app) {
     db.Roster.create({
       player: req.body.player, 
       GameId: req.body.GameId,
+      availability: req.body.availability
       })
       .then(function(dbRoster) {
         res.json(dbRoster);
         });
-      });  
-  app.post("/api/rosters/bulk", function(req, res) {
-    console.log("req.body: ", req.body)
-    req.body.foreach((e) => {
-      // should transform the array into elements
-
-    })
+      });
     
-    
-    db.Roster.bulkCreate({
-      player: req.body.player, GameId: req.body.GameId,
-      })
-      .then(function(dbRoster) {
-        res.json(dbRoster);
-        });
-      });  
+     
   app.put("/api/rosters/:id", function(req, res) {
     db.Roster.update({
       player: req.body.player, 
