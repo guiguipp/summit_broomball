@@ -161,7 +161,7 @@ a[aria-expanded="true"]::before {
     margin-top: 2.5%;
 }
 
-#main {
+.main {
     background: #FFFFFF;
     border-style: solid;
     border-width: 1px;

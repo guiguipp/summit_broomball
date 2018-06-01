@@ -80,7 +80,7 @@
                     Menu
                 </button>
 
-                <div id="main">
+                <div class="main">
                     <h2 class="draft_page">Summit Broomball</h2>
                     <div class="row">
 
@@ -105,6 +105,10 @@
                         </div>
                     </div>
                 </div> <!-- End of main -->
+                <br>
+                <div class="main" id="js_content">
+    
+                </div>
             </div> <!-- End of content -->
         </div>
     </div> <!-- End of wrapper -->
@@ -141,6 +145,7 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
 $(document).ready(function() {
+    $("#js_content").hide();
     const currentURL = window.location.origin;
 
     console.log("ready to grind human meat...")
@@ -215,15 +220,44 @@ $(document).ready(function() {
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             console.log(dataFromAPI)
             dataFromAPI.forEach((e) => {
-                let gameDiv = `<div id=${e.id}>`;
-                    console.log(gameDiv)
+                let gameDiv = `<div class="future_game" id=${e.id} game_date="${e.game_date}">`;
                 let date = e.game_date;
                 let line = `${gameDiv} ${date}\n`
+                // console.log(line)
+                // Does this allow the games to be shown by date?
                 $("#game_list").append(line);
                 });
             })
         }
-    seeUpcomingGames()
+        // this shows the players available for a given game
+        $(document).on("click", ".future_game", function (){
+            let id = $(this).attr("id");
+            // console.log(this)
+            let gameDate = $(this).attr("game_date")
+            // console.log(id);
+            console.log(gameDate)
+            $.ajax({ url: currentURL + "/api/rosters/game/" + id, method: "GET" }).then(function(dataFromAPI) {
+                console.log(dataFromAPI)    
+                $("#js_content").text("");
+                $("#js_content").show();
+                dataFromAPI.forEach((e) => {
+                    let playerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}">${e.player}`
+                        $("#js_content").append(playerDiv)
+                    })
+                let gameDay = `<div class="game_day"><br> <h2>${gameDate}</h2>`
+                $("#js_content").prepend(gameDay)
+
+                })
+
+            });
+    
+
+
+
+
+
+        seeUpcomingGames()
+
     });
         
     </script>
