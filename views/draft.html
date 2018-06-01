@@ -10,6 +10,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
     <title>Summit Broomball</title>
 </head>
@@ -133,6 +134,14 @@
         </ul>
     </div>
     -->        
+    <div class="test">
+            <i class="fa fa-arrow-circle-left arrows"></i>
+            <button class="btn btn-info navbar-btn player_button"> Dictator Cheng</button>
+            <i class="fa fa-times-circle remove"></i>
+            <i class="fa fa-arrow-circle-o-right right arrows"></i>
+
+    </div>
+
     <footer>
 
     </footer>
@@ -218,7 +227,6 @@ $(document).ready(function() {
     function seeUpcomingGames() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
-            console.log(dataFromAPI)
             dataFromAPI.forEach((e) => {
                 let gameDiv = `<div class="future_game" id=${e.id} game_date="${e.game_date}">`;
                 let date = e.game_date;
@@ -241,7 +249,7 @@ $(document).ready(function() {
                 $("#js_content").text("");
                 $("#js_content").show();
                 dataFromAPI.forEach((e) => {
-                    let playerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}">${e.player}`
+                    let playerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}"><i class="fa fa-arrow-circle-left arrows"></i> <button class="btn btn-info navbar-btn player_button">${e.player}</button> <i class="fa fa-times-circle remove"></i> <i class="fa fa-arrow-circle-o-right right arrows"></i>`
                         $("#js_content").append(playerDiv)
                     })
                 let gameDay = `<div class="game_day"><br> <h2>${gameDate}</h2>`
