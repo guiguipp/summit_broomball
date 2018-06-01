@@ -99,8 +99,8 @@
                             </form>
                         </div>
                         <div id="existing_game" class="col">
-                            <div>
-                                <p><br>See upcoming games</p>
+                            <p><br>See upcoming games</p>
+                            <div id="game_list">
                             </div>
                         </div>
                     </div>
@@ -141,6 +141,8 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
 $(document).ready(function() {
+    const currentURL = window.location.origin;
+
     console.log("ready to grind human meat...")
     // code to add the datepicker
     var date_input=$('input[name="date"]'); //our date input has the name "date"
@@ -156,7 +158,6 @@ $(document).ready(function() {
     $("#schedule_game").submit(function(e) {
         let date = $('#date').val()
         // sending the date of the form to the API via an iife
-            var currentURL = window.location.origin;
             $.ajax({ 
                 url: currentURL + "/api/games", 
                 method: "POST",
@@ -169,10 +170,13 @@ $(document).ready(function() {
             })
         // preventing the page to refresh
         e.preventDefault();
+        // empty the form
+        $('#date').val("")
+        // should also reload the list
+        seeUpcomingGames()
     });
     
     const addMembersToDraft = (gameId) => {
-        var currentURL = window.location.origin;
         $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
         .then(function(dataFromAPI) {
             let players = [];
@@ -198,7 +202,6 @@ $(document).ready(function() {
         }
     // helper function to push players to the roster table    
     const fromPlayerToRoster = (player) => {
-        var currentURL = window.location.origin;
         console.log("getting the data: ", player)
         $.ajax({ 
                 url: currentURL + "/api/rosters", 
@@ -207,7 +210,20 @@ $(document).ready(function() {
             })
         }
     // addMembersToDraft()
-
+    function seeUpcomingGames() {
+        $("#game_list").text("");
+        $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
+            console.log(dataFromAPI)
+            dataFromAPI.forEach((e) => {
+                let gameDiv = `<div id=${e.id}>`;
+                    console.log(gameDiv)
+                let date = e.game_date;
+                let line = `${gameDiv} ${date}\n`
+                $("#game_list").append(line);
+                });
+            })
+        }
+    seeUpcomingGames()
     });
         
     </script>

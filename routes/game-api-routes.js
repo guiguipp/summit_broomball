@@ -1,4 +1,9 @@
 var path = require("path");
+var moment = require('moment');
+var Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
+
 
 // Dependencies
 // =============================================================
@@ -16,6 +21,17 @@ module.exports = function(app) {
       res.json(dbGame);
       });
     });
+  app.get("/api/games/upcoming", function(req, res) {
+    var date = moment().format("YYYY-MM-DD");
+    console.log(date);
+    
+    db.Game.findAll({
+      where: {game_date: {[Op.gte]: date}}
+    }).then(function(dbGame) {
+      res.json(dbGame);
+      });
+    });
+
 
   app.get("/api/games/:id", function(req, res) {
     let id = parseInt(req.params.id); 
