@@ -13,7 +13,14 @@ module.exports = function(app) {
       res.json(dbRoster);
       });  
     });
-
+  app.get("/api/rosters/game/:game_id", function(req, res) {
+    db.Roster.findAll({
+      where: 
+        {GameId: req.params.game_id, availability: true}
+    }).then(function(dbRoster) {
+      res.json(dbRoster);
+      });  
+    });
   app.post("/api/rosters", function(req, res) {
     db.Roster.create({
       player: req.body.player, 
@@ -31,6 +38,7 @@ module.exports = function(app) {
       player: req.body.player, 
       goals: req.body.goals,
       assists: req.body.assists,
+      availability: req.body.availability,
       captain1Pick: req.body.captain1Pick,
       captain2Pick: req.body.captain2Pick,
       team: req.body.team
