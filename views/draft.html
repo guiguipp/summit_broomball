@@ -107,8 +107,16 @@
                     </div>
                 </div> <!-- End of main -->
                 <br>
-                <div class="main" id="js_content">
-    
+                <div class="main"> <span id="js_content"></span>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col" id="dark_draft_col"><h2><br>Dark Team</h2></div>
+                            <div class="col" id="available_draft_col"></div>
+                            <div class="col" id="white_draft_col"><h2><br>White Team</h2></div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div> <!-- End of content -->
         </div>
@@ -135,7 +143,7 @@
     </div>
     -->        
     <div class="test">
-            <i class="fa fa-arrow-circle-left arrows"></i>
+            <i class="fa fa-arrow-circle-left left arrows"></i>
             <button class="btn btn-info navbar-btn player_button"> Dictator Cheng</button>
             <i class="fa fa-times-circle remove"></i>
             <i class="fa fa-arrow-circle-o-right right arrows"></i>
@@ -154,7 +162,7 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
 $(document).ready(function() {
-    $("#js_content").hide();
+    // $("#js_content").hide();
     const currentURL = window.location.origin;
 
     console.log("ready to grind human meat...")
@@ -238,6 +246,7 @@ $(document).ready(function() {
             })
         }
         // this shows the players available for a given game
+    function getTeams(){
         $(document).on("click", ".future_game", function (){
             let id = $(this).attr("id");
             // console.log(this)
@@ -246,25 +255,43 @@ $(document).ready(function() {
             console.log(gameDate)
             $.ajax({ url: currentURL + "/api/rosters/game/" + id, method: "GET" }).then(function(dataFromAPI) {
                 console.log(dataFromAPI)    
-                $("#js_content").text("");
-                $("#js_content").show();
+                // $("#js_content").text("");
+                // $("#js_content").show();
+                $("#available_draft_col").text("")
+                $("#js_content").text("")
+
                 dataFromAPI.forEach((e) => {
-                    let playerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}"><i class="fa fa-arrow-circle-left arrows"></i> <button class="btn btn-info navbar-btn player_button">${e.player}</button> <i class="fa fa-times-circle remove"></i> <i class="fa fa-arrow-circle-o-right right arrows"></i>`
-                        $("#js_content").append(playerDiv)
+                    
+                    let availablePlayerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}"><i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}"></i> <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}"></i> <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}"></i>`
+                        $("#available_draft_col").append(availablePlayerDiv)
                     })
                 let gameDay = `<div class="game_day"><br> <h2>${gameDate}</h2>`
-                $("#js_content").prepend(gameDay)
+                
+                $("#js_content").append(gameDay)
 
                 })
 
             });
-    
+        };
+        $(document).on("click", ".remove", function (){
+            console.log("Click recorded")
+            let id = $(this).attr("id");
+            let playerName = $(this).attr("player");
+            console.log(id)
+            console.log(playerName)
+            $.ajax({ 
+                url: currentURL + "/api/rosters/" + id, 
+                method: "PUT",
+                data: jQuery.param({availability: false, player: playerName}) 
+                }).then(function(dataFromAPI) {
+                    console.log("Done")
+                    });
+                });
 
-
-
-
-
-        seeUpcomingGames()
+        
+        
+getTeams()
+seeUpcomingGames()
 
     });
         

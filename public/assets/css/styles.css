@@ -215,12 +215,15 @@ img {
 .arrows {
     font-size: 30px;
     position: relative;
-    top: 5px;   
+    top: 10px;   
     }
 .arrows:hover {
     color: #DE733A;
     /* from: #EA8D47; */
     }
+.left {
+    right: 3px;
+}
 .right {
     left: -15px;
 }
@@ -232,9 +235,7 @@ img {
 .remove:hover {
     color: red;
 }
-
-/* 
-<i class="fa fa-arrow-circle-left"></i>
-            <button class="btn btn-info navbar-btn player_button"> Dictator Cheng</button>
-            <i class="fa fa-times-circle"></i>
-            <i class="fa fa-arrow-circle-o-right"></i> */
+.roster_check {
+    text-align: center;
+    padding-left: 2%;
+}
