@@ -1,4 +1,3 @@
-'use strict' 
 const players = require("./players_db")
 let team1Name = "Dark Team";
 let team2Name = "Light Team";

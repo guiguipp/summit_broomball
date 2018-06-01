@@ -16,22 +16,27 @@
 
 <body>
     <div class="wrapper">
-
         <!-- Header -->
-
-        <img src="./images/logo.jpg" alt="logo">
-
+        
+        <div class="row"> <!-- Positioning the logo via bootstrap grid properties -->
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                    <img src="./images/logo.jpg" id="site-logo" alt="logo">
+            </div>
+            <div class="col"></div>
+        </div>
+        
         <!-- Sidebar -->
         <nav id="sidebar" class="active">
-
             <div id="dismiss">
                 <i class="glyphicon glyphicon-arrow-left"></i>
             </div>
-
             <div class="sidebar-header">
                 <h3>Menu</h3>
             </div>
-
             <ul class="list-unstyled components">
                 <li class="active">
                     <a href="#">HOME</a>
@@ -39,7 +44,6 @@
                 <li>
                     <a href="#">About</a>
                 </li>
-
                 <li>
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul>
@@ -53,42 +57,59 @@
                             <a href="#">PAGE</a>
                         </li>
                     </ul>
-
                     <li>
                         <a href="#">Portfolio</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
                     </li>
-            </ul>
-
+                </li>
+            </ul>                    
         </nav>
 
         <!-- Page Content -->
-        <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
-                Menu
-            </button>
-
-            <div class="col-md-4" id="main">
-                <h2>Summit Broomball</h2>
-                <p>Lorem lorem lorem lorem lorem</p>
+        <div class="row">
+            <div class="col-md-2">
+            <!-- empty col for centering main content -->
             </div>
+            <div class="col-md-8" id="content">
+                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                    <i class="glyphicon glyphicon-align-left">
 
-            <div class="col-md-6" id="main2">
-                <div id="js_content">
+                    </i>
+                    Menu
+                </button>
 
-                </div>
+                <div id="main">
+                    <h2 class="draft_page">Summit Broomball</h2>
+                    <div class="row">
 
-
-            </div>
-
+                        <div id="schedule_game" class="col">
+                            <div>
+                                <p><br>Create a new game</p>
+                            </div>
+                            <form method="post" class="col">
+                                <div class="form-group"> <!-- Date input -->
+                                    <label class="control-label" for="date">Date</label>
+                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+                                </div>
+                                <div class="form-group"> <!-- Submit button -->
+                                    <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="existing_game" class="col">
+                            <div>
+                                <p><br>See upcoming games</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of main -->
+            </div> <!-- End of content -->
         </div>
+    </div> <!-- End of wrapper -->
+    <div class="overlay"> </div>
 
-        <div class="overlay"></div>
-
-    </div>
 <!-- Commenting out this data that is not showing properly yet -->
 <!-- 
 <div class="col-md-1" id="flavicons">
@@ -107,40 +128,18 @@
             </li>
         </ul>
     </div>
-    -->
-    <!-- button to add a game -->
-    <div id="schedule_game">
-        <form method="post" class="col-md-2">
-            <div class="form-group"> <!-- Date input -->
-                <label class="control-label" for="date">Date</label>
-                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
-            </div>
-            <div class="form-group"> <!-- Submit button -->
-                <button class="btn btn-primary " name="submit" type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
-    <div id="js_content">
-
-    </div>
-
+    -->        
     <footer>
 
     </footer>
-
-
-
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="./assets/js/navigation.js"></script>
-        <!-- <script src="./assets/js/app.js"></script> -->
-        <!-- <script src="./assets/js/players_db.js"></script> -->
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <!-- <script src="../public/assets/js/draft.js"></script> -->
-        <script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="./assets/js/navigation.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
 $(document).ready(function() {
     console.log("ready to grind human meat...")
     // code to add the datepicker
@@ -211,6 +210,6 @@ $(document).ready(function() {
 
     });
         
-        </script>
-    </body>
+    </script>
+</body>
 </html>
