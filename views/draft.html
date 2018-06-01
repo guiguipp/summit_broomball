@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="../public/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" type="text/html" href="../public/assets/css/styles.css">
     <title>Summit Broomball</title>
 </head>
 
 <body>
-
     <div class="wrapper">
 
         <!-- Header -->
@@ -71,13 +71,16 @@
                 Menu
             </button>
 
-
             <div class="col-md-4" id="main">
                 <h2>Summit Broomball</h2>
                 <p>Lorem lorem lorem lorem lorem</p>
             </div>
 
             <div class="col-md-6" id="main2">
+                <div id="js_content">
+
+                </div>
+
 
             </div>
 
@@ -86,8 +89,9 @@
         <div class="overlay"></div>
 
     </div>
-
-    <div class="col-md-1" id="flavicons">
+<!-- Commenting out this data that is not showing properly yet -->
+<!-- 
+<div class="col-md-1" id="flavicons">
         <ul class="list-group">
             <li class="flavicon-icons">
                 <img class="flavicon-images" src="./images/logo.png">
@@ -103,6 +107,22 @@
             </li>
         </ul>
     </div>
+    -->
+    <!-- button to add a game -->
+    <div id="schedule_game">
+        <form method="post" class="col-md-2">
+            <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Date</label>
+                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+            </div>
+            <div class="form-group"> <!-- Submit button -->
+                <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div id="js_content">
+
+    </div>
 
     <footer>
 
@@ -110,20 +130,100 @@
 
 
 
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="../public/assets/js/navigation.js"></script>
-    <script src="../public/assets/js/app.js"></script>
-    <script src="../public/assets/js/players_db.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="../public/assets/js/navigation.js"></script>
+        <script src="../public/assets/js/app.js"></script>
+        <script src="../public/assets/js/players_db.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="../public/assets/js/draft.js"></script>
+        <script>
+$(document).ready(function() {
+    console.log("ready to grind human meat...")
+    // code to add the datepicker
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    var options= {
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        };
+    date_input.datepicker(options);
+    // creating the game on "Submit" even via iife
+    $("#schedule_game").submit(function(e) {
+        let date = $('#date').val()
+        // sending the date of the form to the API via an iife
+            var currentURL = window.location.origin;
+            $.ajax({ 
+                url: currentURL + "/api/games", 
+                method: "POST",
+                data: jQuery.param({game_date: date}) 
+            })
+            .then(function(result) {
+                // need validation of the API (if true, or something...)
+                // this is the id of the newly created game 
+                addMembersToDraft(result.id)
+            })
+        // preventing the page to refresh
+        e.preventDefault();
+    });
+    
+    const addMembersToDraft = (gameId) => {
+        var currentURL = window.location.origin;
+        $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
+        .then(function(dataFromAPI) {
+            let players = [];
+            function PlayerObj (game,name) {
+                this.game = game,
+                this.name = name,
+                players.push(this)
+                fromPlayerToRoster(this)
+                }
+                dataFromAPI.forEach((e) => {                
+                    let newPlayerObj = new PlayerObj (gameId,e.shortname)
+                    });
+                console.log("this is the array of players: ", players)
+                
+                
 
-</body>
+                players.forEach((e) => {
 
+
+                })
+                    // need two things: push them to the rosters table
+                // show the array of players in the HTML (right now, it's JSON data, so that won't work)
+                // fromPlayerToRoster(players)
+                $("#js_content").append(players)
+            
+            })
+        }
+    const fromPlayerToRoster = (player) => {
+        var currentURL = window.location.origin;
+        console.log("getting the data: ", player)
+        $.ajax({ 
+                url: currentURL + "/api/rosters", 
+                method: "POST",
+                data: jQuery.param({GameId: player.game,player:player.name}) 
+            })
+        }
+    // addMembersToDraft()
+
+
+
+
+
+
+
+
+
+
+
+    });
+        
+        </script>
+    </body>
 </html>

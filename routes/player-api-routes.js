@@ -6,7 +6,16 @@ module.exports = function(app) {
       res.json(dbPlayer);
       });
     });
-  
+  app.get("/api/players/:status", function(req, res) {
+    let status = req.params.status; 
+    console.log(status);
+    
+    db.Player.findAll({
+      where: {player_status: status}
+      }).then(function(dbPlayer) {
+        res.json(dbPlayer);
+        });
+    });
   app.get("/api/players/:id", function(req, res) {
     let id = parseInt(req.params.id); 
     db.Player.findById(id).then(function(dbPlayer) {
