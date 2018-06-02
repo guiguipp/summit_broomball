@@ -1,4 +1,4 @@
-INSERT INTO Games (game_date, goals_dark, goals_white, summary, author, createdAt, updatedAt) VALUES (20180518, 6, 8, "WHITE NARROWLY DEFEATS DARK
+INSERT INTO Games (game_date, goals_dark, goals_white, editable, summary, author, createdAt, updatedAt) VALUES (20180518, 6, 8, false, "WHITE NARROWLY DEFEATS DARK
 
 
     White was Tony R (traded early), Steve G, Paul G, Sheila, Gui, Sui, Knudsen, Todd, Dane, Joe (traded), Jamie (traded), and Barry in goal 
@@ -90,34 +90,34 @@ INSERT INTO Stats (GameId, goal_scorer, goal_assist, team, createdAt, updatedAt)
 INSERT INTO Stats (GameId, goal_scorer, goal_assist, team, createdAt, updatedAt) VALUES (1, 'Shawnski','', 'dark', 20180525, 20180528);
 INSERT INTO Stats (GameId, goal_scorer, goal_assist, team, createdAt, updatedAt) VALUES (1, 'Joe','Knudsen', 'white', 20180525, 20180528);
 
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Swords', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Vilks', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Carity', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Foss', 1, 3, 5, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Grant', 1, 1, 3, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Karissa', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Kiemo', 1, 1, 3, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Weddie', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Barry', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Gui', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Joe', 1, 0, 2, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Paul', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Shalanah', 1, 1, 3, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Steve', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Becca', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Chad', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Dane', 2, 0, 4, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Graham', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Shawnski', 1, 1, 3, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Sheila', 1, 0, 2, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Todd', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Tony', 2, 0, 4, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Ben', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Moore', 0, 0, 0, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Jason', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Sui', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Jamie', 0, 0, 0, 1, 'white', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Jen', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Kim', 0, 0, 0, 0, 'Unavailable', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Stan', 1, 0, 2, 1, 'dark', 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, createdAt, updatedAt) VALUES (1, 'Knudsen', 2, 3, 7, 1, 'white', 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Swords', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Vilks', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Carity', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Foss', 1, 3, 5, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Grant', 1, 1, 3, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Karissa', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Kiemo', 1, 1, 3, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Weddie', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Barry', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Gui', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Joe', 1, 0, 2, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Paul', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Shalanah', 1, 1, 3, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Steve', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Becca', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Chad', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Dane', 2, 0, 4, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Graham', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Shawnski', 1, 1, 3, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Sheila', 1, 0, 2, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Todd', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Tony', 2, 0, 4, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Ben', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Moore', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Jason', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Sui', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Jamie', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Jen', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Kim', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Stan', 1, 0, 2, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Knudsen', 2, 3, 7, 1, 'white', false, 20180525, 20180528);

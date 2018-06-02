@@ -40,7 +40,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="#">HOME</a>
+                    <a href="/home">HOME</a>
                 </li>
                 <li>
                     <a href="#">About</a>
@@ -49,13 +49,13 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul>
                         <li>
-                            <a href="#">PAGE</a>
+                            <a href="/player">PAGE</a>
                         </li>
                         <li>
-                            <a href="#">PAGE</a>
+                            <a href="">PAGE</a>
                         </li>
                         <li>
-                            <a href="#">PAGE</a>
+                            <a href="/league">PAGE</a>
                         </li>
                     </ul>
                     <li>
@@ -92,7 +92,7 @@
                             <form method="post" class="col">
                                 <div class="form-group"> <!-- Date input -->
                                     <label class="control-label" for="date">Date</label>
-                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
                                 </div>
                                 <div class="form-group"> <!-- Submit button -->
                                     <button class="btn btn-primary " name="submit" type="submit">Submit</button>
@@ -110,9 +110,9 @@
                 <div class="main" id="content_hidden"> <span id="js_content"></span>
                     <div class="container">
                         <div class="row">
-                            <div class="col"><h2><br>Dark Team</h2><span id="dark_draft_col"></span></div>
-                            <div class="col" id="available_draft_col"></div>
-                            <div class="col"><h2><br>White Team</h2><span id="white_draft_col"></span></div>
+                            <div class="col"><h2>Dark Team</h2><span id="dark_draft_col"></span></div>
+                            <div class="col"> <h2><br></h2> <span id="available_draft_col"></span></div>
+                            <div class="col"><h2>White Team</h2><span id="white_draft_col"></span></div>
 
                         </div>
 
@@ -183,13 +183,13 @@ $(document).ready(function() {
                 // need validation of the API (if true, or something...)
                 // this is the id of the newly created game 
                 addMembersToDraft(result.id)
+                seeUpcomingGames()
             })
         // preventing the page to refresh
         e.preventDefault();
         // empty the form
         $('#date').val("")
         // should also reload the list
-        seeUpcomingGames()
         });
     
     const addMembersToDraft = (gameId) => {
@@ -219,25 +219,23 @@ $(document).ready(function() {
         $.ajax({ 
                 url: currentURL + "/api/rosters", 
                 method: "POST",
-                data: jQuery.param({GameId: player.game,player:player.name,availability: true}) 
+                data: jQuery.param({GameId: player.game,player:player.name, saved: false, availability: true}) 
             })
         }
-    // addMembersToDraft()
+    // shows the list of future games
     function seeUpcomingGames() {
         // emptying the div so that it does not keep appending when the data is refreshed
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameDiv = `<div class="future_game" id=${e.id} game_date="${e.game_date}">`;
-                let date = e.game_date;
-                let line = `${gameDiv} ${date}\n`
+                let gameDiv = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}\n`
                 // console.log(line)
                 // Does this allow the games to be shown by date?
-                $("#game_list").append(line);
+                $("#game_list").append(gameDiv);
                 });
             })
         }
-    // this shows the players available for a given game
+    // this shows the players available for a given game after a click on one of the future games
     function showTeams(){
         $(document).on("click", ".future_game", function (){
             $("#content_hidden").show();
@@ -245,11 +243,12 @@ $(document).ready(function() {
             // console.log(this)
             let gameDate = $(this).attr("game_date")
             // console.log(id);
+            console.log(id)
             console.log(gameDate)
             getAvailablePlayers(id,gameDate)   
             })
         };
-        
+    // sets the player as unavailable after a click on the "remove" icon 
     $(document).on("click", ".remove", function (){
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
@@ -264,7 +263,7 @@ $(document).ready(function() {
                 getAvailablePlayers(gameId,gameDate)   
                 });
             });
-
+    // drafts the player to the "dark" team after a click on the left arrow
     $(document).on("click", ".left", function (){
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
@@ -278,6 +277,8 @@ $(document).ready(function() {
                 getAvailablePlayers(gameId,gameDate)   
                 });
             });
+
+    // drafts the player to the "white" team after a click on the right arrow
     $(document).on("click", ".right", function (){
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
@@ -292,6 +293,7 @@ $(document).ready(function() {
                 });
             });
 
+    // shows players in their respective columns, according to the team they have been drafted to
     function getAvailablePlayers(idOfGame,dateOfGame) {
         $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame, method: "GET" }).then(function(dataFromAPI) {
             $("#available_draft_col").text("")
