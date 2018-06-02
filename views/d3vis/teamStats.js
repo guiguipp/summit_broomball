@@ -3,43 +3,43 @@ var person_data = {
         'Assists': 193,
         'Goals_scored': 167
     },
-    1690: {
+    Tom: {
         'Assists': 55,
         'Goals_scored': 23
     },
-    1691: {
+    Bob: {
         'Assists': 87,
         'Goals_scored': 980
     },
-    1692: {
+    billy: {
         'Assists': 22,
         'Goals_scored': 234
     },
-    1693: {
+    Adam: {
         'Assists': 66,
         'Goals_scored': 17
     },
-    1694: {
+    Moose: {
         'Assists': 6,
         'Goals_scored': 45
     },
-    1695: {
+    Guillaume: {
         'Assists': 0,
         'Goals_scored': 86
     },
-    1696: {
+    Pam: {
         'Assists': 76,
         'Goals_scored': 210
     },
-    1697: {
+    Moe: {
         'Assists': 100,
         'Goals_scored': 155
     },
-    1698: {
+    Erik: {
         'Assists': 15,
         'Goals_scored': 39
     },
-    1699: {
+    Majid: {
         'Assists': 73,
         'Goals_scored': 450
     }
