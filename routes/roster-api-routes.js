@@ -25,7 +25,8 @@ module.exports = function(app) {
     db.Roster.create({
       player: req.body.player, 
       GameId: req.body.GameId,
-      availability: req.body.availability
+      availability: req.body.availability,
+      editable: true
       })
       .then(function(dbRoster) {
         res.json(dbRoster);

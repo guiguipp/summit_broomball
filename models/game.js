@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
         summary: {
             type: DataTypes.TEXT
             },
+        editable: {
+            type: DataTypes.BOOLEAN,
+            },
         author: {
             type: DataTypes.STRING
             }

@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes) {
         player: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
             validate: {
                 len: [1]
                 }
@@ -29,6 +28,9 @@ module.exports = function(sequelize, DataTypes) {
             },
         availability: {
             type: DataTypes.BOOLEAN
+            },
+        editable: {
+            type: DataTypes.BOOLEAN,
             },
         team: {
             type: DataTypes.ENUM,

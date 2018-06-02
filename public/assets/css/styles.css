@@ -239,3 +239,15 @@ img {
     text-align: center;
     padding-left: 2%;
 }
+.game_button:first-child { 
+    margin-top: 31px;
+    }
+.game_button {
+    text-align: center;
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 150px;
+}
+.game_button:hover {
+    background-color: #EA8D47;
+}
