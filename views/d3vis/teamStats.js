@@ -494,9 +494,9 @@ function updateCharts(duration, delay) {
                 chart_y = label_space_top;
             }
 
-            //
             // Bars
-            //
+            // =============================================================
+
             var bars = svgChart.selectAll("rect." + chart).data(person_data, function (d) {
                 return d.year + "-" + chart;
             });
