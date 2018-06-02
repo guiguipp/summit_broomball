@@ -196,7 +196,7 @@ $(document).ready(function() {
         $('#date').val("")
         // should also reload the list
         seeUpcomingGames()
-    });
+        });
     
     const addMembersToDraft = (gameId) => {
         $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
@@ -212,17 +212,15 @@ $(document).ready(function() {
                 dataFromAPI.forEach((e) => {                
                     let newPlayerObj = new PlayerObj (gameId,e.shortname)
                     });
-                console.log("this is the array of players: ", players)
-                
-                
+                console.log("this is the array of players: ", players)        
                 // need to show the array of players in the HTML (right now, it's JSON data, so that won't work)
                 // or show database data instead?
                 // could add logic to go to the game page and show all available players
                 $("#js_content").append(players)
-            
-            })
-        }
-    // helper function to push players to the roster table    
+        
+                })
+            }
+    // helper function to push players to the roster table when a game is created   
     const fromPlayerToRoster = (player) => {
         console.log("getting the data: ", player)
         $.ajax({ 
@@ -233,6 +231,7 @@ $(document).ready(function() {
         }
     // addMembersToDraft()
     function seeUpcomingGames() {
+        // emptying the div so that it does not keep appending when the data is refreshed
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
@@ -246,51 +245,59 @@ $(document).ready(function() {
             })
         }
         // this shows the players available for a given game
-    function getTeams(){
+    function showTeams(){
         $(document).on("click", ".future_game", function (){
             let id = $(this).attr("id");
             // console.log(this)
             let gameDate = $(this).attr("game_date")
             // console.log(id);
             console.log(gameDate)
-            $.ajax({ url: currentURL + "/api/rosters/game/" + id, method: "GET" }).then(function(dataFromAPI) {
-                console.log(dataFromAPI)    
-                // $("#js_content").text("");
-                // $("#js_content").show();
-                $("#available_draft_col").text("")
-                $("#js_content").text("")
-
-                dataFromAPI.forEach((e) => {
-                    
-                    let availablePlayerDiv = `<div class="roster_check" id="${e.id}" availability="${e.availability}"><i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}"></i> <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}"></i> <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}"></i>`
-                        $("#available_draft_col").append(availablePlayerDiv)
-                    })
-                let gameDay = `<div class="game_day"><br> <h2>${gameDate}</h2>`
-                
-                $("#js_content").append(gameDay)
-
-                })
-
-            });
+            getAvailablePlayers(id,gameDate)   
+            })
         };
-        $(document).on("click", ".remove", function (){
-            console.log("Click recorded")
-            let id = $(this).attr("id");
-            let playerName = $(this).attr("player");
-            console.log(id)
-            console.log(playerName)
-            $.ajax({ 
-                url: currentURL + "/api/rosters/" + id, 
-                method: "PUT",
-                data: jQuery.param({availability: false, player: playerName}) 
-                }).then(function(dataFromAPI) {
-                    console.log("Done")
-                    });
+        
+    $(document).on("click", ".remove", function (){
+        console.log("Click recorded")
+        let playerId = $(this).attr("id");
+        let gameId = $(this).attr("game_id");
+        let playerName = $(this).attr("player");
+        let gameDate = $(this).attr("game_date")
+        console.log(playerId)
+        console.log(gameId)
+        console.log(playerName)
+        console.log(gameDate)
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + playerId, 
+            method: "PUT",
+            data: jQuery.param({availability: false, player: playerName}) 
+            }).then(function(dataFromAPI) {
+                console.log("Recorded")
+                getAvailablePlayers(gameId,gameDate)   
                 });
+            });
+
+    function getAvailablePlayers(idOfGame,dateOfGame) {
+        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame, method: "GET" }).then(function(dataFromAPI) {
+            console.log(dataFromAPI)
+            $("#available_draft_col").text("")
+            $("#js_content").text("")
+            dataFromAPI.forEach((e) => {
+                let availablePlayerDiv = 
+                `<div class="roster_check" id="${e.id}" availability="${e.availability}">
+                <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
+                <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
+                <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
+                <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                $("#available_draft_col").append(availablePlayerDiv)
+                })
+            let gameDay = `<div class="game_day"><br> <h2>${dateOfGame}</h2>`
+            $("#js_content").append(gameDay)
+            })
+        }
 
         
         
-getTeams()
+showTeams()
 seeUpcomingGames()
 
     });
