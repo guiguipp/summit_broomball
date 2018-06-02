@@ -1,53 +1,56 @@
 var path = require("path")
 var db = require("../models");
 
-module.exports = function(app) {
-  app.get("/api/stats", function(req, res) {
-    db.Stat.findAll({}).then(function(dbStat) {
+module.exports = function (app) {
+  app.get("/api/stats", function (req, res) {
+    db.Stat.findAll({}).then(function (dbStat) {
       res.json(dbStat);
-      });
     });
+  });
 
-  app.get("/api/stats/:id", function(req, res) {
-    let id = parseInt(req.params.id); 
-    db.Stat.findById(id).then(function(dbStat) {
+  app.get("/api/stats/:id", function (req, res) {
+    let id = parseInt(req.params.id);
+    db.Stat.findById(id).then(function (dbStat) {
       res.json(dbStat);
-      });  
     });
+  });
 
-  app.post("/api/stats", function(req, res) {
+  app.post("/api/stats", function (req, res) {
     db.Stat.create({
-      team: req.body.team,
-      GameId: req.body.GameId
+        team: req.body.team,
+        GameId: req.body.GameId
       })
-      .then(function(dbPlayer) {
+      .then(function (dbPlayer) {
         res.json(dbPlayer);
-        });
       });
-    
-  app.put("/api/stats/:id", function(req, res) {
+  });
+
+  app.put("/api/stats/:id", function (req, res) {
     db.Stat.update({
-      team: req.body.team, 
-      goal_scorer: req.body.goal_scorer,
-      goal_assist: req.body.goal_assist,
-      },
-      {
-      returning: true,
-      where: {id: req.params.id}
+        team: req.body.team,
+        goal_scorer: req.body.goal_scorer,
+        goal_assist: req.body.goal_assist,
+      }, {
+        returning: true,
+        where: {
+          id: req.params.id
+        }
       })
-      .then(function(dbPlayer) {
+      .then(function (dbPlayer) {
         res.json(dbPlayer);
-        });
       });
+  });
 
 
-  app.delete("/api/stats/:id", function(req, res) {
+  app.delete("/api/stats/:id", function (req, res) {
     db.Stat.destroy({
-      where: {id: req.params.id}
+        where: {
+          id: req.params.id
+        }
       })
-      .then(function(dbStat) {
-      res.json(dbStat);
+      .then(function (dbStat) {
+        res.json(dbStat);
       });
-    });
+  });
 
 };
