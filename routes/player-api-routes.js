@@ -7,9 +7,7 @@ module.exports = function(app) {
       });
     });
   app.get("/api/players/:status", function(req, res) {
-    let status = req.params.status; 
-    console.log(status);
-    
+    let status = req.params.status;     
     db.Player.findAll({
       where: {player_status: status}
       }).then(function(dbPlayer) {
