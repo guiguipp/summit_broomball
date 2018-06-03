@@ -26,6 +26,17 @@ module.exports = function(app) {
       res.json(dbRoster);
       });  
     });
+  // retrieve non available players for a given game. Sorted alphabetically
+  app.get("/api/rosters/game/:game_id/unavailable", function(req, res) {
+    db.Roster.findAll({
+      where: 
+        {GameId: req.params.game_id, availability: false}, 
+        order: [
+          ['player', 'ASC']]
+    }).then(function(dbRoster) {
+      res.json(dbRoster);
+      });  
+    });
   // find level info from "players" on a join of all available players for a given game. Sorted alphabetically
   app.get("/api/rosters/game/:game_id/players", function(req, res) {
     db.sequelize.query('SELECT DISTINCT shortname,Rosters.id,player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true ORDER BY shortname ASC',
