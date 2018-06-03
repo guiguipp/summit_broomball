@@ -46,7 +46,6 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
-
   // edit player for a game
   app.put("/api/rosters/:id", function(req, res) {
     db.Roster.update({
