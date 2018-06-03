@@ -35,7 +35,6 @@ module.exports = function (app) {
         res.json(dbGame);
         });
     });
-  };
   app.get("/api/games/past", function (req, res) {
     var date = moment().format("YYYY-MM-DD");
     console.log(date);
