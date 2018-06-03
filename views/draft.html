@@ -40,7 +40,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="/home">HOME</a>
+                    <a href="#">HOME</a>
                 </li>
                 <li>
                     <a href="#">About</a>
@@ -49,13 +49,13 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul>
                         <li>
-                            <a href="/player">PAGE</a>
+                            <a href="#">PAGE</a>
                         </li>
                         <li>
-                            <a href="">PAGE</a>
+                            <a href="#">PAGE</a>
                         </li>
                         <li>
-                            <a href="/league">PAGE</a>
+                            <a href="#">PAGE</a>
                         </li>
                     </ul>
                     <li>
@@ -107,7 +107,25 @@
                     </div>
                 </div> <!-- End of main -->
                 <br>
-                <div class="main" id="content_hidden"> <span id="js_content"></span>
+                <div class="main content_hidden">
+                <!-- <div class="main"> -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+                                    <button class="btn btn-info navbar-btn menu_options">Reset Teams</button> 
+                            </div>
+                            <div class="col text-center">
+                                    <button class="btn btn-info navbar-btn menu_options" id="autodraft">Autodraft</button> 
+                            </div>
+                            <div class="col text-center">
+                                    <button class="btn btn-info navbar-btn menu_options">Set picks</button> 
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="main content_hidden" id="draft_data"> <span id="js_content"></span>
                     <div class="container">
                         <div class="row">
                             <div class="col"><h2>Dark Team</h2><span id="dark_draft_col"></span></div>
@@ -122,7 +140,7 @@
         </div>
     </div> <!-- End of wrapper -->
     <div class="overlay"> </div>
-
+    
 <!-- Commenting out this data that is not showing properly yet -->
 <!-- 
 <div class="col-md-1" id="flavicons">
@@ -156,8 +174,10 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
 $(document).ready(function() {
-    $("#content_hidden").hide();
+    $(".content_hidden").hide();
     const currentURL = window.location.origin;
+    const team1Name = "dark";
+    const team2Name = "white";
 
     console.log("ready to grind human meat...")
     // code to add the datepicker
@@ -228,7 +248,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameDiv = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}\n`
+                let gameDiv = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button></div>\n`
                 // console.log(line)
                 // Does this allow the games to be shown by date?
                 $("#game_list").append(gameDiv);
@@ -238,13 +258,15 @@ $(document).ready(function() {
     // this shows the players available for a given game after a click on one of the future games
     function showTeams(){
         $(document).on("click", ".future_game", function (){
-            $("#content_hidden").show();
+            $(".content_hidden").show();
             let id = $(this).attr("id");
             // console.log(this)
             let gameDate = $(this).attr("game_date")
             // console.log(id);
             console.log(id)
             console.log(gameDate)
+            $("#autodraft").attr("game_id",id)
+            $("#autodraft").attr("game_date",gameDate)
             getAvailablePlayers(id,gameDate)   
             })
         };
@@ -334,11 +356,120 @@ $(document).ready(function() {
             $("#js_content").append(gameDay)
             })
         }
+    // submenu options
+    $("#autodraft").click(function (){
+        let availablePlayers = [];
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date")
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId+ "/players", method: "GET" }).then(function(dataFromAPI) {
+        console.log("Here is the data I receive from the call:\n",dataFromAPI)
+        // apply the autodraft feature to players available for that game
+        $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
+            //this function is executed after function1
+            console.log("Now after then?")
+            getAvailablePlayers(gameId,gameDate)
+            });
+        });
+            });
+        // })
+
+    showTeams()
+    seeUpcomingGames()
+
+    // Team sorting functions
+    ////////////////////////////////////
+
+    // Autodraft
+    const autoDraft = (arrayOfAvailablePlayers) => {
+        let mixedRosters = [];
+        // recreating our array by assigning each player to its level
+        let output = arrayOfAvailablePlayers.reduce((levels,player) => {
+            levels[player.level] = levels[player.level] || [];
+            levels[player.level].push({
+                shortname: player.shortname,
+                id: player.id,
+                level: player.level
+            });
+            return levels;
+        },[])
+        // getting the number of levels
+        let numOutput = Object.keys(output).length;
+        for (let i = 0; i < numOutput; i++) {
+            // running the randomize function for each level
+            let playersByLevel = Object.entries(output)[i]
+            // the "level" is the first argument in the array, the next one is the players: that's how we access them
+            let playersArray = playersByLevel[1]
+            // console.log("players array non randomized: ", playersArray)
+            randomize(playersArray, mixedRosters)
+            }
+        for (i = 0; i < mixedRosters.length; i++) {
+            // assigning different team to every other player
+            if (i%2 === 0) {
+                mixedRosters[i].team = team1Name;
+                }
+            else {
+                mixedRosters[i].team = team2Name;
+                }
+            }
+            updateTeam(this)
+            function PlayerObj (name,id,team) {
+                this.name = name,
+                this.id = id,
+                this.team = team
+                updateTeam(this)
+                }
+            mixedRosters.forEach((e) => {
+                let newPlayerObj = new PlayerObj (e.shortname,e.id,e.team)
+                })
+        // the only purpose of calling this function is to verify that teams are balanced (level wise)
+        filterTeams(mixedRosters);
+        }
+
+// function to filter array of player objects into teams
+// (each player object has been assigned a team name)
+    const filterTeams = (arrayOfPlayerObjects) => {
+        let rosterTeam2 = [];
+        let rosterTeam1 = [];
+
+        // filter player objects according to name of the team #1
+        rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.team === team1Name)
+        console.log(`\n************\n${team1Name}:\n************\n`);
+        // display the shortname of the player objects for the whole team
+        rosterTeam1.forEach((e) => {
+            console.log(`${e.shortname} (${e.level})`);
+            })
+        // filter player objects according to name of the team #2
+        rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.team === team2Name)
+        console.log(`\n************\n${team2Name}:\n************\n`);
+        // display the shortname of the player objects for the whole team
+        rosterTeam2.forEach((e) => {
+            console.log(`${e.shortname} (${e.level})`);
+            })
+        }
+    // utility function to randomize an array (pushes/deletes to another array recursively, until it's empty) 
+    const randomize = (inputArray, outputArray) => {
+    if(inputArray.length > 0) {
+        let randomPlayer = inputArray[Math.floor(Math.random()*inputArray.length)];
+        let index = inputArray.indexOf(randomPlayer);
+        outputArray.push(randomPlayer);
+        inputArray.splice(index,1)
+        randomize(inputArray, outputArray);
+        }
+    }
+
+// helper function to update a player team in the db with parameters stored in player object
+// We will pass it the player's information in the constructor 
+    const updateTeam = (participant) => {
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + participant.id, 
+            method: "PUT",
+            data: jQuery.param({team: participant.team, player: participant.name}) 
+            }).then(function(dataFromAPI) {
+                // console.log(dataFromAPI)   
+                });
+        }
 
         
-        
-showTeams()
-seeUpcomingGames()
 
     });
         
