@@ -1,5 +1,7 @@
 d3.json("myData.json", function(data){
     
+    var team_data = require ("../../routes/stat-api-routes.js")
+    
     var tip = d3.select(".chart-container")
       .append("div")
     .attr("class", "tip")
