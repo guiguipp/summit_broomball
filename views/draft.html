@@ -323,43 +323,51 @@ $(document).ready(function() {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
-
             $("#js_content").text("")
+
             dataFromAPI.forEach((e) => {
+                let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
+                let playerButton = `<button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button>`
+                let removeButton = `<i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                let rightArrowButton = `<i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                let leftArrowButton = `<i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`    
                 if (e.team) {
                     if (e.team.toLowerCase() === "dark") {
                         let darkPlayersDiv = 
-                        `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                        <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                        <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        `   ${divRosterCheck} 
+                            ${playerButton}
+                            ${removeButton}
+                            ${rightArrowButton}
+                        `
                         $("#dark_draft_col").append(darkPlayersDiv)
                         }
                     else if (e.team.toLowerCase() === "white") {
-                        let whitePlayersDiv = 
-                        `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                        <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                        <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        let whitePlayersDiv =
+                        `   ${divRosterCheck}  
+                            ${leftArrowButton}
+                            ${playerButton}
+                            ${removeButton}`
                         $("#white_draft_col").append(whitePlayersDiv)
                         }
                     else {
-                        let availablePlayerDiv = 
-                        `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                        <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                        <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        let availablePlayerDiv =
+                        `   ${divRosterCheck} 
+                            ${leftArrowButton}
+                            ${playerButton}
+                            ${removeButton}
+                            ${rightArrowButton}
+                        `
                         $("#available_draft_col").append(availablePlayerDiv)
                         }
                 }
                 else {
                     let availablePlayerDiv = 
-                    `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                    <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                    <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                    <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                    <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                    `   ${divRosterCheck} 
+                        ${leftArrowButton}
+                        ${playerButton}
+                        ${removeButton}
+                        ${rightArrowButton}
+                    `
                     $("#available_draft_col").append(availablePlayerDiv)
                     }
                 })
@@ -400,9 +408,7 @@ $(document).ready(function() {
                 updateTeam(this)
                 }
                 dataFromAPI.forEach((e) => {
-                    console.log("e.id: ", e.id, "e.player: ",e.player)
                     let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
-                    console.log("newPlayerObj: ",newPlayerObj)
                 })
                 getAvailablePlayers(gameId,gameDate)
             })
@@ -459,8 +465,8 @@ $(document).ready(function() {
         filterTeams(mixedRosters);
         }
 
-// function to filter array of player objects into teams
-// (each player object has been assigned a team name)
+    // function to filter array of player objects into teams
+    // (each player object has been assigned a team name)
     const filterTeams = (arrayOfPlayerObjects) => {
         let rosterTeam2 = [];
         let rosterTeam1 = [];
@@ -491,8 +497,8 @@ $(document).ready(function() {
         }
     }
 
-// helper function to update a player team in the db with parameters stored in player object
-// We will pass it the player's information in the constructor 
+    // helper function to update a player team in the db with parameters stored in player object
+    // We will pass it the player's information in the constructor 
     const updateTeam = (participant) => {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + participant.id, 

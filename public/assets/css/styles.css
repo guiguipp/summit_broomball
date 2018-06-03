@@ -246,6 +246,21 @@ img {
     color: red;
     }
 
+.roster_check {
+    text-align: center;
+    padding-left: 2%;
+}
+
+
+.form-group {
+    color: whitesmoke;
+    text-shadow:
+    -0.5px -0.5px 0 black,
+    0.5px -0.5px 0 black,
+    -0.5px 0.5px 0 black,
+    0.5px 0.5px 0 black;
+}
+
 .game_button:first-child { 
     margin-top: 31px;
     }
