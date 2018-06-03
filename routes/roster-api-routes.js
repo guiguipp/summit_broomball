@@ -24,6 +24,7 @@ module.exports = function (app) {
     }).then(function (dbRoster) {
       res.json(dbRoster);
     });
+  });
   app.get("/api/rosters/game/:game_id/players", function(req, res) {
     db.sequelize.query('SELECT DISTINCT shortname,Rosters.id,player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true',
     {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
@@ -42,6 +43,7 @@ module.exports = function (app) {
       .then(function (dbRoster) {
         res.json(dbRoster);
       });
+  });
 
     
   app.put("/api/rosters/:id", function(req, res) {
