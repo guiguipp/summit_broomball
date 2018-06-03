@@ -20,27 +20,25 @@ module.exports = function(app) {
       res.json(dbGame);
       });
     });
+  // showing future games
   app.get("/api/games/upcoming", function(req, res) {
     var date = moment().format("YYYY-MM-DD");
     console.log(date);
     db.Game.findAll({
       where: {game_date: {[Op.gte]: date}}, 
-      // order: sequelize.col('game_date')
       order: [
-        // Will escape title and validate DESC against a list of valid direction parameters
         ['game_date', 'ASC']]
       }).then(function(dbGame) {
         res.json(dbGame);
         });
     });
+  // showing past games
   app.get("/api/games/past", function(req, res) {
     var date = moment().format("YYYY-MM-DD");
     console.log(date);
     db.Game.findAll({
       where: {game_date: {[Op.lte]: date}}, 
-      // order: sequelize.col('game_date')
       order: [
-        // Will escape title and validate DESC against a list of valid direction parameters
       ['game_date', 'ASC']]
     }).then(function(dbGame) {
       res.json(dbGame);
