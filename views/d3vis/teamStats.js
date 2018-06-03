@@ -35,7 +35,7 @@ var team_data = require ("../../routes/stat-api-routes.js")
         .attr("dy", "2.5em")
         .attr("dx", width/2 - margin.left)
         .attr("text-anchor", "start")
-        .text("Player");
+        .text("Players");
   
     g.append("g")
         .attr("class", "axis axis--y")
