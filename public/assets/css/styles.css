@@ -43,15 +43,10 @@ h2 {
 
 p {
     color: black;
-    font-family: 'Boogaloo', cursive;
+    font-family: 'Yellowtail', cursive;
     position: relative;
     bottom: 20px;
-    left: 525px;
-    text-shadow:
-    -0.5px -0.5px 0 whitesmoke,
-    0.5px -0.5px 0 whitesmoke,
-    -0.5px 0.5px 0 whitesmoke,
-    0.5px 0.5px 0 whitesmoke;
+    left: 175px;
 }
 
 .wrapper {
@@ -76,11 +71,6 @@ a, a:hover, a:focus {
     background: #EA8D47;
     color: #fff;
     transition: all 0.3s;
-    text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
 
 }
 
@@ -129,7 +119,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #ACADB2;
+    color: #7386D5;
     background: #fff;
 }
 
@@ -156,7 +146,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halfling';
+    font-family: 'Glyphicons Halflings';
     font-size: 0.6em;
 }
 
@@ -189,37 +179,21 @@ a[aria-expanded="true"]::before {
 img {
     width: 205px;
     /* margin-left: 1175px; */
-    margin-top: 3%;
+    margin-top: 1%;
 }
 
 #button-one {
-    color: black;
     position: relative;
     width: 150px;
     height: 50px;
-    left: 465px;
-    background-color: #FFFFFF;
-    border-color: #000;
-    text-shadow:
-    -0.5px -0.5px 0 #EA8D47,
-    0.5px -0.5px 0 #EA8D47,
-    -0.5px 0.5px 0 #EA8D47,
-    0.5px 0.5px 0 #EA8D47;
+    left: 75px;
 }
 
 #button-two {
-    color: black;
     position: relative;
     width: 150px;
     height: 50px;
-    left: 515px;
-    background-color: #FFFFFF;
-    border-color: #000;
-    text-shadow:
-    -0.5px -0.5px 0 #EA8D47,
-    0.5px -0.5px 0 #EA8D47,
-    -0.5px 0.5px 0 #EA8D47,
-    0.5px 0.5px 0 #EA8D47;
+    left: 175px;
 }
 
 @media (max-width: 768px) {
@@ -230,9 +204,17 @@ img {
         margin-left: 0;
     }
 }
+
+.roster_check {
+    text-align: center;
+    /* padding-left: 2%; */
+    width: 120%;
+    min-width: 200px;
+}
+
 .player_button {
     background-color: #EA8D47;
-    width: 150px;
+    width: 50%;
     margin-top: 10px;
 }
 .player_button:hover {
@@ -249,54 +231,33 @@ img {
     }
 .left {
     right: 3px;
-}
+    }
 .right {
     left: -15px;
-}
+    }
+
 .remove {
     position: relative;
     top: -12px;
     left: -12px;   
-}
+    }
+
 .remove:hover {
     color: red;
-}
-.roster_check {
-    text-align: center;
-    padding-left: 2%;
-}
-
-
-.form-group {
-    color: whitesmoke;
-    text-shadow:
-    -0.5px -0.5px 0 black,
-    0.5px -0.5px 0 black,
-    -0.5px 0.5px 0 black,
-    0.5px 0.5px 0 black;
-}
-
-#playerButton, #contactSubmit {
-    background-color: #ACADB2;
-    border-style: none;
-    text-shadow:
-    -0.5px -0.5px 0 #000,
-    0.5px -0.5px 0 #000,
-    -0.5px 0.5px 0 #000,
-    0.5px 0.5px 0 #000;
-}
+    }
 
 .game_button:first-child { 
     margin-top: 31px;
-}
-
+    }
 .game_button {
     text-align: center;
     width: 150px;
     margin-top: 10px;
     margin-left: 150px;
-}
+    }
 .game_button:hover {
     background-color: #EA8D47;
-
-}
+    }
+.menu_options:hover {
+    background-color: #EA8D47;
+    }
