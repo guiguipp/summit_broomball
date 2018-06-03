@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="../public/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Summit Broomball</title>
 </head>
 
@@ -19,65 +20,78 @@
 
         <!-- Header -->
 
-        <img src="./images/logo.jpg" alt="logo">
-
-        <!-- Sidebar -->
-        <nav id="sidebar" class="active">
-
-            <div id="dismiss">
-                <i class="glyphicon glyphicon-arrow-left"></i>
+        <div class="row"> <!-- Positioning the logo via bootstrap grid properties -->
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                    <img src="./images/logo.jpg" id="site-logo" alt="logo">
             </div>
+            <div class="col"></div>
+        </div>
 
-            <div class="sidebar-header">
-                <h3>Menu</h3>
-            </div>
+<!-- Sidebar -->
+<nav id="sidebar" class="active">
 
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="#">HOME</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
+        <div id="dismiss">
+        <i class="far fa-arrow-alt-circle-left"></i>
+        </div>
 
-                <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="#">PAGE</a>
-                        </li>
-                    </ul>
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+        </div>
 
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <a href="#">About</a>
+            </li>
+
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                <ul>
                     <li>
-                        <a href="#">Portfolio</a>
+                        <a href="#">Add A Player</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#">Draft Page</a>
                     </li>
-            </ul>
+                    <li>
+                        <a href="#">League Page</a>
+                    </li>
+                </ul>
 
-        </nav>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+        </ul>
 
-        <!-- Page Content -->
-        <div id="content">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
-                Menu
-            </button>
+    </nav>
 
-
-            <div class="col-md-4" id="main">
-                <h2>Summit Broomball</h2>
-                <p>Lorem lorem lorem lorem lorem</p>
+    <!-- Page Content -->
+    <div class="row">
+    <div class="col-md-2">
+        
+    </div>
+    <div class="col-md-8" id="content">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+            <i class="far fa-arrow-alt-circle-left"></i>
+            Menu
+        </button>
+        
             </div>
+        </div>
 
-            <div class="col-md-6" id="main2">
+
+                <div class="row">
+                    <div class="col-md-12" id="inner-main">
+                        <h2>League History</h2>
+                        <p class="league-links">Pretend League Link</p>
+                    </div>
+                </div>
 
             </div>
 
@@ -85,23 +99,6 @@
 
         <div class="overlay"></div>
 
-    </div>
-
-    <div class="col-md-1" id="flavicons">
-        <ul class="list-group">
-            <li class="flavicon-icons">
-                <img class="flavicon-images" src="./images/logo.png">
-            </li>
-            <li class="flavicon-icons">
-                <img class="flavicon-images" src="./images/logo.png">
-            </li>
-            <li class="flavicon-icons">
-                <img class="flavicon-images" src="./images/logo.png">
-            </li>
-            <li class="flavicon-icons">
-                <img class="flavicon-images" src="./images/logo.png">
-            </li>
-        </ul>
     </div>
 
     <footer>
@@ -119,9 +116,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="../public/assets/js/navigation.js"></script>
-    <script src="../public/assets/js/app.js"></script>
-    <script src="../public/assets/js/players_db.js"></script>
+    <script src="./assets/js/navigation.js"></script>
+    <!-- <script src="./assets/js/app.js"></script> -->
+    <!-- <script src="./assets/js/players_db.js"></script> -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
 </body>
