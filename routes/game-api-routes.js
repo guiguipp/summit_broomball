@@ -98,4 +98,3 @@ module.exports = function (app) {
         res.json(dbGame);
       });
   });
-}
