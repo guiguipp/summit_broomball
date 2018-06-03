@@ -1,6 +1,6 @@
-var team_data = require ("../../routes/stat-api-routes.js")
-
-  var tip = d3.select(".chart-container")
+d3.json("myData.json", function(data){
+    
+    var tip = d3.select(".chart-container")
       .append("div")
     .attr("class", "tip")
       .style("position", "absolute")
@@ -60,3 +60,7 @@ var team_data = require ("../../routes/stat-api-routes.js")
           //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
           .on("mouseout", function(){return tip.style("visibility", "hidden");});
        });
+
+})
+
+  
