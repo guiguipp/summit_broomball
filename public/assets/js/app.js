@@ -223,8 +223,8 @@ const autoDraft = (arrayOfAvailablePlayers) => {
 // CHECK: CALL THE AUTO DRAFT FUNCTION
 // ******************************************
 // ******************************************
-autoDraft(easyEx)
-// autoDraft(availablePlayers)
+// autoDraft(easyEx)
+autoDraft(availablePlayers)
 
 /* 
 => double check that pick is available, before drafting

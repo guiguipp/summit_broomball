@@ -10,7 +10,6 @@ const Op = Sequelize.Op;
 
 // Requiring our Todo model
 var db = require("../models");
-
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -30,10 +29,9 @@ module.exports = function(app) {
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ['game_date', 'ASC']]
-      
-    }).then(function(dbGame) {
-      res.json(dbGame);
-      });
+      }).then(function(dbGame) {
+        res.json(dbGame);
+        });
     });
   app.get("/api/games/past", function(req, res) {
     var date = moment().format("YYYY-MM-DD");
@@ -43,14 +41,11 @@ module.exports = function(app) {
       // order: sequelize.col('game_date')
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
-        ['game_date', 'ASC']]
-      
+      ['game_date', 'ASC']]
     }).then(function(dbGame) {
       res.json(dbGame);
       });
     });
-
-
 
   app.get("/api/games/:id", function(req, res) {
     let id = parseInt(req.params.id); 
