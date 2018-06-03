@@ -40,7 +40,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="/index">HOME</a>
+                    <a href="#">HOME</a>
                 </li>
                 <li>
                     <a href="#">About</a>
@@ -49,13 +49,13 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul>
                         <li>
-                            <a href="/player">Add A Player</a>
+                            <a href="#">PAGE</a>
                         </li>
                         <li>
-                            <a href="">Draft Page</a>
+                            <a href="#">PAGE</a>
                         </li>
                         <li>
-                            <a href="/league">League Page</a>
+                            <a href="#">PAGE</a>
                         </li>
                     </ul>
                     <li>
@@ -107,12 +107,12 @@
                     </div>
                 </div> <!-- End of main -->
                 <br>
-                <div class="main content_hidden">
-                <!-- <div class="main"> -->
+                <!-- <div class="main content_hidden"> -->
+                <div class="main">
                     <div class="container">
                         <div class="row">
                             <div class="col text-center">
-                                    <button class="btn btn-info navbar-btn menu_options">Reset Teams</button> 
+                                    <button class="btn btn-info navbar-btn menu_options" id="reset">Reset Teams</button> 
                             </div>
                             <div class="col text-center">
                                     <button class="btn btn-info navbar-btn menu_options" id="autodraft">Autodraft</button> 
@@ -267,6 +267,8 @@ $(document).ready(function() {
             console.log(gameDate)
             $("#autodraft").attr("game_id",id)
             $("#autodraft").attr("game_date",gameDate)
+            $("#reset").attr("game_id",id)
+            $("#reset").attr("game_date",gameDate)
             getAvailablePlayers(id,gameDate)   
             })
         };
@@ -321,34 +323,51 @@ $(document).ready(function() {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
-
             $("#js_content").text("")
+
             dataFromAPI.forEach((e) => {
+                let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
+                let playerButton = `<button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button>`
+                let removeButton = `<i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                let rightArrowButton = `<i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                let leftArrowButton = `<i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`    
                 if (e.team) {
                     if (e.team.toLowerCase() === "dark") {
                         let darkPlayersDiv = 
-                        `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                        <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                        <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        `   ${divRosterCheck} 
+                            ${playerButton}
+                            ${removeButton}
+                            ${rightArrowButton}
+                        `
                         $("#dark_draft_col").append(darkPlayersDiv)
                         }
                     else if (e.team.toLowerCase() === "white") {
-                        let whitePlayersDiv = 
-                        `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                        <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                        <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                        <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        let whitePlayersDiv =
+                        `   ${divRosterCheck}  
+                            ${leftArrowButton}
+                            ${playerButton}
+                            ${removeButton}`
                         $("#white_draft_col").append(whitePlayersDiv)
+                        }
+                    else {
+                        let availablePlayerDiv =
+                        `   ${divRosterCheck} 
+                            ${leftArrowButton}
+                            ${playerButton}
+                            ${removeButton}
+                            ${rightArrowButton}
+                        `
+                        $("#available_draft_col").append(availablePlayerDiv)
                         }
                 }
                 else {
                     let availablePlayerDiv = 
-                    `<div class="roster_check" id="${e.id}" availability="${e.availability}">
-                    <i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                    <button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button> 
-                    <i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i> 
-                    <i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                    `   ${divRosterCheck} 
+                        ${leftArrowButton}
+                        ${playerButton}
+                        ${removeButton}
+                        ${rightArrowButton}
+                    `
                     $("#available_draft_col").append(availablePlayerDiv)
                     }
                 })
@@ -356,22 +375,44 @@ $(document).ready(function() {
             $("#js_content").append(gameDay)
             })
         }
+    
     // submenu options
+    ////////////////////////////////////
+    
+    // Assign each available player for that game to "Dark" or "White" team after click 
     $("#autodraft").click(function (){
         let availablePlayers = [];
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
         $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId+ "/players", method: "GET" }).then(function(dataFromAPI) {
-        console.log("Here is the data I receive from the call:\n",dataFromAPI)
-        // apply the autodraft feature to players available for that game
-        $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
-            //this function is executed after function1
-            console.log("Now after then?")
-            getAvailablePlayers(gameId,gameDate)
+            // apply the autodraft feature to players available for that game
+            $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
+                //this function is executed after function1
+                getAvailablePlayers(gameId,gameDate)
+                });
             });
         });
-            });
-        // })
+
+    // Assign each available player for that game to "" team after click     
+    $("#reset").click(function() {
+        console.log("Click recorded")
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date")
+        console.log(this)
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId, method: "GET" }).then(function(dataFromAPI) {
+            console.log(dataFromAPI)
+            function PlayerObj (id,name,team) {
+                this.id = id,
+                this.name = name,
+                this.team = team,
+                updateTeam(this)
+                }
+                dataFromAPI.forEach((e) => {
+                    let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
+                })
+                getAvailablePlayers(gameId,gameDate)
+            })
+        })
 
     showTeams()
     seeUpcomingGames()
@@ -411,7 +452,6 @@ $(document).ready(function() {
                 mixedRosters[i].team = team2Name;
                 }
             }
-            updateTeam(this)
             function PlayerObj (name,id,team) {
                 this.name = name,
                 this.id = id,
@@ -425,8 +465,8 @@ $(document).ready(function() {
         filterTeams(mixedRosters);
         }
 
-// function to filter array of player objects into teams
-// (each player object has been assigned a team name)
+    // function to filter array of player objects into teams
+    // (each player object has been assigned a team name)
     const filterTeams = (arrayOfPlayerObjects) => {
         let rosterTeam2 = [];
         let rosterTeam1 = [];
@@ -457,8 +497,8 @@ $(document).ready(function() {
         }
     }
 
-// helper function to update a player team in the db with parameters stored in player object
-// We will pass it the player's information in the constructor 
+    // helper function to update a player team in the db with parameters stored in player object
+    // We will pass it the player's information in the constructor 
     const updateTeam = (participant) => {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + participant.id, 
