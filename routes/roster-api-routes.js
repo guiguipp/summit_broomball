@@ -15,22 +15,26 @@ module.exports = function(app) {
       res.json(dbRoster);
       });  
     });
+  // find all available players for a given game. Sorted alphabetically
   app.get("/api/rosters/game/:game_id", function(req, res) {
     db.Roster.findAll({
       where: 
-        {GameId: req.params.game_id, availability: true}
+        {GameId: req.params.game_id, availability: true}, 
+        order: [
+          ['player', 'ASC']]
     }).then(function(dbRoster) {
       res.json(dbRoster);
       });  
     });
+  // find level info from "players" on a join of all available players for a given game. Sorted alphabetically
   app.get("/api/rosters/game/:game_id/players", function(req, res) {
-    db.sequelize.query('SELECT DISTINCT shortname,Rosters.id,player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true',
+    db.sequelize.query('SELECT DISTINCT shortname,Rosters.id,player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true ORDER BY shortname ASC',
     {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
       }).then(function(dbRoster) {
         res.json(dbRoster);
         });
       });
-
+  // create a roster for a game
   app.post("/api/rosters", function(req, res) {
     db.Roster.create({
       player: req.body.player, 
@@ -42,7 +46,7 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
-    
+  // edit player for a game
   app.put("/api/rosters/:id", function(req, res) {
     db.Roster.update({
       player: req.body.player, 
