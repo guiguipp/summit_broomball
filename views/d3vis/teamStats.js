@@ -35,7 +35,7 @@ var team_data = require ("../../routes/stat-api-routes.js")
         .attr("dy", "2.5em")
         .attr("dx", width/2 - margin.left)
         .attr("text-anchor", "start")
-        .text("Grad Year");
+        .text("Player");
   
     g.append("g")
         .attr("class", "axis axis--y")
@@ -45,7 +45,7 @@ var team_data = require ("../../routes/stat-api-routes.js")
         .attr("y", 6)
         .attr("dy", "0.71em")
         .attr("text-anchor", "end")
-        .text("Student Count");
+        .text("Pooints Scored");
    
   
     g.selectAll(".bar")
