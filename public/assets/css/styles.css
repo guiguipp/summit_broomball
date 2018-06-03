@@ -220,6 +220,10 @@ img {
 .player_button:hover {
     background-color: #EA8D47;
 }
+.unavailable {
+    background-color: #ACADB2;
+    margin-left: -15px;
+    }
 .arrows {
     font-size: 30px;
     position: relative;

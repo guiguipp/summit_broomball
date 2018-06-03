@@ -118,7 +118,7 @@
                                     <button class="btn btn-info navbar-btn menu_options" id="autodraft">Autodraft</button> 
                             </div>
                             <div class="col text-center">
-                                    <button class="btn btn-info navbar-btn menu_options">Set picks</button> 
+                                    <button class="btn btn-info navbar-btn menu_options" id="unavailable">Show unavailable</button> 
                             </div>
                         </div>
 
@@ -258,6 +258,8 @@ $(document).ready(function() {
             $("#autodraft").attr("game_date",gameDate)
             $("#reset").attr("game_id",id)
             $("#reset").attr("game_date",gameDate)
+            $("#unavailable").attr("game_id",id)
+            $("#unavailable").attr("game_date",gameDate)
             getAvailablePlayers(id,gameDate)   
             })
         };
@@ -406,6 +408,34 @@ $(document).ready(function() {
                 getAvailablePlayers(gameId,gameDate)
             })
         })
+    // show unavailable players
+    $("#unavailable").click(function() {
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date")
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/unavailable", method: "GET" }).then(function(dataFromAPI) {
+            dataFromAPI.forEach((e) => {
+                let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
+                let playerButton = `<button class="btn btn-info navbar-btn unavailable player_button" id="${e.id}" player="${e.player}" game_id="${e.GameId}" game_date=${gameDate}>${e.player}</button>`
+                let availablePlayerDiv = `${divRosterCheck} ${playerButton}`
+                $("#available_draft_col").append(availablePlayerDiv)
+                });
+            })
+        })
+    // make unavailable member available again
+    $(document).on("click", ".unavailable", function (){
+        let playerId = $(this).attr("id");
+        let playerName = $(this).attr("player");
+        let gameId = $(this).attr("game_id")
+        let gameDate = $(this).attr("game_date")
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + playerId, 
+            method: "PUT",
+            data: jQuery.param({availability: true, player: playerName}) 
+            }).then(function(dataFromAPI) {
+                getAvailablePlayers(gameId,gameDate)   
+                });
+            });
+    
 
     showTeams()
     seeUpcomingGames()
