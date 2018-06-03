@@ -264,6 +264,21 @@ img {
     -0.5px 0.5px 0 black,
     0.5px 0.5px 0 black;
 }
+
+
+#playerButton, #contactSubmit {
+    background-color: #ACADB2;
+    border-style: none;
+    text-shadow:
+    -0.5px -0.5px 0 #000,
+    0.5px -0.5px 0 #000,
+    -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000;
+}
+
+.league-links {
+    background-color: white;
+
 /* 
 .game_button:first-child { 
     margin-top: 31px;
@@ -287,4 +302,5 @@ img {
     }
 #game_text {
     margin-bottom: 38px;
+
 }
