@@ -91,7 +91,7 @@
                             </div>
                             <form method="post" class="col">
                                 <div class="form-group"> <!-- Date input -->
-                                    <label class="control-label" for="date">Date</label>
+                                    <label class="control-label" id="date_text" for="date">Date</label>
                                     <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
                                 </div>
                                 <div class="form-group"> <!-- Submit button -->
@@ -100,7 +100,7 @@
                             </form>
                         </div>
                         <div id="existing_game" class="col">
-                            <p><br>See upcoming games</p>
+                            <p id="game_text"><br>See upcoming games</p>
                             <div id="game_list">
                             </div>
                         </div>
@@ -190,7 +190,7 @@ $(document).ready(function() {
         autoclose: true,
         };
     date_input.datepicker(options);
-    // creating the game on "Submit" even via iife
+    // creating the game on "Submit" event
     $("#schedule_game").submit(function(e) {
         let date = $('#date').val()
         // sending the date of the form to the API via an iife
@@ -207,39 +207,32 @@ $(document).ready(function() {
             })
         // preventing the page to refresh
         e.preventDefault();
-        // empty the form
+        // emptying the form
         $('#date').val("")
-        // should also reload the list
         });
     
+    // adding all members to game created  
     const addMembersToDraft = (gameId) => {
         $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
         .then(function(dataFromAPI) {
-            let players = [];
-            // will see if we need this array in the constructor
             function PlayerObj (game,name) {
                 this.game = game,
                 this.name = name,
-                players.push(this)
                 fromPlayerToRoster(this)
                 }
                 dataFromAPI.forEach((e) => {                
                     let newPlayerObj = new PlayerObj (gameId,e.shortname)
                     });
-                console.log("this is the array of players: ", players)        
-                // need to show the array of players in the HTML (right now, it's JSON data, so that won't work)
-                // or show database data instead?
-                // could add logic to go to the game page and show all available players
                 $("#js_content").append(players)
         
                 })
             }
-    // helper function to push players to the roster table when a game is created   
+    // helper function to push players to the roster table when a game is created (set availability to true)   
     const fromPlayerToRoster = (player) => {
         $.ajax({ 
                 url: currentURL + "/api/rosters", 
                 method: "POST",
-                data: jQuery.param({GameId: player.game,player:player.name, saved: false, availability: true}) 
+                data: jQuery.param({GameId: player.game,player:player.name, editable: false, availability: true}) 
             })
         }
     // shows the list of future games
@@ -248,9 +241,9 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameDiv = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button></div>\n`
-                // console.log(line)
-                // Does this allow the games to be shown by date?
+                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
+                let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
+                let gameDiv = `${gameButton} ${removeButton}`
                 $("#game_list").append(gameDiv);
                 });
             })
@@ -260,11 +253,7 @@ $(document).ready(function() {
         $(document).on("click", ".future_game", function (){
             $(".content_hidden").show();
             let id = $(this).attr("id");
-            // console.log(this)
             let gameDate = $(this).attr("game_date")
-            // console.log(id);
-            console.log(id)
-            console.log(gameDate)
             $("#autodraft").attr("game_id",id)
             $("#autodraft").attr("game_date",gameDate)
             $("#reset").attr("game_id",id)
@@ -273,7 +262,7 @@ $(document).ready(function() {
             })
         };
     // sets the player as unavailable after a click on the "remove" icon 
-    $(document).on("click", ".remove", function (){
+    $(document).on("click", ".remove_player", function (){
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
         let playerName = $(this).attr("player");
@@ -287,6 +276,24 @@ $(document).ready(function() {
                 getAvailablePlayers(gameId,gameDate)   
                 });
             });
+    // deletes a game after a click on the "remove" icon
+    $(document).on("click", ".remove_game", function (){
+        let gameId = $(this).attr("id");
+        let gameDate = $(this).attr("game_date")
+        let result = confirm("Are you sure you want to delete this game? \nAll associated information will be lost");
+        if (result) {
+            $.ajax({ 
+                url: currentURL + "/api/games/" + gameId, 
+                method: "DELETE"
+                }).then(function(dataFromAPI) {
+                    console.log("Game Deleted")
+                    // reloads the game list
+                    seeUpcomingGames()
+                    // re-hides the section to not show roster for suppressed game
+                    $(".content_hidden").hide();            
+                    });
+            }
+        });
     // drafts the player to the "dark" team after a click on the left arrow
     $(document).on("click", ".left", function (){
         let playerId = $(this).attr("id");
@@ -328,9 +335,10 @@ $(document).ready(function() {
             dataFromAPI.forEach((e) => {
                 let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
                 let playerButton = `<button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button>`
-                let removeButton = `<i class="fa fa-times-circle remove" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                let removeButton = `<i class="fa fa-times-circle remove remove_player" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                 let rightArrowButton = `<i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                 let leftArrowButton = `<i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`    
+                let defaultSet = `${divRosterCheck} ${leftArrowButton} ${playerButton} ${removeButton} ${rightArrowButton}`
                 if (e.team) {
                     if (e.team.toLowerCase() === "dark") {
                         let darkPlayersDiv = 
@@ -350,24 +358,12 @@ $(document).ready(function() {
                         $("#white_draft_col").append(whitePlayersDiv)
                         }
                     else {
-                        let availablePlayerDiv =
-                        `   ${divRosterCheck} 
-                            ${leftArrowButton}
-                            ${playerButton}
-                            ${removeButton}
-                            ${rightArrowButton}
-                        `
+                        let availablePlayerDiv = defaultSet
                         $("#available_draft_col").append(availablePlayerDiv)
                         }
                 }
                 else {
-                    let availablePlayerDiv = 
-                    `   ${divRosterCheck} 
-                        ${leftArrowButton}
-                        ${playerButton}
-                        ${removeButton}
-                        ${rightArrowButton}
-                    `
+                    let availablePlayerDiv = defaultSet
                     $("#available_draft_col").append(availablePlayerDiv)
                     }
                 })
@@ -395,12 +391,9 @@ $(document).ready(function() {
 
     // Assign each available player for that game to "" team after click     
     $("#reset").click(function() {
-        console.log("Click recorded")
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
-        console.log(this)
         $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId, method: "GET" }).then(function(dataFromAPI) {
-            console.log(dataFromAPI)
             function PlayerObj (id,name,team) {
                 this.id = id,
                 this.name = name,
@@ -420,7 +413,7 @@ $(document).ready(function() {
     // Team sorting functions
     ////////////////////////////////////
 
-    // Autodraft
+    // Autodraft feature: separates all players by level, randomly assigns them to dark or white team
     const autoDraft = (arrayOfAvailablePlayers) => {
         let mixedRosters = [];
         // recreating our array by assigning each player to its level
@@ -445,12 +438,8 @@ $(document).ready(function() {
             }
         for (i = 0; i < mixedRosters.length; i++) {
             // assigning different team to every other player
-            if (i%2 === 0) {
-                mixedRosters[i].team = team1Name;
-                }
-            else {
-                mixedRosters[i].team = team2Name;
-                }
+            if (i%2 === 0) {mixedRosters[i].team = team1Name;}
+            else {mixedRosters[i].team = team2Name}
             }
             function PlayerObj (name,id,team) {
                 this.name = name,
@@ -486,18 +475,18 @@ $(document).ready(function() {
             console.log(`${e.shortname} (${e.level})`);
             })
         }
-    // utility function to randomize an array (pushes/deletes to another array recursively, until it's empty) 
+    // helper function to randomize an array (pushes/deletes to another array recursively, until it's empty) 
     const randomize = (inputArray, outputArray) => {
-    if(inputArray.length > 0) {
-        let randomPlayer = inputArray[Math.floor(Math.random()*inputArray.length)];
-        let index = inputArray.indexOf(randomPlayer);
-        outputArray.push(randomPlayer);
-        inputArray.splice(index,1)
-        randomize(inputArray, outputArray);
+        if(inputArray.length > 0) {
+            let randomPlayer = inputArray[Math.floor(Math.random()*inputArray.length)];
+            let index = inputArray.indexOf(randomPlayer);
+            outputArray.push(randomPlayer);
+            inputArray.splice(index,1)
+            randomize(inputArray, outputArray);
+            }
         }
-    }
 
-    // helper function to update a player team in the db with parameters stored in player object
+    // helper function to update a player's team in the db with parameters stored in player object
     // We will pass it the player's information in the constructor 
     const updateTeam = (participant) => {
         $.ajax({ 
@@ -505,7 +494,6 @@ $(document).ready(function() {
             method: "PUT",
             data: jQuery.param({team: participant.team, player: participant.name}) 
             }).then(function(dataFromAPI) {
-                // console.log(dataFromAPI)   
                 });
         }
 

@@ -260,10 +260,10 @@ img {
     -0.5px 0.5px 0 black,
     0.5px 0.5px 0 black;
 }
-
+/* 
 .game_button:first-child { 
     margin-top: 31px;
-    }
+    } */
 .game_button {
     text-align: center;
     width: 150px;
@@ -276,3 +276,11 @@ img {
 .menu_options:hover {
     background-color: #EA8D47;
     }
+#date_text {
+    color: black;
+    text-shadow: none;
+    font-variant: small-caps;
+    }
+#game_text {
+    margin-bottom: 38px;
+}
