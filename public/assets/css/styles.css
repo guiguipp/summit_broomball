@@ -230,9 +230,17 @@ img {
         margin-left: 0;
     }
 }
+
+.roster_check {
+    text-align: center;
+    /* padding-left: 2%; */
+    width: 120%;
+    min-width: 200px;
+}
+
 .player_button {
     background-color: #EA8D47;
-    width: 150px;
+    width: 50%;
     margin-top: 10px;
 }
 .player_button:hover {
@@ -249,17 +257,20 @@ img {
     }
 .left {
     right: 3px;
-}
+    }
 .right {
     left: -15px;
-}
+    }
+
 .remove {
     position: relative;
     top: -12px;
     left: -12px;   
-}
+    }
+
 .remove:hover {
     color: red;
+    }
 }
 .roster_check {
     text-align: center;
@@ -285,7 +296,6 @@ img {
     -0.5px 0.5px 0 #000,
     0.5px 0.5px 0 #000;
 }
-
 .game_button:first-child { 
     margin-top: 31px;
 }
@@ -295,8 +305,11 @@ img {
     width: 150px;
     margin-top: 10px;
     margin-left: 150px;
-}
+    }
 .game_button:hover {
     background-color: #EA8D47;
-
+    }
+.menu_options:hover {
+    background-color: #EA8D47;
+    }
 }
