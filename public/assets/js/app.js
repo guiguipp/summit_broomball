@@ -433,9 +433,13 @@ $(document).ready(function() {
     // showing the players for the selected/played game
     $(document).on("click",".game_results", function (){
         let gameId = $(this).attr("game_id");
-        // $("#result_table").text("");
+        showGameStats(gameId)
+        })
+
+    function showGameStats(idOfGame) {
+        $("#result_table").text("");
         console.log("Result Table Emptied")
-        $.ajax({ url: currentURL + "/api/rosters/game/" + gameId + "/availability/1/goals/DESC", method: "GET" }).then(function(dataFromAPI) {
+        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/goals/DESC", method: "GET" }).then(function(dataFromAPI) {
             console.log(dataFromAPI)
             $("#result_table").append(`
             <div id='table_content'>
@@ -454,19 +458,21 @@ $(document).ready(function() {
 
             for(i=0; i < dataFromAPI.length; i++){
                 let d = dataFromAPI[i];
-                let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" player_id="${d.id}" player="${d.player}" game_id="${gameId}" team="${d.team}"></i>`
-                let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" player_id="${d.id}" player="${d.player}" game_id="${gameId}" team="${d.team}"></i>`
-                let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" player_id="${d.id}" player="${d.player}" game_id="${gameId}" team="${d.team}"></i>`
-                let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" player_id="${d.id}" player="${d.player}" game_id="${gameId}" team="${d.team}"></i>`
-    
+                let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
+                let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
+                let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
+                let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
+                if (d.goals == "null") {d.goals.replace("null",0)}
+                
+
                 let row = $('<tr></tr>').addClass('result_row').html(
                 `
                 <table>
                     <tbody>
                         <tr> 
-                            <td class="table_data name_in_table">${dataFromAPI[i].player}</td> 
-                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${dataFromAPI[i].goals}</span> ${minusGoalButton}</h4></td> 
-                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data">${dataFromAPI[i].assists}</span> ${minusAssistButton}</h4></td>
+                            <td class="table_data name_in_table">${d.player}</td> 
+                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton}</h4></td> 
+                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data">${d.assists}</span> ${minusAssistButton}</h4></td>
                         </tr>
                     </tbody>
                 </table>
@@ -475,18 +481,100 @@ $(document).ready(function() {
                 }
 
             $('#table_content').append(table);
-            });
-            
-        });
+            });            
+        };
     $(document).on("click",".stat_button",function(){
         let gameId = $(this).attr("game_id");
         let playerId = $(this).attr("player_id");
         let playerName  = $(this).attr("player");
         let playerTeam = $(this).attr("team");
-        var buttonClass = $(this).attr("class");
-        console.log(typeof buttonClass)
-        var actionClass = buttonClass.replace("fa fa-minus-circle stat_button","");
-        console.log(" gameId: ", gameId, " playerId: ", playerId, " playerName: ", playerName, " playerTeam: ",playerTeam,"\nbuttonClass: ",buttonClass, "\nactionClass: ",actionClass)
+        let buttonClass = $(this).attr("class");
+        let currentValue = parseInt($(this).attr("current_tot"))
+        
+        buttonClass = buttonClass.replace("fa fa-minus-circle stat_button","").replace("fa fa-plus-circle stat_button","");
+        console.log("currentValue: ", currentValue)
+        console.log(typeof currentValue)
+        let newValue;
+        
+        console.log("newValue: ", newValue)
+
+        switch(buttonClass) {
+            case buttonClass = " add_goal":
+                newValue = currentValue + 1;
+                /*
+                doSomething().then(function(result) {
+                    return doSomethingElse(result);
+                })
+                  */
+                /*
+                updateGoal(playerId,playerName,newValue).then(function(){
+                    return showGameStats(gameId);
+                    })
+                .then(function(newResult) {
+                    return showGameStats(gameId);
+                    })    
+                */
+                updateGoal(playerId,playerName,newValue,showGameStats(gameId));
+                
+                break;
+                /*
+                $.when($.ajax(updateGoal(playerId,playerName,newValue))).then(function() {
+                    showGameStats(gameId)
+                    });*/
+            case buttonClass = " add_assist":
+                newValue = currentValue + 1;
+                updateAssist(playerId,playerName,newValue,showGameStats(gameId));
+                /*
+                $.when($.ajax(updateAssist(playerId,playerName,newValue))).then(function() {
+                    showGameStats(gameId)
+                    });
+                    */
+                break;
+            case buttonClass = " substract_goal":    
+                newValue = currentValue - 1;
+                updateGoal(playerId,playerName,newValue,showGameStats(gameId));    
+                /*
+                $.when($.ajax(updateGoal(playerId,playerName,newValue))).then(function() {
+                    showGameStats(gameId)
+                    });
+                    */
+                break;
+            case buttonClass = " substract_assist":
+                newValue = currentValue - 1;
+                updateAssist(playerId,playerName,newValue,showGameStats(gameId));
+
+                /*
+                $.when($.ajax(updateAssist(playerId,playerName,newValue))).then(function() {
+                    showGameStats(gameId)
+                    });
+                    */
+                break;
+            }
         });
+    // enter a goal
+    function updateGoal(idOfPlayer, playerName, newGoalTotal) {
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + idOfPlayer, 
+            method: "PUT",
+            data: jQuery.param({id: idOfPlayer, player: playerName, goals: newGoalTotal}) 
+            }).then(function(dataFromAPI) {
+                console.log("dataFromAPI :", dataFromAPI)
+                })
+            }
+    function updateAssist(idOfPlayer, playerName, newAssistTotal) {
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + idOfPlayer, 
+            method: "PUT",
+            data: jQuery.param({id: idOfPlayer, player: playerName, assists: newAssistTotal}) 
+            }).then(function(dataFromAPI) {
+                console.log(dataFromAPI)
+                })
+            }
+
+
+
+    
+    
+
 
 }); //end of JQuery (document).ready
