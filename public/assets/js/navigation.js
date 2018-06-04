@@ -23,18 +23,5 @@ $(document).ready(function() {
         $(".overlay").fadeOut();
     })
 
-    $(".league-links").on("click", function() {
-        
-    })
-
-
-
-
-
-
-
-
-
-
 
 });

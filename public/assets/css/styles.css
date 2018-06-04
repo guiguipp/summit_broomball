@@ -92,7 +92,7 @@ a, a:hover, a:focus {
     width: 35px;
     height: 35px;
     position: absolute;
-    /* top right corner of siebar */
+    /* top right corner of sidebar */
     top: 10px;
     right: 10px;
 }
@@ -119,7 +119,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #EA8D47;
     background: #fff;
 }
 
@@ -146,7 +146,6 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halflings';
     font-size: 0.6em;
 }
 
@@ -283,85 +282,19 @@ img {
     0.5px 0.5px 0 #000;
 }
 
-.league-links {
-    background-color: white;
-    }
-/* 
-.game_button:first-child { 
-    margin-top: 31px;
-    } */
-.game_button {
-    text-align: center;
-    width: 150px;
-    margin-top: 10px;
-    margin-left: 150px;
-    }
-.game_button:hover {
-    background-color: #EA8D47;
-    }
-.menu_options:hover {
-    background-color: #EA8D47;
-    }
-#date_text {
-    color: black;
-    text-shadow: none;
-    font-variant: small-caps;
-    }
-#game_text {
-    margin-bottom: 38px;
-}
-
-/* table formatting */
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    padding: 8px;
-}
-th {
-	text-align: center;
-}
-td {
-  text-align: left;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-thead > th {
-    font-variant: small-caps;
-    font-weight: bold;
-}
-.table_data {
-    width: 25%;
-}
-.stats {
-    text-align: center;
-}
-.stat_button {
-    margin: 0,5px,0,5px;
-    font-size: 150%;
-    color: #EA8D47;
-    }
-.stat_button:hover {
-    color: #DE733A;
-} 
-tr {
-    font-size: 100%;
-}
-.raw_data {
-    font-size: 95%;
-    margin: 5px;
-    padding: 10px;
+#recap-button {
+    position: relative;
+    font-size: 20px;
+    left: 45%;
+    margin-top: 15px;
+    bottom: 20px;
+    background-color: #ACADB2;
     border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    background-color: white;
+    text-shadow: -0.5px -0.5px 0 #EA8D47, 0.5px -0.5px 0 #EA8D47, -0.5px 0.5px 0 #EA8D47, 0.5px 0.5px 0 #EA8D47;
 }
-.name_in_table {
-    font-size: 150%;
-    font-variant: small-caps;
-    font-weight: bold;
+
+.game-text {
+    font-size: 24px;
+    position: relative;
+    left: 40%;
 }
