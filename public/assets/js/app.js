@@ -1,11 +1,17 @@
 $(document).ready(function() {
+    ////////////////////////////////////////
+    /////// Draft specific javascript //////
+    ////////////////////////////////////////
+    
+    
     $(".content_hidden").hide();
     const currentURL = window.location.origin;
     const team1Name = "dark";
     const team2Name = "white";
 
     console.log("ready to grind human meat...")
-    
+
+
     // creating the game on "Submit" event
     $("#schedule_game").submit(function(e) {
         let date = $('#date').val()
@@ -220,8 +226,10 @@ $(document).ready(function() {
             })
         }
     
-    // submenu options
-    ////////////////////////////////////
+    ////////////////////////////////////////
+    //////// draft submenu options /////////
+    ////////////////////////////////////////    
+    
     
     // Assign each available player for that game to "Dark" or "White" team after click 
     $("#autodraft").click(function (){
@@ -439,7 +447,7 @@ $(document).ready(function() {
     function showGameStats(idOfGame) {
         $("#result_table").text("");
         console.log("Result Table Emptied")
-        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/goals/DESC", method: "GET" }).then(function(dataFromAPI) {
+        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
             console.log(dataFromAPI)
             $("#result_table").append(`
             <div id='table_content'>
@@ -492,85 +500,55 @@ $(document).ready(function() {
         let currentValue = parseInt($(this).attr("current_tot"))
         
         buttonClass = buttonClass.replace("fa fa-minus-circle stat_button","").replace("fa fa-plus-circle stat_button","");
-        console.log("currentValue: ", currentValue)
-        console.log(typeof currentValue)
         let newValue;
         
-        console.log("newValue: ", newValue)
-
         switch(buttonClass) {
             case buttonClass = " add_goal":
+                console.log("Case add_goal")
                 newValue = currentValue + 1;
-                /*
-                doSomething().then(function(result) {
-                    return doSomethingElse(result);
-                })
-                  */
-                /*
-                updateGoal(playerId,playerName,newValue).then(function(){
-                    return showGameStats(gameId);
-                    })
-                .then(function(newResult) {
-                    return showGameStats(gameId);
-                    })    
-                */
-                updateGoal(playerId,playerName,newValue,showGameStats(gameId));
+                updateGoal(playerId,newValue,showGameStats,gameId);
+                break;
                 
-                break;
-                /*
-                $.when($.ajax(updateGoal(playerId,playerName,newValue))).then(function() {
-                    showGameStats(gameId)
-                    });*/
             case buttonClass = " add_assist":
+                console.log("Case add_assist")
                 newValue = currentValue + 1;
-                updateAssist(playerId,playerName,newValue,showGameStats(gameId));
-                /*
-                $.when($.ajax(updateAssist(playerId,playerName,newValue))).then(function() {
-                    showGameStats(gameId)
-                    });
-                    */
+                updateAssist(playerId,playerName,newValue,showGameStats,gameId);
                 break;
-            case buttonClass = " substract_goal":    
-                newValue = currentValue - 1;
-                updateGoal(playerId,playerName,newValue,showGameStats(gameId));    
-                /*
-                $.when($.ajax(updateGoal(playerId,playerName,newValue))).then(function() {
-                    showGameStats(gameId)
-                    });
-                    */
-                break;
-            case buttonClass = " substract_assist":
-                newValue = currentValue - 1;
-                updateAssist(playerId,playerName,newValue,showGameStats(gameId));
 
-                /*
-                $.when($.ajax(updateAssist(playerId,playerName,newValue))).then(function() {
-                    showGameStats(gameId)
-                    });
-                    */
+            case buttonClass = " substract_goal":    
+                console.log("Case substract_goal")
+                newValue = currentValue - 1;
+                updateGoal(playerId,newValue,showGameStats,gameId);    
+                break;
+
+            case buttonClass = " substract_assist":
+                console.log("Case substract_assist")
+                newValue = currentValue - 1;
+                updateAssist(playerId,playerName,newValue,showGameStats,gameId);
                 break;
             }
         });
     // enter a goal
-    function updateGoal(idOfPlayer, playerName, newGoalTotal,cb) {
+    function updateGoal(idOfPlayer, newGoalTotal, cb,gameId) {
         $.ajax({ 
-            url: currentURL + "/api/rosters/" + idOfPlayer, 
+            url: currentURL + "/api/rosters/" + idOfPlayer + "/goals", 
             method: "PUT",
-            data: jQuery.param({id: idOfPlayer, player: playerName, goals: newGoalTotal}) 
+            data: jQuery.param({goals: newGoalTotal}) 
             }).then(function(dataFromAPI) {
-                console.log("dataFromAPI :", dataFromAPI)
-                if (dataFromAPI[1] = 1) {
-                    cb
+                if (dataFromAPI[1] === 1) {
+                    cb(gameId)
                     }
                 })
             }
-    function updateAssist(idOfPlayer, playerName, newAssistTotal) {
+    function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId) {
         $.ajax({ 
-            url: currentURL + "/api/rosters/" + idOfPlayer, 
+            url: currentURL + "/api/rosters/" + idOfPlayer + "/assists", 
             method: "PUT",
-            data: jQuery.param({id: idOfPlayer, player: playerName, assists: newAssistTotal}) 
+            data: jQuery.param({assists: newAssistTotal}) 
             }).then(function(dataFromAPI) {
-                console.log(dataFromAPI)
+                if (dataFromAPI[1] === 1) {
+                    cb(gameId)
+                    }
                 })
             }
 
