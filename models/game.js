@@ -19,8 +19,17 @@ module.exports = function(sequelize, DataTypes) {
         summary: {
             type: DataTypes.TEXT
             },
+        pick1set: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+            },
+        pick2set: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+            },
         editable: {
             type: DataTypes.BOOLEAN,
+            defaultValue: true
             },
         author: {
             type: DataTypes.STRING

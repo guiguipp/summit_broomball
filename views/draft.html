@@ -100,10 +100,19 @@
                             </form>
                         </div>
                         <div id="existing_game" class="col">
-                            <p id="game_text"><br>See upcoming games</p>
+                            <p id="game_text"><br>Upcoming games</p>
                             <div id="game_list">
                             </div>
                         </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center"> <!-- Submit button -->
+                                <button class="btn btn-primary" name="submit" type="submit" id="games_to_show" which-list="past">Past Games</button>
+                            </div>
+    
+                        </div>
+
                     </div>
                 </div> <!-- End of main -->
                 <br>
@@ -234,7 +243,29 @@ $(document).ready(function() {
         // emptying the form
         $('#date').val("")
         });
-    
+    // alternating between show future and past games
+    function toggleGames(){    
+        $("#games_to_show").click(function (){
+            let gamesDate = $(this).attr("which-list");
+            console.log(gamesDate)
+            if (gamesDate === "past") {
+                $("#games_to_show").attr("which-list","future")
+                $("#games_to_show").html('Upcoming Games');
+                $("#existing_game").html("<p id='game_text'><br>Past games</p><div id='game_list'></div>")
+                seePastGames()
+                }
+            else {
+                $("#games_to_show").attr("which-list","past")
+                $("#games_to_show").html('Past Games');
+                $("#existing_game").html("<p id='game_text'><br>Upcoming games</p><div id='game_list'></div>")
+                seeUpcomingGames()
+                }
+            });
+        }
+
+
+
+
     // adding all members to game created  
     const addPlayersToDraft = (gameId,status) => {
         $.ajax({ url: currentURL + "/api/players/" + status, method: "GET" })
@@ -267,6 +298,19 @@ $(document).ready(function() {
                 let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
                 let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton} ${removeButton}`
+                $("#game_list").append(gameDiv);
+                });
+            })
+        }
+    // shows the list of future games
+    function seePastGames() {
+        // emptying the div so that it does not keep appending when the data is refreshed
+        $("#game_list").text("");
+        $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
+            dataFromAPI.forEach((e) => {
+                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
+                // let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
+                let gameDiv = `${gameButton}`//`${gameButton} ${removeButton}` // not sure we want a remove button for past games
                 $("#game_list").append(gameDiv);
                 });
             })
@@ -497,6 +541,7 @@ $(document).ready(function() {
         });
     showTeams()
     seeUpcomingGames()
+    toggleGames()
 
     // Team sorting functions
     ////////////////////////////////////

@@ -63,8 +63,8 @@ INSERT INTO Players (shortname, full_name, player_level, preferred_position, pla
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Sheila', 'Sheila Cheng', 'B +', 'Forward', 'Member', 'sheilacheng6@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Todd', 'Todd Swanson', 'B +', 'Forward', 'Member', 'toddswanson88@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Tony', 'Tony Ryan', 'B', 'Forward', 'Member', 'tpdpt@aol.com', 20180501, 20180528); 
-INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Ben', 'Ben MacLean', 'Goalie', 'Goalie', 'Member', 'benjamin.maclean23@gmail.com', 20180501, 20180528); 
-INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Moore', 'Bill Moore', 'Goalie', 'Goalie', 'Member', 'samlexi33@gmail.com', 20180501, 20180528); 
+INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Ben (G)', 'Ben MacLean', 'Goalie', 'Goalie', 'Member', 'benjamin.maclean23@gmail.com', 20180501, 20180528); 
+INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Moore (G)', 'Bill Moore', 'Goalie', 'Goalie', 'Member', 'samlexi33@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Jason', 'Jason Forde', 'C -', 'Defense', 'Member', 'birdisthewordmn@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Sui', 'Matthew Johnson', 'C -', 'Defense', 'Member', 'mattsui.gk@gmail.com', 20180501, 20180528); 
 INSERT INTO Players (shortname, full_name, player_level, preferred_position, player_status, email, createdAt, updatedAt) VALUES ('Jamie', 'Jamie McBride', 'C', 'Forward', 'Member', 'jamiemcbride71@gmail.com', 20180501, 20180528); 
@@ -112,8 +112,8 @@ INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team,
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Sheila', 1, 0, 2, 1, 'white', false, 20180525, 20180528);
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Todd', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Tony', 2, 0, 4, 1, 'white', false, 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Ben', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
-INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Moore', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Ben (G)', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
+INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Moore (G)', 0, 0, 0, 1, 'dark', false, 20180525, 20180528);
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Jason', 0, 0, 0, 0, 'Unavailable', false, 20180525, 20180528);
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Sui', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
 INSERT INTO Rosters (GameId, player, goals, assists, points, availability, team, editable, createdAt, updatedAt) VALUES (1, 'Jamie', 0, 0, 0, 1, 'white', false, 20180525, 20180528);
