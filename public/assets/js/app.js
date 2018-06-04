@@ -259,7 +259,7 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
         console.log("Here it is!")
-        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId + "/" + "availability/0", method: "GET" }).then(function(dataFromAPI) {
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId + "/" + "availability/0/player/ASC", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
                 let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
                 let playerButton = `<button class="btn btn-info navbar-btn unavailable player_button" id="${e.id}" player="${e.player}" game_id="${e.GameId}" game_date=${gameDate}>${e.player}</button>`
@@ -552,13 +552,16 @@ $(document).ready(function() {
             }
         });
     // enter a goal
-    function updateGoal(idOfPlayer, playerName, newGoalTotal) {
+    function updateGoal(idOfPlayer, playerName, newGoalTotal,cb) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer, 
             method: "PUT",
             data: jQuery.param({id: idOfPlayer, player: playerName, goals: newGoalTotal}) 
             }).then(function(dataFromAPI) {
                 console.log("dataFromAPI :", dataFromAPI)
+                if (dataFromAPI[1] = 1) {
+                    cb
+                    }
                 })
             }
     function updateAssist(idOfPlayer, playerName, newAssistTotal) {
