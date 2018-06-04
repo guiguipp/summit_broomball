@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Boogaloo|Yellowtail" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
@@ -15,142 +14,155 @@
 </head>
 
 <body>
-
     <div class="wrapper">
 
         <!-- Pop-up Modal-->
 
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                View Recap
-              </button>
+            View Recap
+        </button>
 
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
+                      
                         <section class="chart-container">
                             <svg width="460" height="320"></svg>
                           </section>
+
+
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-                  </div>
                 </div>
-              </div>
-
+            </div>
+        </div>
+    </div>
         <!-- Header -->
 
-        <div class="row"> <!-- Positioning the logo via bootstrap grid properties -->
+        <div class="row">
+            <!-- Positioning the logo via bootstrap grid properties -->
             <div class="col"></div>
             <div class="col"></div>
             <div class="col"></div>
             <div class="col"></div>
             <div class="col">
-                    <img src="./images/logo.jpg" id="site-logo" alt="logo">
+                <img src="./images/logo.jpg" id="site-logo" alt="logo">
             </div>
             <div class="col"></div>
         </div>
 
 <!-- Sidebar -->
-<nav id="sidebar" class="active">
-
-
+    <nav id="sidebar" class="active">
         <div id="dismiss">
-        <i class="far fa-arrow-alt-circle-left"></i>
+            <i class="far fa-arrow-alt-circle-left"></i>
         </div>
 
         <div class="sidebar-header">
             <h3>Menu</h3>
         </div>
-
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="/home">HOME</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-
-                <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul>
-                        <li>
-                            <a href="/player">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="/draft">PAGE</a>
-                        </li>
-                        <li>
-                            <a href="/">PAGE</a>
-                        </li>
-                    </ul>
-
-
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#">Home</a>
+                <a href="/home">HOME</a>
             </li>
             <li>
                 <a href="#">About</a>
             </li>
-
             <li>
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                 <ul>
                     <li>
-                        <a href="#">Add A Player</a>
+                        <a href="/player">PAGE</a>
                     </li>
                     <li>
-                        <a href="#">Draft Page</a>
+                        <a href="/draft">PAGE</a>
                     </li>
                     <li>
-                        <a href="#">League Page</a>
+                        <a href="/">PAGE</a>
                     </li>
                 </ul>
-
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-        </ul>
-
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <ul>
+                            <li>
+                                <a href="#">Add A Player</a>
+                            </li>
+                            <li>
+                                <a href="#">Draft Page</a>
+                            </li>
+                            <li>
+                                <a href="#">League Page</a>
+                            </li>
+                        </ul>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </li>
     </nav>
 
     <!-- Page Content -->
     <div class="row">
-    <div class="col-md-2">
-        
-    </div>
-    <div class="col-md-8" id="content">
-        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            Menu
-        </button>
-        
-            </div>
+        <div class="col-md-2">
+            
         </div>
-
-
-                <div class="row">
-                    <div class="col-md-12" id="inner-main">
-                        <h2>League History</h2>
-                        <p class="league-links">Pretend League Link</p>
-                    </div>
-                </div>
-
-            </div>
+        <div class="col-md-8" id="content">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="far fa-arrow-alt-circle-left"></i>
+                Menu
+            </button>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="inner-main">
+            <h2>League History</h2>
+            <p class="league-links">Pretend League Link</p>
+            <!-- overflowing due to p being so oddly positioned -->
 
         </div>
-
-        <div class="overlay"></div>
-
     </div>
+    <div class="overlay"></div>
+    </div>
+    <!-- Creating my own divs to facilitate merging later on (Gui) -->
+    <div class="row">
+        <div class="col">
+            <h2>Games</h2>
+            <div class="row" id="list_of_games">
+                        
+                            
+                
+            </div>
+        </div>    
+    </div>
+    <div class="main" id="game_records">
+    <!-- <div class="main content_hidden" id="game_records"> -->
+        <div class="container">
+            <div class="row">
+                <div class="col"><span id="result_table"></span></div>
+
+
+
+                
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- End of Guillaume's divs -->
 
     <footer>
 
@@ -158,21 +170,14 @@
 
 
 
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="./assets/js/navigation.js"></script>
-    <!-- <script src="./assets/js/app.js"></script> -->
-    <!-- <script src="./assets/js/players_db.js"></script> -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-   <script  src="../d3vis/teamStats.js"> </script> 
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <!-- <script src="../d3vis/teamStats.js"> </script>  -->
+    <script src="./assets/js/app.js"></script>
 
 </body>
-
 </html>

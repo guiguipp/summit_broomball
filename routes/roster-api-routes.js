@@ -16,23 +16,12 @@ module.exports = function(app) {
       });  
     });
   // find all available players for a given game. Sorted alphabetically
-  app.get("/api/rosters/game/:game_id", function(req, res) {
+  app.get("/api/rosters/game/:game_id/availability/:availability/:sortingcol/:direction", function(req, res) {
     db.Roster.findAll({
       where: 
-        {GameId: req.params.game_id, availability: true}, 
+        {GameId: req.params.game_id, availability: req.params.availability}, 
         order: [
-          ['player', 'ASC']]
-    }).then(function(dbRoster) {
-      res.json(dbRoster);
-      });  
-    });
-  // retrieve non available players for a given game. Sorted alphabetically
-  app.get("/api/rosters/game/:game_id/unavailable", function(req, res) {
-    db.Roster.findAll({
-      where: 
-        {GameId: req.params.game_id, availability: false}, 
-        order: [
-          ['player', 'ASC']]
+          [req.params.sortingcol, req.params.direction]]
     }).then(function(dbRoster) {
       res.json(dbRoster);
       });  

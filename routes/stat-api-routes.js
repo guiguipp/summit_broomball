@@ -9,15 +9,17 @@ module.exports = function(app) {
     });
 
   app.get("/api/stats/:id", function(req, res) {
-    let id = parseInt(req.params.id); 
-    db.Stat.findById(id).then(function(dbStat) {
+    db.Stat.findAll({
+      where: {GameId: req.params.id}
+    }).then(function(dbStat) {
       res.json(dbStat);
       });  
     });
 
-  app.post("/api/stats", function(req, res) {
+  app.post("/api/stats/:id/goal", function(req, res) {
     db.Stat.create({
       team: req.body.team,
+      goal_scorer: req.body.goal_scorer,
       GameId: req.body.GameId
       })
       .then(function(dbPlayer) {

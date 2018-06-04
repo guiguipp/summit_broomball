@@ -14,7 +14,7 @@ module.exports = function(app) {
         res.json(dbPlayer);
         });
     });
-  app.get("/api/players/:id", function(req, res) {
+  app.get("/api/players/player/:id", function(req, res) {
     let id = parseInt(req.params.id); 
     db.Player.findById(id).then(function(dbPlayer) {
       res.json(dbPlayer);
@@ -35,7 +35,7 @@ module.exports = function(app) {
         });
       });
     
-  app.put("/api/players/:id", function(req, res) {
+  app.put("/api/players/player/:id", function(req, res) {
     db.Player.update({
       shortname: req.body.shortname, 
       full_name: req.body.full_name,
