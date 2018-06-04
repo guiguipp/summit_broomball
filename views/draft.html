@@ -107,21 +107,23 @@
                     </div>
                 </div> <!-- End of main -->
                 <br>
-                <!-- <div class="main content_hidden"> -->
-                <div class="main">
+                <div class="main content_hidden">
+                <!-- <div class="main"> -->
                     <div class="container">
                         <div class="row">
                             <div class="col text-center">
-                                    <button class="btn btn-info navbar-btn menu_options" id="reset">Reset Teams</button> 
+                                <button class="btn btn-info navbar-btn menu_options" id="reset">Reset Teams</button> 
                             </div>
                             <div class="col text-center">
-                                    <button class="btn btn-info navbar-btn menu_options" id="autodraft">Autodraft</button> 
+                                <button class="btn btn-info navbar-btn menu_options" id="autodraft">Autodraft</button> 
                             </div>
                             <div class="col text-center">
-                                    <button class="btn btn-info navbar-btn menu_options" id="unavailable">Show unavailable</button> 
+                                <button class="btn btn-info navbar-btn menu_options" id="unavailable">Show unavailable</button> 
+                            </div>
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn menu_options" id="ten_buckers">Add Non-Members</button> 
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <br>
@@ -131,11 +133,33 @@
                             <div class="col"><h2>Dark Team</h2><span id="dark_draft_col"></span></div>
                             <div class="col"> <h2><br></h2> <span id="available_draft_col"></span></div>
                             <div class="col"><h2>White Team</h2><span id="white_draft_col"></span></div>
-
                         </div>
-
                     </div>
                 </div>
+                <br>
+                <div class="main content_hidden">
+                <!-- <div class="main"> -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn menu_options" id="picks_dark">Set Dark Picks</button> 
+                            </div>
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn menu_options" id="picks_white">Set White Picks</button> 
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn menu_options" id="alternate_draft">Alternate Draft</button> 
+                            </div>
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn menu_options" id="serpentine_draft">Serpentine Draft</button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
             </div> <!-- End of content -->
         </div>
     </div> <!-- End of wrapper -->
@@ -202,7 +226,7 @@ $(document).ready(function() {
             .then(function(result) {
                 // need validation of the API (if true, or something...)
                 // this is the id of the newly created game 
-                addMembersToDraft(result.id)
+                addPlayersToDraft(result.id,"member")
                 seeUpcomingGames()
             })
         // preventing the page to refresh
@@ -212,19 +236,18 @@ $(document).ready(function() {
         });
     
     // adding all members to game created  
-    const addMembersToDraft = (gameId) => {
-        $.ajax({ url: currentURL + "/api/players/member", method: "GET" })
+    const addPlayersToDraft = (gameId,status) => {
+        $.ajax({ url: currentURL + "/api/players/" + status, method: "GET" })
         .then(function(dataFromAPI) {
-            function PlayerObj (game,name) {
+            function PlayerObj (game,name,membershipStatus) {
                 this.game = game,
                 this.name = name,
+                this.membershipStatus = membershipStatus,
                 fromPlayerToRoster(this)
                 }
                 dataFromAPI.forEach((e) => {                
-                    let newPlayerObj = new PlayerObj (gameId,e.shortname)
+                    let newPlayerObj = new PlayerObj (gameId,e.shortname,status)
                     });
-                $("#js_content").append(players)
-        
                 })
             }
     // helper function to push players to the roster table when a game is created (set availability to true)   
@@ -233,8 +256,8 @@ $(document).ready(function() {
                 url: currentURL + "/api/rosters", 
                 method: "POST",
                 data: jQuery.param({GameId: player.game,player:player.name, editable: false, availability: true}) 
-            })
-        }
+                })
+            }
     // shows the list of future games
     function seeUpcomingGames() {
         // emptying the div so that it does not keep appending when the data is refreshed
@@ -249,6 +272,7 @@ $(document).ready(function() {
             })
         }
     // this shows the players available for a given game after a click on one of the future games
+    // we also set data attr for the game being worked on
     function showTeams(){
         $(document).on("click", ".future_game", function (){
             $(".content_hidden").show();
@@ -260,6 +284,8 @@ $(document).ready(function() {
             $("#reset").attr("game_date",gameDate)
             $("#unavailable").attr("game_id",id)
             $("#unavailable").attr("game_date",gameDate)
+            $("#ten_buckers").attr("game_id",id)
+            $("#ten_buckers").attr("game_date",gameDate)
             getAvailablePlayers(id,gameDate)   
             })
         };
@@ -274,7 +300,6 @@ $(document).ready(function() {
             method: "PUT",
             data: jQuery.param({availability: false, player: playerName}) 
             }).then(function(dataFromAPI) {
-                console.log("Recorded")
                 getAvailablePlayers(gameId,gameDate)   
                 });
             });
@@ -328,7 +353,7 @@ $(document).ready(function() {
 
     // shows players in their respective columns, according to the team they have been drafted to
     function getAvailablePlayers(idOfGame,dateOfGame) {
-        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame, method: "GET" }).then(function(dataFromAPI) {
+        $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1", method: "GET" }).then(function(dataFromAPI) {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
@@ -395,7 +420,7 @@ $(document).ready(function() {
     $("#reset").click(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
-        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId, method: "GET" }).then(function(dataFromAPI) {
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1", method: "GET" }).then(function(dataFromAPI) {
             function PlayerObj (id,name,team) {
                 this.id = id,
                 this.name = name,
@@ -412,7 +437,8 @@ $(document).ready(function() {
     $("#unavailable").click(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
-        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/unavailable", method: "GET" }).then(function(dataFromAPI) {
+        console.log("Here it is!")
+        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId + "/" + "availability/0", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
                 let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
                 let playerButton = `<button class="btn btn-info navbar-btn unavailable player_button" id="${e.id}" player="${e.player}" game_id="${e.GameId}" game_date=${gameDate}>${e.player}</button>`
@@ -435,8 +461,40 @@ $(document).ready(function() {
                 getAvailablePlayers(gameId,gameDate)   
                 });
             });
-    
+    // add non-members to the list of draftable players
+    $("#ten_buckers").click(function() {
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date");
+        console.log("Click recorded\ngameId: ",gameId,"\ngameDate: ",gameDate)
+        $.ajax({ url: currentURL + "/api/players/ten_bucker", method: "GET" })
+        .then(function(dataFromAPI) {
+            dataFromAPI.forEach((e) => {
+                let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
+                let playerButton = `<button class="btn btn-info navbar-btn not_a_member player_button" id="${e.id}" player="${e.shortname}" game_id="${gameId}" game_date=${gameDate}>${e.shortname}</button>`
+                let availablePlayerDiv = `${divRosterCheck} ${playerButton}`
+                $("#available_draft_col").append(availablePlayerDiv)
+                });
+            })
+        })
 
+    // clicking on a ten bucker adds them to the list of available players
+    $(document).on("click",".not_a_member", function (){
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date");
+        let playerName = $(this).attr("player");
+        let newPlayerforDraft = {
+            game: gameId,
+            name: playerName
+            }
+        console.log("Player obj without constructor: ", newPlayerforDraft)
+        $.ajax({ 
+            url: currentURL + "/api/rosters", 
+            method: "POST",
+            data: jQuery.param({GameId: newPlayerforDraft.game, player: newPlayerforDraft.name, editable: false, availability: true}) 
+            }).then(function(){
+            getAvailablePlayers(gameId,gameDate)
+            })    
+        });
     showTeams()
     seeUpcomingGames()
 

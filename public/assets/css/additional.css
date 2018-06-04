@@ -43,15 +43,28 @@ h2 {
 
 p {
     color: black;
-    font-family: 'Yellowtail', cursive;
+    font-family: 'Boogaloo', cursive;
     position: relative;
     bottom: 20px;
-    left: 175px;
+    left: 525px;
+    text-shadow:
+    -0.5px -0.5px 0 whitesmoke,
+    0.5px -0.5px 0 whitesmoke,
+    -0.5px 0.5px 0 whitesmoke,
+    0.5px 0.5px 0 whitesmoke;
 }
 
 .wrapper {
     display: block;
-}
+    background: #EA8D47;
+    color: #fff;
+    transition: all 0.3s;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
 
 a, a:hover, a:focus {
     color: inherit;
@@ -119,7 +132,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #ACADB2;
     background: #fff;
 }
 
@@ -146,7 +159,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halflings';
+    font-family: 'Glyphicons Halfling';
     font-size: 0.6em;
 }
 
@@ -179,22 +192,39 @@ a[aria-expanded="true"]::before {
 img {
     width: 205px;
     /* margin-left: 1175px; */
-    margin-top: 1%;
+    margin-top: 3%;
 }
 
 #button-one {
+    color: black;
     position: relative;
     width: 150px;
     height: 50px;
     left: 75px;
-}
+    left: 465px;
+    background-color: #FFFFFF;
+    border-color: #000;
+    text-shadow:
+        -0.5px -0.5px 0 #EA8D47,
+        0.5px -0.5px 0 #EA8D47,
+        -0.5px 0.5px 0 #EA8D47,
+        0.5px 0.5px 0 #EA8D47;
+    }
 
 #button-two {
+    color: black;
     position: relative;
     width: 150px;
     height: 50px;
-    left: 175px;
-}
+    left: 515px;
+    background-color: #FFFFFF;
+    border-color: #000;
+    text-shadow:
+        -0.5px -0.5px 0 #EA8D47,
+        0.5px -0.5px 0 #EA8D47,
+        -0.5px 0.5px 0 #EA8D47,
+        0.5px 0.5px 0 #EA8D47;
+    }
 
 @media (max-width: 768px) {
     #sidebar {
@@ -202,6 +232,10 @@ img {
     }
     #sidebar.active {
         margin-left: 0;
+    }
+    img {
+        text-align: center;
+        padding-left: 2%;
     }
 }
 
@@ -268,26 +302,16 @@ img {
     0.5px -0.5px 0 black,
     -0.5px 0.5px 0 black,
     0.5px 0.5px 0 black;
-}
-
-
+    }
 #playerButton, #contactSubmit {
     background-color: #ACADB2;
     border-style: none;
     text-shadow:
-    -0.5px -0.5px 0 #000,
-    0.5px -0.5px 0 #000,
-    -0.5px 0.5px 0 #000,
-    0.5px 0.5px 0 #000;
-}
-
-.league-links {
-    background-color: white;
-
-/* 
-.game_button:first-child { 
-    margin-top: 31px;
-    } */
+        -0.5px -0.5px 0 #000,
+        0.5px -0.5px 0 #000,
+        -0.5px 0.5px 0 #000,
+        0.5px 0.5px 0 #000;
+    }
 .game_button {
     text-align: center;
     width: 150px;
@@ -307,5 +331,4 @@ img {
     }
 #game_text {
     margin-bottom: 38px;
-
 }
