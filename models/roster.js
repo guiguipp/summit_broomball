@@ -31,6 +31,7 @@ module.exports = function(sequelize, DataTypes) {
             },
         editable: {
             type: DataTypes.BOOLEAN,
+            defaultValue: true
             },
         team: {
             type: DataTypes.ENUM,
