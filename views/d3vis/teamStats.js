@@ -1,7 +1,7 @@
 var d3 = require("d3"),
-jsdom = require("jsdom");
+    jsdom = require("jsdom");
 
-var team_data = require ("../../routes/stat-api-routes.js")
+var team_data = require("../../routes/stat-api-routes.js")
 
 d3.json("myData.json", function (data) {
 
