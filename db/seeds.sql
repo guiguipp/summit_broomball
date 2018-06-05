@@ -1,3 +1,4 @@
+Use summit;
 INSERT INTO Games (game_date, goals_dark, goals_white, editable, summary, author, createdAt, updatedAt) VALUES (20180518, 6, 8, false, "WHITE NARROWLY DEFEATS DARK
 
 
