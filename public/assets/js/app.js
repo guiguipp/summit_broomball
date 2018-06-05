@@ -112,7 +112,7 @@ $(document).ready(function() {
         })
     };
     // Helper function to reset the data attr for each game
-    const setDataAttr = (idOfGame,dateOfGame,lockStatus) => {
+    const setDataAttr = (idOfGame,dateOfGame,lockStatus,cb) => {
         console.log(`Rerunning the setDataAttr with following lockstatus: ${lockStatus}`)
         $("#autodraft").attr("game_id",idOfGame)
         $("#autodraft").attr("game_date",dateOfGame)
@@ -216,7 +216,12 @@ $(document).ready(function() {
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
             $("#js_content").text("")
-            console.log("Lock status before rendering: ",lockStatus)
+            if (lockStatus === "true") {
+                lockStatus = true;
+                }
+            else if (lockStatus === "false") {
+                lockStatus = false;
+                }
             dataFromAPI.forEach((e) => {
                 let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
                 let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
@@ -325,7 +330,7 @@ $(document).ready(function() {
                     updateTeam(this)
                     }
                     dataFromAPI.forEach((e) => {
-                        // resetting the team (using not unavailable)
+                        // resetting the team (using "unavailable" as the team, not the status...)
                         let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
                     })
                     getAvailablePlayers(gameId,gameDate,locked)
