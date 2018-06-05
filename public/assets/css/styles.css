@@ -41,17 +41,30 @@ h2 {
     1px 1px 0 #000;
 }
 
-p {
+.welcomeText {
     color: black;
-    font-family: 'Yellowtail', cursive;
+    font-family: 'Boogaloo', cursive;
     position: relative;
     bottom: 20px;
-    left: 175px;
+    left: 525px;
+    text-shadow:
+    -0.5px -0.5px 0 whitesmoke,
+    0.5px -0.5px 0 whitesmoke,
+    -0.5px 0.5px 0 whitesmoke,
+    0.5px 0.5px 0 whitesmoke;
 }
 
 .wrapper {
     display: block;
-}
+    background: #EA8D47;
+    color: #fff;
+    transition: all 0.3s;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
 
 a, a:hover, a:focus {
     color: inherit;
@@ -119,7 +132,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #EA8D47;
+    color: #ACADB2;
     background: #fff;
 }
 
@@ -178,22 +191,39 @@ a[aria-expanded="true"]::before {
 img {
     width: 205px;
     /* margin-left: 1175px; */
-    margin-top: 1%;
+    margin-top: 3%;
 }
 
 #button-one {
+    color: black;
     position: relative;
     width: 150px;
     height: 50px;
     left: 75px;
-}
+    left: 465px;
+    background-color: #FFFFFF;
+    border-color: #000;
+    text-shadow:
+        -0.5px -0.5px 0 #EA8D47,
+        0.5px -0.5px 0 #EA8D47,
+        -0.5px 0.5px 0 #EA8D47,
+        0.5px 0.5px 0 #EA8D47;
+    }
 
 #button-two {
+    color: black;
     position: relative;
     width: 150px;
     height: 50px;
-    left: 175px;
-}
+    left: 515px;
+    background-color: #FFFFFF;
+    border-color: #000;
+    text-shadow:
+        -0.5px -0.5px 0 #EA8D47,
+        0.5px -0.5px 0 #EA8D47,
+        -0.5px 0.5px 0 #EA8D47,
+        0.5px 0.5px 0 #EA8D47;
+    }
 
 @media (max-width: 768px) {
     #sidebar {
@@ -261,7 +291,6 @@ img {
     padding-left: 2%;
 }
 
-
 .form-group {
     color: whitesmoke;
     text-shadow:
@@ -305,13 +334,25 @@ img {
 .grey:hover {
     background-color: #DE733A;   
 }
+
 .game_button {
     text-align: center;
     width: 150px;
     margin-top: 10px;
     margin-left: 150px;
     }
-    
 .game_button:hover {
     background-color: #EA8D47;
     }
+.menu_options:hover {
+    background-color: #EA8D47;
+    }
+    
+#date_text {
+    color: black;
+    text-shadow: none;
+    font-variant: small-caps;
+    }
+#game_text {
+    margin-bottom: 38px;
+}

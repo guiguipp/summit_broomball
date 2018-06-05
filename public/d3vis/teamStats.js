@@ -1,9 +1,9 @@
-var d3 = require("d3"),
-    jsdom = require("jsdom");
+// var d3 = require("d3"),
+//     jsdom = require("jsdom");
 
-var team_data = require("../../routes/stat-api-routes.js")
-
-d3.json("myData.json", function (data) {
+// var team_data = require("../../routes/stat-api-routes.js")
+// fetch('http://localhost:8080/api/rosters').then(data => console.log(data))
+d3.json('http://localhost:8080/api/rosters').then(function(data) {
 
 
     var tip = d3.select(".chart-container")
@@ -29,10 +29,7 @@ d3.json("myData.json", function (data) {
     var g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.json("apiPlaceholderURL", function (error, data) {
-        //if (error) throw error;
-
-        var data = team_data;
+        // var data = team_data;
 
         x.domain(data.map(function (d) {
             return d.player;
@@ -85,5 +82,3 @@ d3.json("myData.json", function (data) {
                 return tip.style("visibility", "hidden");
             });
     });
-
-})
