@@ -402,6 +402,15 @@ tr {
     overflow: scroll;
 }
 
+#bottom_lock_feature {
+    min-height: 50px;
+    background-color: white;
+    padding: 5%;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px; 
+}
+
 /* Other colors to use (according to material.io 
 https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C00&secondary.color=9E9E9E 
 
@@ -463,4 +472,12 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 .player_button {   
     width: 50%;
     margin-top: 10px;
+}
+/* other buttons */
+.locking_feature {
+    min-height: 75px;
+    min-width: 75px;
+}
+.bigger_fa_lock {
+    font-size: 150%;
 }
