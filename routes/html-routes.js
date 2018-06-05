@@ -27,6 +27,9 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../views/player.html"));
   });
 
+  app.get("/stats", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/stats.html"));
+  });
 
   app.get("/contact", function(req, res) {
     res.sendFile(path.join(__dirname, "../views/contact.html"));

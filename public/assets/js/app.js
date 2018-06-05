@@ -421,12 +421,13 @@ $(document).ready(function() {
 
 
     ////////////////////////////////////////
-    ////// League specific javascript //////
+    ////// Stats specific javascript //////
     ////////////////////////////////////////
 
     // shows the list of past games (had to be specific to that page because of the toggle on the draft page)
     function seeOnlyPastGames() {
         // emptying the div so that it does not keep appending when the data is refreshed
+        console.log("something's happening")
         $("#list_of_games").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
@@ -445,6 +446,7 @@ $(document).ready(function() {
         })
 
     function showGameStats(idOfGame) {
+        $(".content_hidden").show();
         $("#result_table").text("");
         console.log("Result Table Emptied")
         $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
@@ -462,7 +464,7 @@ $(document).ready(function() {
                 </table>
             </div>`)
 
-            var table = $('<table></table>').addClass('foo');
+            var table = $('<table></table>').addClass('table_class');
 
             for(i=0; i < dataFromAPI.length; i++){
                 let d = dataFromAPI[i];
@@ -470,9 +472,7 @@ $(document).ready(function() {
                 let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
                 let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
                 let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
-                if (d.goals == "null") {d.goals.replace("null",0)}
                 
-
                 let row = $('<tr></tr>').addClass('result_row').html(
                 `
                 <table>
@@ -518,17 +518,21 @@ $(document).ready(function() {
             case buttonClass = " substract_goal":    
                 console.log("Case substract_goal")
                 newValue = currentValue - 1;
-                updateGoal(playerId,newValue,showGameStats,gameId);    
+                if(newValue >= 0) {
+                    updateGoal(playerId,newValue,showGameStats,gameId);
+                    }
                 break;
 
             case buttonClass = " substract_assist":
                 console.log("Case substract_assist")
                 newValue = currentValue - 1;
-                updateAssist(playerId,playerName,newValue,showGameStats,gameId);
+                if(newValue >= 0) {
+                    updateAssist(playerId,playerName,newValue,showGameStats,gameId);
+                    }
                 break;
             }
         });
-    // enter a goal
+    // update # of goals
     function updateGoal(idOfPlayer, newGoalTotal, cb,gameId) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/goals", 
@@ -540,6 +544,7 @@ $(document).ready(function() {
                     }
                 })
             }
+    // update # of assists
     function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/assists", 
@@ -551,7 +556,6 @@ $(document).ready(function() {
                     }
                 })
             }
-
 
 
     

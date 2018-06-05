@@ -345,3 +345,84 @@ img {
     background-color: #ACADB2;
     border-color: black;
 }
+.grey:hover {
+    background-color: #EA8D47
+}
+
+/* table formatting */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+padding: 8px;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+thead > th {
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.table_data {
+    width: 25%;
+}
+
+.stats {
+    text-align: center;
+}
+
+.stat_button {
+    margin: 0,5px,0,5px;
+    font-size: 150%;
+    color: #EA8D47;
+}
+
+.stat_button:hover {
+    color: #DE733A;
+} 
+
+tr {
+    font-size: 100%;
+}
+
+.raw_data {
+    font-size: 95%;
+    margin: 5px;
+    padding: 10px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+}
+
+.name_in_table {
+    font-size: 150%;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+#game_records {
+    min-height: 500px;
+}
+
+#list_of_games {
+    max-height: 200px;
+    overflow: scroll;
+}
+#game_list {
+    max-height: 200px;
+    overflow: scroll;
+}
