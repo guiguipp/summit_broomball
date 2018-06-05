@@ -98,37 +98,42 @@ $(document).ready(function() {
                 });
             })
         }
-    // this shows the players available for a given game after a click on one of the future games
-    // we also set data attr for the game being worked on to buttons
+    // this shows the players available for a given game after a click on one of the games
+    
     function showTeams(){
         $(document).on("click", ".future_game", function (){
             $(".content_hidden").show();
             let id = $(this).attr("id");
             let gameDate = $(this).attr("game_date")
             let locked = $(this).attr("locked");
-            console.log("Locked? ",locked)
-            let arrayOfelements = ["#autodraft","#reset","#unavailable","#ten_buckers","#unlock_allInfo","#lock_all_info"]
-            $("#autodraft").attr("game_id",id)
-            $("#autodraft").attr("game_date",gameDate)
-            $("#autodraft").attr("locked",locked)
-            $("#reset").attr("game_id",id)
-            $("#reset").attr("game_date",gameDate)
-            $("#reset").attr("locked",locked)
-            $("#unavailable").attr("game_id",id)
-            $("#unavailable").attr("game_date",gameDate)
-            $("#unavailable").attr("locked",locked)
-            $("#ten_buckers").attr("game_id",id)
-            $("#ten_buckers").attr("game_date",gameDate)
-            $("#ten_buckers").attr("locked",locked)
-            $("#unlock_all_info").attr("game_id",id)
-            $("#unlock_all_info").attr("game_date",gameDate)
-            $("#unlock_all_info").attr("locked",locked)
-            $("#lock_all_info").attr("game_id",id)
-            $("#lock_all_info").attr("game_date",gameDate)
-            $("#lock_all_info").attr("locked",locked)
-            getAvailablePlayers(id,gameDate,locked)   
-            })
-        };
+            console.log("Locked? ",locked);
+            setDataAttr(id,gameDate,locked); 
+            getAvailablePlayers(id,gameDate,locked);
+        })
+    };
+    // Helper function to reset the data attr for each game
+    const setDataAttr = (idOfGame,dateOfGame,lockStatus) => {
+        console.log(`Rerunning the setDataAttr with following lockstatus: ${lockStatus}`)
+        $("#autodraft").attr("game_id",idOfGame)
+        $("#autodraft").attr("game_date",dateOfGame)
+        $("#autodraft").attr("locked",lockStatus)
+        $("#reset").attr("game_id",idOfGame)
+        $("#reset").attr("game_date",dateOfGame)
+        $("#reset").attr("locked",lockStatus)
+        $("#unavailable").attr("game_id",idOfGame)
+        $("#unavailable").attr("game_date",dateOfGame)
+        $("#unavailable").attr("locked",lockStatus)
+        $("#ten_buckers").attr("game_id",idOfGame)
+        $("#ten_buckers").attr("game_date",dateOfGame)
+        $("#ten_buckers").attr("locked",lockStatus)
+        $("#unlock_all_info").attr("game_id",idOfGame)
+        $("#unlock_all_info").attr("game_date",dateOfGame)
+        $("#unlock_all_info").attr("locked",lockStatus)
+        $("#lock_all_info").attr("game_id",idOfGame)
+        $("#lock_all_info").attr("game_date",dateOfGame)
+        $("#lock_all_info").attr("locked",lockStatus)
+        }
+
     // helper function to create attributes dynamically
     const addAttr = (thingsToUpdate, updates) => {
         thingsToUpdate.forEach((e) => {
@@ -222,33 +227,27 @@ $(document).ready(function() {
                 let darkPlayersDiv;
                 let whitePlayersDiv;
                 if (lockStatus !== true) {
-                    console.log("in the if (locked is false)")
                     defaultSet = `${divRosterCheck} ${leftArrowButton}${playerButton}${removeButton}${rightArrowButton}`
                     darkPlayersDiv = `${divRosterCheck}${playerButton}${removeButton}${rightArrowButton}`
                     whitePlayersDiv = `${divRosterCheck}${leftArrowButton} ${playerButton}${removeButton}`
                     }
                 else {
-                    console.log("in the else (locked is true)")
                     defaultSet = `${divRosterCheck} ${playerButton}`
                     darkPlayersDiv = defaultSet
                     whitePlayersDiv = defaultSet
                     }
                 if (e.team) {
                     if (e.team.toLowerCase() === "dark") {
-                        // darkPlayersDiv
                         $("#dark_draft_col").append(darkPlayersDiv)
                         }
                     else if (e.team.toLowerCase() === "white") {
-                        // whitePlayersDiv
                         $("#white_draft_col").append(whitePlayersDiv)
                         }
                     else {
-                        // let availablePlayerDiv = defaultSet
                         $("#available_draft_col").append(defaultSet)
                         }
                 }
                 else {
-                    // let availablePlayerDiv = defaultSet
                     $("#available_draft_col").append(defaultSet)
                     }
                 })
@@ -256,6 +255,7 @@ $(document).ready(function() {
             $("#js_content").append(gameDay)
             })
         }
+
     // lock game
     $("#unlock_all_info").click(function(){
         let gameId = $(this).attr("game_id");
@@ -266,6 +266,7 @@ $(document).ready(function() {
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
+                setDataAttr(gameId,gameDate,locked)
                 getAvailablePlayers(gameId,gameDate,locked)   
             })
         })
@@ -279,6 +280,7 @@ $(document).ready(function() {
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
+                setDataAttr(gameId,gameDate,locked)
                 getAvailablePlayers(gameId,gameDate,locked)   
                 })
             })
@@ -296,13 +298,8 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         let locked = $(this).attr("locked");
-        if (locked = true) {
-            console.log("Nothing will happen, bruh!")
-            }
-        else {
-            console.log("this should run only if locked is not true. How is locked?:", locked)
+        if (locked === "false") {
             $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId+ "/players", method: "GET" }).then(function(dataFromAPI) {
-                console.log("Doing something")
                 // apply the autodraft feature to players available for that game
                 $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
                     //this function is executed after function1
@@ -319,18 +316,21 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         let locked = $(this).attr("locked");
-        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1", method: "GET" }).then(function(dataFromAPI) {
-            function PlayerObj (id,name,team) {
-                this.id = id,
-                this.name = name,
-                this.team = team,
-                updateTeam(this)
-                }
-                dataFromAPI.forEach((e) => {
-                    let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
+        if (locked === "false") {
+            $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1/player/asc", method: "GET" }).then(function(dataFromAPI) {
+                function PlayerObj (id,name,team) {
+                    this.id = id,
+                    this.name = name,
+                    this.team = team,
+                    updateTeam(this)
+                    }
+                    dataFromAPI.forEach((e) => {
+                        // resetting the team (using not unavailable)
+                        let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
+                    })
+                    getAvailablePlayers(gameId,gameDate,locked)
                 })
-                getAvailablePlayers(gameId,gameDate,locked)
-            })
+            }
         })
     // show unavailable players
     $("#unavailable").click(function() {
