@@ -533,6 +533,13 @@ $(document).ready(function() {
         $(".content_hidden").show();
         $("#results_dark").text("");
         $("#results_white").text("");
+        if (lockStatus === "true") {
+            lockStatus = true;
+            }
+        else if (lockStatus === "false") {
+            lockStatus = false;
+            }
+
         $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
             console.log(dataFromAPI)
             let darkHeader = `
@@ -577,18 +584,25 @@ $(document).ready(function() {
             
             for(i=0; i < dataFromAPI.length; i++){
                 let d = dataFromAPI[i];
-            
+                
                 let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
                 let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
                 let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
                 let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
-            
+                
+                if (lockStatus === true) {
+                    plusGoalButton = "";
+                    plusAssistButton = "";
+                    minusGoalButton = "";
+                    minusAssistButton = "";
+                }
+
                 if (d.team === "dark") {
                     let rowDark = `
                         <tr> 
                             <td class="table_data name_in_table">${d.player}</td> 
-                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton} </h4></td> 
-                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4></td>
+                            <td class="table_data stats"> <div class="insecable"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton}</h4> </div> </td> 
+                            <td class="table_data stats"> <div class="insecable"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4> </div> </td>
                         </tr>`
                     $("#table_body_dark").append(rowDark)
                     }
@@ -596,8 +610,8 @@ $(document).ready(function() {
                     let rowWhite = `
                         <tr> 
                             <td class="table_data name_in_table">${d.player}</td> 
-                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton} </h4></td> 
-                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4></td>
+                            <td class="table_data stats"> <div class="insecable"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton} </h4> </div> </td> 
+                            <td class="table_data stats"> <div class="insecable"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4> </div> </td>
                         </tr>`
                     $("#table_body_white").append(rowWhite)
                     }
@@ -611,15 +625,12 @@ $(document).ready(function() {
 
         $(document).on("click",".stat_button",function(){
             let lockStatus = $(this).attr("locked");
-            console.log("LockStatus inside Toggle Updating Mode: ", lockStatus)
             if (lockStatus === "true") {
                 lockStatus = true;
                 }
             else if (lockStatus === "false") {
                 lockStatus = false;
                 }
-            console.log("lockStatus after boolean check: ", lockStatus)
-            console.log(typeof lockStatus)
 
             if (lockStatus != true) {
                 let gameId = $(this).attr("game_id");
@@ -663,7 +674,7 @@ $(document).ready(function() {
                     }
                 }
                 else {
-                    console.log("Nothing should be happening then... ?")
+                    console.log("Could display an error message... ?")
                 }
             });
         // }
