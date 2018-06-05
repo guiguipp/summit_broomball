@@ -2,11 +2,21 @@ var path = require("path")
 var db = require("../models");
 
 module.exports = function(app) {
-  app.get("/api/stats", function(req, res) {
-    db.Stat.findAll({}).then(function(dbStat) {
-      res.json(dbStat);
+  app.get("/api/rosters", function(req, res) {
+    db.Rosters.findAll({}).then(function(dbRosters) {
+    console.log("dbRosters");
+
+      // res.json(dbStat);
       });
     });
+
+    app.get("/api/stats", function(req, res) {
+      db.Stat.findAll({}).then(function(dbStat) {
+      console.log(dbStat);
+      
+        res.json(dbStat);
+        });
+      });
 
   app.get("/api/stats/:id", function(req, res) {
     let id = parseInt(req.params.id); 
