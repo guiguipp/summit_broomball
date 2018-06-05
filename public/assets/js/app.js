@@ -497,8 +497,6 @@ $(document).ready(function() {
         }
 
 
-
-
     ////////////////////////////////////////
     ////// Stats specific javascript //////
     ////////////////////////////////////////
@@ -509,7 +507,7 @@ $(document).ready(function() {
         $("#list_of_games").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div game_id=${e.id} class="game_results" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn regular-grey game_button">${e.game_date}</button>\n`
+                let gameButton = `<div game_id=${e.id} class="game_results" locked="${e.lock_info}" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn regular-grey game_button">${e.game_date}</button>\n`
                 let gameDiv = `${gameButton}`
                 $("#list_of_games").append(gameDiv);
                 });
@@ -519,10 +517,20 @@ $(document).ready(function() {
     // showing the players for the selected/played game
     $(document).on("click",".game_results", function (){
         let gameId = $(this).attr("game_id");
-        showGameStats(gameId)
+        let locked = $(this).attr("locked");
+        lockStats(gameId,locked)
+        showGameStats(gameId,locked)
         })
-
-    function showGameStats(idOfGame) {
+        
+    const lockStats = (idOfGame,lockStatus) => {
+        $("#unlock_all_info_stats").attr("game_id",idOfGame)
+        $("#unlock_all_info_stats").attr("locked",lockStatus)
+        $("#lock_all_info_stats").attr("game_id",idOfGame)
+        $("#lock_all_info_stats").attr("locked",lockStatus)
+        }
+    
+    function showGameStats(idOfGame,lockStatus){
+        console.log("lockStatus inside showGameStats", lockStatus)
         $(".content_hidden").show();
         $("#result_table").text("");
         console.log("Result Table Emptied")
@@ -545,10 +553,10 @@ $(document).ready(function() {
 
             for(i=0; i < dataFromAPI.length; i++){
                 let d = dataFromAPI[i];
-                let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
-                let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
-                let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
-                let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
+                let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
+                let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
+                let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
+                let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
                 
                 let row = $('<tr></tr>').addClass('result_row').html(
                 `
@@ -566,76 +574,125 @@ $(document).ready(function() {
                 }
 
             $('#table_content').append(table);
+            // toggleUpdatingMode(lockStatus);
             });            
         };
-    $(document).on("click",".stat_button",function(){
-        let gameId = $(this).attr("game_id");
-        let playerId = $(this).attr("player_id");
-        let playerName  = $(this).attr("player");
-        let playerTeam = $(this).attr("team");
-        let buttonClass = $(this).attr("class");
-        let currentValue = parseInt($(this).attr("current_tot"))
+    
+
+    // const toggleUpdatingMode = (lockStatus) => {
         
-        buttonClass = buttonClass.replace("fa fa-minus-circle stat_button","").replace("fa fa-plus-circle stat_button","");
-        let newValue;
-        
-        switch(buttonClass) {
-            case buttonClass = " add_goal":
-                console.log("Case add_goal")
-                newValue = currentValue + 1;
-                updateGoal(playerId,newValue,showGameStats,gameId);
-                break;
+
+        $(document).on("click",".stat_button",function(){
+            let lockStatus = $(this).attr("locked");
+            console.log("LockStatus inside Toggle Updating Mode: ", lockStatus)
+            if (lockStatus === "true") {
+                lockStatus = true;
+                }
+            else if (lockStatus === "false") {
+                lockStatus = false;
+                }
+            console.log("lockStatus after boolean check: ", lockStatus)
+            console.log(typeof lockStatus)
+
+            if (lockStatus != true) {
+                let gameId = $(this).attr("game_id");
+                let playerId = $(this).attr("player_id");
+                let playerName  = $(this).attr("player");
+                let playerTeam = $(this).attr("team");
+                let buttonClass = $(this).attr("class");
+                let currentValue = parseInt($(this).attr("current_tot"))
                 
-            case buttonClass = " add_assist":
-                console.log("Case add_assist")
-                newValue = currentValue + 1;
-                updateAssist(playerId,playerName,newValue,showGameStats,gameId);
-                break;
+                buttonClass = buttonClass.replace("fa fa-minus-circle stat_button","").replace("fa fa-plus-circle stat_button","");
+                let newValue;
+                
+                switch(buttonClass) {
+                    case buttonClass = " add_goal":
+                        console.log("Case add_goal")
+                        newValue = currentValue + 1;
+                        updateGoal(playerId,newValue,showGameStats,gameId,lockStatus);
+                        break;
+                        
+                    case buttonClass = " add_assist":
+                        console.log("Case add_assist")
+                        newValue = currentValue + 1;
+                        updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus);
+                        break;
 
-            case buttonClass = " substract_goal":    
-                console.log("Case substract_goal")
-                newValue = currentValue - 1;
-                if(newValue >= 0) {
-                    updateGoal(playerId,newValue,showGameStats,gameId);
-                    }
-                break;
+                    case buttonClass = " substract_goal":    
+                        console.log("Case substract_goal")
+                        newValue = currentValue - 1;
+                        if(newValue >= 0) {
+                            updateGoal(playerId,newValue,showGameStats,gameId,lockStatus);
+                            }
+                        break;
 
-            case buttonClass = " substract_assist":
-                console.log("Case substract_assist")
-                newValue = currentValue - 1;
-                if(newValue >= 0) {
-                    updateAssist(playerId,playerName,newValue,showGameStats,gameId);
+                    case buttonClass = " substract_assist":
+                        console.log("Case substract_assist")
+                        newValue = currentValue - 1;
+                        if(newValue >= 0) {
+                            updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus);
+                            }
+                        break;
                     }
-                break;
-            }
-        });
+                }
+                else {
+                    console.log("Nothing should be happening then... ?")
+                }
+            });
+        // }
+
     // update # of goals
-    function updateGoal(idOfPlayer, newGoalTotal, cb,gameId) {
+    function updateGoal(idOfPlayer, newGoalTotal, cb,gameId,lockStatus) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/goals", 
             method: "PUT",
             data: jQuery.param({goals: newGoalTotal}) 
             }).then(function(dataFromAPI) {
                 if (dataFromAPI[1] === 1) {
-                    cb(gameId)
+                    cb(gameId,lockStatus)
                     }
                 })
             }
     // update # of assists
-    function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId) {
+    function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId,lockStatus) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/assists", 
             method: "PUT",
             data: jQuery.param({assists: newAssistTotal}) 
             }).then(function(dataFromAPI) {
                 if (dataFromAPI[1] === 1) {
-                    cb(gameId)
+                    cb(gameId,lockStatus)
                     }
                 })
             }
+    $("#unlock_all_info_stats").click(function(){
+        let gameId = $(this).attr("game_id");
+        let locked = false;
+        console.log(`Data from the lock.\ngameId: ${gameId}\nCurrently locked?: ${locked}`)
+        $.ajax({    
+            url: currentURL + "/api/game/" + gameId + "/lock", 
+            data: jQuery.param({lock_info: locked}), 
+            method: "PUT" }).then(function(dataFromAPI) {
+                lockStats(gameId,locked)
+                showGameStats(gameId,locked)
+            })
+        })
+    // unlock game
+    $("#lock_all_info_stats").click(function(){
+        let gameId = $(this).attr("game_id");
+        let locked = true;
+        console.log(`Data from the lock.\ngameId: ${gameId}\nCurrently locked?: ${locked}`)
+        $.ajax({    
+            url: currentURL + "/api/game/" + gameId + "/lock", 
+            data: jQuery.param({lock_info: locked}), 
+            method: "PUT" }).then(function(dataFromAPI) {
+                lockStats(gameId,locked)
+                showGameStats(gameId,locked)
+                })
+            })
 
 
-    
+
     
 
     seeOnlyPastGames()
