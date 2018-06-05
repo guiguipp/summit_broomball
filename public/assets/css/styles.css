@@ -341,3 +341,7 @@ img {
 #game_text {
     margin-bottom: 38px;
 }
+.grey {
+    background-color: #ACADB2;
+    border-color: black;
+}
