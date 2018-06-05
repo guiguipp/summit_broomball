@@ -298,3 +298,20 @@ img {
     position: relative;
     left: 40%;
 }
+.grey {
+    background-color: #ACADB2;
+    border-color: black;
+    }
+.grey:hover {
+    background-color: #DE733A;   
+}
+.game_button {
+    text-align: center;
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 150px;
+    }
+    
+.game_button:hover {
+    background-color: #EA8D47;
+    }
