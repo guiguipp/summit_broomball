@@ -56,15 +56,7 @@ h2 {
 
 .wrapper {
     display: block;
-    background: #EA8D47;
-    color: #fff;
-    transition: all 0.3s;
-    text-shadow:
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
-    }
+}
 
 a, a:hover, a:focus {
     color: inherit;
@@ -326,13 +318,6 @@ img {
     font-size: 24px;
     position: relative;
     left: 40%;
-}
-.grey {
-    background-color: #ACADB2;
-    border-color: black;
-    }
-.grey:hover {
-    background-color: #DE733A;   
 }
 
 .game_button {
