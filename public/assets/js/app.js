@@ -78,7 +78,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
+                let gameButton = `<div id=${e.id} class="future_game" locked="${e.lock_info}" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn dark_grey game_button">${e.game_date}</button>\n`
                 let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton} ${removeButton}`
                 $("#game_list").append(gameDiv);
@@ -91,7 +91,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
+                let gameButton = `<div id=${e.id} class="future_game" locked="${e.lock_info}" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn regular_grey game_button">${e.game_date}</button>\n`
                 // let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton}`//`${gameButton} ${removeButton}` // not sure we want a remove button for past games
                 $("#game_list").append(gameDiv);
@@ -99,35 +99,59 @@ $(document).ready(function() {
             })
         }
     // this shows the players available for a given game after a click on one of the future games
-    // we also set data attr for the game being worked on
+    // we also set data attr for the game being worked on to buttons
     function showTeams(){
         $(document).on("click", ".future_game", function (){
             $(".content_hidden").show();
             let id = $(this).attr("id");
             let gameDate = $(this).attr("game_date")
+            let locked = $(this).attr("locked");
+            console.log("Locked? ",locked)
+            let arrayOfelements = ["#autodraft","#reset","#unavailable","#ten_buckers","#unlock_allInfo","#lock_all_info"]
             $("#autodraft").attr("game_id",id)
             $("#autodraft").attr("game_date",gameDate)
+            $("#autodraft").attr("locked",locked)
             $("#reset").attr("game_id",id)
             $("#reset").attr("game_date",gameDate)
+            $("#reset").attr("locked",locked)
             $("#unavailable").attr("game_id",id)
             $("#unavailable").attr("game_date",gameDate)
+            $("#unavailable").attr("locked",locked)
             $("#ten_buckers").attr("game_id",id)
             $("#ten_buckers").attr("game_date",gameDate)
-            getAvailablePlayers(id,gameDate)   
+            $("#ten_buckers").attr("locked",locked)
+            $("#unlock_all_info").attr("game_id",id)
+            $("#unlock_all_info").attr("game_date",gameDate)
+            $("#unlock_all_info").attr("locked",locked)
+            $("#lock_all_info").attr("game_id",id)
+            $("#lock_all_info").attr("game_date",gameDate)
+            $("#lock_all_info").attr("locked",locked)
+            getAvailablePlayers(id,gameDate,locked)   
             })
         };
+    // helper function to create attributes dynamically
+    const addAttr = (thingsToUpdate, updates) => {
+        thingsToUpdate.forEach((e) => {
+            console.log(e)
+
+        })
+    }
+
+
+
     // sets the player as unavailable after a click on the "remove" icon 
     $(document).on("click", ".remove_player", function (){
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
         let playerName = $(this).attr("player");
-        let gameDate = $(this).attr("game_date")
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
         $.ajax({ 
             url: currentURL + "/api/rosters/" + playerId, 
             method: "PUT",
             data: jQuery.param({availability: false, player: playerName}) 
             }).then(function(dataFromAPI) {
-                getAvailablePlayers(gameId,gameDate)   
+                getAvailablePlayers(gameId,gameDate,locked)   
                 });
             });
     // deletes a game after a click on the "remove" icon
@@ -153,13 +177,14 @@ $(document).ready(function() {
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
         let playerName = $(this).attr("player");
-        let gameDate = $(this).attr("game_date")
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
         $.ajax({ 
             url: currentURL + "/api/rosters/" + playerId, 
             method: "PUT",
             data: jQuery.param({team: "dark", player: playerName}) 
             }).then(function(dataFromAPI) {
-                getAvailablePlayers(gameId,gameDate)   
+                getAvailablePlayers(gameId,gameDate,locked)   
                 });
             });
 
@@ -168,64 +193,98 @@ $(document).ready(function() {
         let playerId = $(this).attr("id");
         let gameId = $(this).attr("game_id");
         let playerName = $(this).attr("player");
-        let gameDate = $(this).attr("game_date")
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
         $.ajax({ 
             url: currentURL + "/api/rosters/" + playerId, 
             method: "PUT",
             data: jQuery.param({team: "white", player: playerName}) 
             }).then(function(dataFromAPI) {
-                getAvailablePlayers(gameId,gameDate)   
+                getAvailablePlayers(gameId,gameDate,locked)   
                 });
             });
 
     // shows players in their respective columns, according to the team they have been drafted to
-    function getAvailablePlayers(idOfGame,dateOfGame) {
+    function getAvailablePlayers(idOfGame,dateOfGame,lockStatus) {
         $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
             $("#js_content").text("")
-
+            console.log("Lock status before rendering: ",lockStatus)
             dataFromAPI.forEach((e) => {
                 let divRosterCheck = `<div class="roster_check" id="${e.id}" availability="${e.availability}">`
-                let playerButton = `<button class="btn btn-info navbar-btn player_button" id="${e.id}" player="${e.player}">${e.player}</button>`
+                let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
                 let removeButton = `<i class="fa fa-times-circle remove remove_player" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                 let rightArrowButton = `<i class="fa fa-arrow-circle-o-right right arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                 let leftArrowButton = `<i class="fa fa-arrow-circle-left left arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`    
-                let defaultSet = `${divRosterCheck} ${leftArrowButton} ${playerButton} ${removeButton} ${rightArrowButton}`
+                let defaultSet;
+                let darkPlayersDiv;
+                let whitePlayersDiv;
+                if (lockStatus !== true) {
+                    console.log("in the if (locked is false)")
+                    defaultSet = `${divRosterCheck} ${leftArrowButton}${playerButton}${removeButton}${rightArrowButton}`
+                    darkPlayersDiv = `${divRosterCheck}${playerButton}${removeButton}${rightArrowButton}`
+                    whitePlayersDiv = `${divRosterCheck}${leftArrowButton} ${playerButton}${removeButton}`
+                    }
+                else {
+                    console.log("in the else (locked is true)")
+                    defaultSet = `${divRosterCheck} ${playerButton}`
+                    darkPlayersDiv = defaultSet
+                    whitePlayersDiv = defaultSet
+                    }
                 if (e.team) {
                     if (e.team.toLowerCase() === "dark") {
-                        let darkPlayersDiv = 
-                        `   ${divRosterCheck} 
-                            ${playerButton}
-                            ${removeButton}
-                            ${rightArrowButton}
-                        `
+                        // darkPlayersDiv
                         $("#dark_draft_col").append(darkPlayersDiv)
                         }
                     else if (e.team.toLowerCase() === "white") {
-                        let whitePlayersDiv =
-                        `   ${divRosterCheck}  
-                            ${leftArrowButton}
-                            ${playerButton}
-                            ${removeButton}`
+                        // whitePlayersDiv
                         $("#white_draft_col").append(whitePlayersDiv)
                         }
                     else {
-                        let availablePlayerDiv = defaultSet
-                        $("#available_draft_col").append(availablePlayerDiv)
+                        // let availablePlayerDiv = defaultSet
+                        $("#available_draft_col").append(defaultSet)
                         }
                 }
                 else {
-                    let availablePlayerDiv = defaultSet
-                    $("#available_draft_col").append(availablePlayerDiv)
+                    // let availablePlayerDiv = defaultSet
+                    $("#available_draft_col").append(defaultSet)
                     }
                 })
             let gameDay = `<div class="game_day"><br> <h2>${dateOfGame}</h2>`
             $("#js_content").append(gameDay)
             })
         }
-    
+    // lock game
+    $("#unlock_all_info").click(function(){
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date");
+        let locked = false;
+        console.log(`Data from the lock.\ngameId: ${gameId}\ngameDate:${gameDate}\nCurrently locked?: ${locked}`)
+        $.ajax({    
+            url: currentURL + "/api/game/" + gameId + "/lock", 
+            data: jQuery.param({lock_info: locked}), 
+            method: "PUT" }).then(function(dataFromAPI) {
+                getAvailablePlayers(gameId,gameDate,locked)   
+            })
+        })
+    // unlock game
+    $("#lock_all_info").click(function(){
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date");
+        let locked = true;
+        console.log(`Data from the lock.\ngameId: ${gameId}\ngameDate:${gameDate}\nCurrently locked?: ${locked}`)
+        $.ajax({    
+            url: currentURL + "/api/game/" + gameId + "/lock", 
+            data: jQuery.param({lock_info: locked}), 
+            method: "PUT" }).then(function(dataFromAPI) {
+                getAvailablePlayers(gameId,gameDate,locked)   
+                })
+            })
+
+
+
     ////////////////////////////////////////
     //////// draft submenu options /////////
     ////////////////////////////////////////    
@@ -235,20 +294,31 @@ $(document).ready(function() {
     $("#autodraft").click(function (){
         let availablePlayers = [];
         let gameId = $(this).attr("game_id");
-        let gameDate = $(this).attr("game_date")
-        $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId+ "/players", method: "GET" }).then(function(dataFromAPI) {
-            // apply the autodraft feature to players available for that game
-            $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
-                //this function is executed after function1
-                getAvailablePlayers(gameId,gameDate)
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
+        if (locked = true) {
+            console.log("Nothing will happen, bruh!")
+            }
+        else {
+            console.log("this should run only if locked is not true. How is locked?:", locked)
+            $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId+ "/players", method: "GET" }).then(function(dataFromAPI) {
+                console.log("Doing something")
+                // apply the autodraft feature to players available for that game
+                $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
+                    //this function is executed after function1
+                    console.log("Doing something else")
+                    getAvailablePlayers(gameId,gameDate,locked)
+                    });
                 });
-            });
+            }
+            
         });
 
     // Assign each available player for that game to "" team after click     
     $("#reset").click(function() {
         let gameId = $(this).attr("game_id");
-        let gameDate = $(this).attr("game_date")
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
         $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1", method: "GET" }).then(function(dataFromAPI) {
             function PlayerObj (id,name,team) {
                 this.id = id,
@@ -259,7 +329,7 @@ $(document).ready(function() {
                 dataFromAPI.forEach((e) => {
                     let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
                 })
-                getAvailablePlayers(gameId,gameDate)
+                getAvailablePlayers(gameId,gameDate,locked)
             })
         })
     // show unavailable players
@@ -280,14 +350,15 @@ $(document).ready(function() {
     $(document).on("click", ".unavailable", function (){
         let playerId = $(this).attr("id");
         let playerName = $(this).attr("player");
-        let gameId = $(this).attr("game_id")
-        let gameDate = $(this).attr("game_date")
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date");
+        let locked = $(this).attr("locked");
         $.ajax({ 
             url: currentURL + "/api/rosters/" + playerId, 
             method: "PUT",
             data: jQuery.param({availability: true, player: playerName}) 
             }).then(function(dataFromAPI) {
-                getAvailablePlayers(gameId,gameDate)   
+                getAvailablePlayers(gameId,gameDate,locked)   
                 });
             });
     // add non-members to the list of draftable players
@@ -311,6 +382,7 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         let playerName = $(this).attr("player");
+        let locked = $(this).attr("locked");
         let newPlayerforDraft = {
             game: gameId,
             name: playerName
@@ -321,9 +393,11 @@ $(document).ready(function() {
             method: "POST",
             data: jQuery.param({GameId: newPlayerforDraft.game, player: newPlayerforDraft.name, editable: false, availability: true}) 
             }).then(function(){
-            getAvailablePlayers(gameId,gameDate)
+            getAvailablePlayers(gameId,gameDate,locked)
             })    
         });
+
+
     showTeams()
     seeUpcomingGames()
 
@@ -427,17 +501,15 @@ $(document).ready(function() {
     // shows the list of past games (had to be specific to that page because of the toggle on the draft page)
     function seeOnlyPastGames() {
         // emptying the div so that it does not keep appending when the data is refreshed
-        console.log("something's happening")
         $("#list_of_games").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div game_id=${e.id} class="game_results" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
+                let gameButton = `<div game_id=${e.id} class="game_results" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn regular-grey game_button">${e.game_date}</button>\n`
                 let gameDiv = `${gameButton}`
                 $("#list_of_games").append(gameDiv);
                 });
             })
         }
-    seeOnlyPastGames()
     
     // showing the players for the selected/played game
     $(document).on("click",".game_results", function (){
@@ -561,5 +633,5 @@ $(document).ready(function() {
     
     
 
-
+    seeOnlyPastGames()
 }); //end of JQuery (document).ready

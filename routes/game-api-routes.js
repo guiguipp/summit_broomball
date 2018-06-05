@@ -78,7 +78,18 @@ module.exports = function(app) {
         res.json(dbGame);
         });
       });
-  
+  app.put("/api/game/:id/lock", function(req, res) {
+    db.Game.update({
+      lock_info: req.body.lock_info
+      },
+      {
+      returning: true,
+      where: {id: req.params.id}
+      })
+      .then(function(dbGame) {
+        res.json(dbGame);
+        });
+      });
   app.delete("/api/games/:id", function(req, res) {
     db.Game.destroy({
       where: {id: req.params.id}

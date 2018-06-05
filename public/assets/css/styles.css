@@ -235,14 +235,7 @@ img {
     min-width: 200px;
 }
 
-.player_button {
-    background-color: #EA8D47;
-    width: 50%;
-    margin-top: 10px;
-}
-.player_button:hover {
-    background-color: #EA8D47;
-}
+
 .unavailable {
     background-color: #ACADB2;
     margin-left: -15px;
@@ -320,18 +313,6 @@ img {
     left: 40%;
 }
 
-.game_button {
-    text-align: center;
-    width: 150px;
-    margin-top: 10px;
-    margin-left: 150px;
-    }
-.game_button:hover {
-    background-color: #EA8D47;
-    }
-.menu_options:hover {
-    background-color: #EA8D47;
-    }
     
 #date_text {
     color: black;
@@ -340,13 +321,6 @@ img {
     }
 #game_text {
     margin-bottom: 38px;
-}
-.grey {
-    background-color: #ACADB2;
-    border-color: black;
-}
-.grey:hover {
-    background-color: #EA8D47
 }
 
 /* table formatting */
@@ -418,6 +392,7 @@ tr {
     min-height: 500px;
 }
 
+/* lists in draft.html & stats.html */
 #list_of_games {
     max-height: 200px;
     overflow: scroll;
@@ -425,4 +400,84 @@ tr {
 #game_list {
     max-height: 200px;
     overflow: scroll;
+}
+
+#bottom_lock_feature {
+    min-height: 50px;
+    background-color: white;
+    padding: 5%;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px; 
+}
+
+/* Other colors to use (according to material.io 
+https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C00&secondary.color=9E9E9E 
+
+
+.orange {
+    base-color: #ea8d47;
+    light: #ffbe75;
+    dark: #b35f19;
+}
+.grey {
+    base-color: #acadb2;
+    light: #dedfe4;
+    dark: #7d7e83;
+}
+*/
+/* games and players button styles */
+.dark_grey {
+    background-color: #7d7e83;
+    border-color: black;
+}
+.dark_grey:hover {
+    background-color: #b35f19;
+}
+.light_grey {
+    background-color: #dedfe4;
+    border-color: #000
+}
+.light_grey:hover {
+    background-color: #ffbe75;
+}
+.game_button {
+    text-align: center;
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 150px;
+    }
+.regular_grey {
+    background-color: #acadb2;
+    border-color: black;
+}
+.regular_grey:hover {
+    background-color: #ea8d47;
+}
+/*
+.game_button:hover {
+    background-color: #EA8D47;
+    }
+.menu_options:hover {
+    background-color: #EA8D47;
+    }
+.grey {
+    background-color: #ACADB2;
+    border-color: black;
+}
+.grey:hover {
+    background-color: #EA8D47
+}
+*/
+.player_button {   
+    width: 50%;
+    margin-top: 10px;
+}
+/* other buttons */
+.locking_feature {
+    min-height: 75px;
+    min-width: 75px;
+}
+.bigger_fa_lock {
+    font-size: 150%;
 }

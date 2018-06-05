@@ -27,9 +27,9 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
             },
-        editable: {
+        lock_info: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true
+            defaultValue: false
             },
         author: {
             type: DataTypes.STRING

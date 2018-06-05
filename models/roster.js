@@ -32,9 +32,9 @@ module.exports = function(sequelize, DataTypes) {
         availability: {
             type: DataTypes.BOOLEAN
             },
-        editable: {
+        lock_info: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true
+            defaultValue: false
             },
         team: {
             type: DataTypes.ENUM,
