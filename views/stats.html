@@ -15,7 +15,6 @@
 
 <body>
     <div class="wrapper">
-
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -24,17 +23,14 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                      
+                    <!-- <div class="modal-body">
                         <section class="chart-container">
                             <svg width="460" height="320"></svg>
-                          </section>
-
-
+                        </section>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -53,11 +49,10 @@
             <div class="col"></div>
         </div>
 
-<!-- Sidebar -->
-<nav id="sidebar" class="active">
-
+    <!-- Sidebar -->
+    <nav id="sidebar" class="active">
         <div id="dismiss">
-        <i class="far fa-arrow-alt-circle-left"></i>
+            <i class="far fa-arrow-alt-circle-left"></i>
         </div>
 
         <div class="sidebar-header">
@@ -71,7 +66,6 @@
             <li>
                 <a href="#">About</a>
             </li>
-
             <li>
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                 <ul>
@@ -88,15 +82,14 @@
                         <a href="#">Enter game stats</a>
                     </li>
                 </ul>
-
                 <li>
                     <a href="/contact">Contact</a>
                 </li>
+            </li>
         </ul>
-
     </nav>
 
-    <!-- Page Content -->
+                    <!-- Page Content -->
     <div class="row">
         <div class="col-md-2">
             
@@ -105,8 +98,7 @@
             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                 <i class="far fa-arrow-alt-circle-left"></i>
                 Menu
-            </button>
-            
+            </button>   
         </div>
     </div>
 
@@ -133,13 +125,8 @@
         <div class="main content_hidden" id="game_records">
             <div class="container">
                 <div class="row">
-                    <div class="col"><span id="result_table"></span></div>
-
-
-
-
-    
-                    
+                    <div class="col"><span id="results_dark"></span></div>
+                    <div class="col"><span id="results_white"></span></div>
                 </div>
             </div>
         </div>
