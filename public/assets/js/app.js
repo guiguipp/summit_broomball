@@ -78,7 +78,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
+                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
                 let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton} ${removeButton}`
                 $("#game_list").append(gameDiv);
@@ -91,7 +91,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
+                let gameButton = `<div id=${e.id} class="future_game" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
                 // let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton}`//`${gameButton} ${removeButton}` // not sure we want a remove button for past games
                 $("#game_list").append(gameDiv);
@@ -430,7 +430,7 @@ $(document).ready(function() {
         $("#list_of_games").text("");
         $.ajax({ url: currentURL + "/api/games/past", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div game_id=${e.id} class="game_results" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn game_button">${e.game_date}</button>\n`
+                let gameButton = `<div game_id=${e.id} class="game_results" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn grey game_button">${e.game_date}</button>\n`
                 let gameDiv = `${gameButton}`
                 $("#list_of_games").append(gameDiv);
                 });
