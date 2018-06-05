@@ -16,23 +16,12 @@ module.exports = function(app) {
       });  
     });
   // find all available players for a given game. Sorted alphabetically
-  app.get("/api/rosters/game/:game_id", function(req, res) {
+  app.get("/api/rosters/game/:game_id/availability/:availability/:sortingcol/:direction", function(req, res) {
     db.Roster.findAll({
       where: 
-        {GameId: req.params.game_id, availability: true}, 
+        {GameId: req.params.game_id, availability: req.params.availability}, 
         order: [
-          ['player', 'ASC']]
-    }).then(function(dbRoster) {
-      res.json(dbRoster);
-      });  
-    });
-  // retrieve non available players for a given game. Sorted alphabetically
-  app.get("/api/rosters/game/:game_id/unavailable", function(req, res) {
-    db.Roster.findAll({
-      where: 
-        {GameId: req.params.game_id, availability: false}, 
-        order: [
-          ['player', 'ASC']]
+          [req.params.sortingcol, req.params.direction]]
     }).then(function(dbRoster) {
       res.json(dbRoster);
       });  
@@ -58,7 +47,7 @@ module.exports = function(app) {
         });
       });
   // edit player for a game
-  app.put("/api/rosters/:id", function(req, res) {
+  app.put("/api/rosters/:id/", function(req, res) {
     db.Roster.update({
       player: req.body.player, 
       goals: req.body.goals,
@@ -76,6 +65,33 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+  app.put("/api/rosters/:id/goals", function(req, res) {
+    db.Roster.update({
+      // player: req.body.player, 
+      goals: req.body.goals
+      },
+      {
+      returning: true,
+      where: {id: req.params.id}
+      })
+      .then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
+  app.put("/api/rosters/:id/assists", function(req, res) {
+    db.Roster.update({
+      // player: req.body.player, 
+      assists: req.body.assists
+      },
+      {
+      returning: true,
+      where: {id: req.params.id}
+      })
+      .then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
+
   app.delete("/api/rosters/:id", function(req, res) {
     db.Roster.destroy({
       where: {id: req.params.id}

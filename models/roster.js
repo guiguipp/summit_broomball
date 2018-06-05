@@ -12,13 +12,16 @@ module.exports = function(sequelize, DataTypes) {
                 }
             },
         goals: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
             },
         assists: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
             },
         points: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
             },
         captain1Pick: {
             type: DataTypes.INTEGER
@@ -31,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
             },
         editable: {
             type: DataTypes.BOOLEAN,
+            defaultValue: true
             },
         team: {
             type: DataTypes.ENUM,
