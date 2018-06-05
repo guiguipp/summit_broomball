@@ -1,26 +1,41 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-var exampleDates = ["01/01/2019", "02/01/2019", "03/01/2019"]
+    var globalData = []
 
-function renderGameRecapButtons() {
+    function renderGameRecapButtons(dataArray) {
 
-    for (i = 0; i < exampleDates.length; i++) {
+        for (i = 0; i < dataArray.length; i++) {
 
-        let dates = exampleDates[i];
+            let dates = dataArray[i].game_date;
+            // console.log(dates)
+            // let dark = dataArray[i].goals_dark
+            // let white = dataArray[i].goals_white
 
-    let buttons = $("<button>");
-    buttons.attr("type", "button");
-    buttons.addClass("btn btn-primary");
-    buttons.attr("data-toggle", "modal");
-    buttons.attr("data-target", "#exampleModalCenter");
-    buttons.attr("id", "recap-button")
-    buttons.text(dates);
-    $("#inner-main").append(buttons);
-    buttons.append("<br>")
+            let buttons = $("<button>");
+            buttons.attr("type", "button");
+            buttons.addClass("btn btn-primary");
+            buttons.attr("data-toggle", "modal");
+            buttons.attr("data-target", "#exampleModalCenter");
+            buttons.attr("id", `recap-button-${i}`)
+            buttons.attr("data-stats", dates)
+            // buttons.attr("data-dark", dark)
+            // buttons.attr("data-white", white)
+            buttons.text(dates);
+            console.log(dates)
+            $("#buttons-div").append(buttons);
+            buttons.append("<br>")
 
+        }
     }
-}
+  
+    $.getJSON("/api/games/past", function (data) {
+        globalData = (data)
+        renderGameRecapButtons(globalData)
+        // console.log(globalData)
 
-renderGameRecapButtons()
+    })
 
-});
+    renderGameRecapButtons(globalData)
+
+})
+
