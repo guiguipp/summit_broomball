@@ -481,3 +481,11 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 .bigger_fa_lock {
     font-size: 150%;
 }
+.insecable {
+    min-width: 120px;
+}
+@media (max-width: 1199px) {
+    #team_white_content {
+        margin-top: 100px;
+    }
+}
