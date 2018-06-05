@@ -1,9 +1,4 @@
-// var d3 = require("d3"),
-//     jsdom = require("jsdom");
-
-// var team_data = require("../../routes/stat-api-routes.js")
-// fetch('http://localhost:8080/api/rosters').then(data => console.log(data))
-d3.json('http://localhost:8080/api/rosters').then(function(data) {
+d3.json('http://localhost:8080/api/rosters').then(function (data) {
 
 
     var tip = d3.select(".chart-container")
@@ -29,56 +24,56 @@ d3.json('http://localhost:8080/api/rosters').then(function(data) {
     var g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        // var data = team_data;
+    // var data = team_data;
 
-        x.domain(data.map(function (d) {
-            return d.player;
-        }));
-        y.domain([0, d3.max(data, function (d) {
-            return d.points;
-        })]);
+    x.domain(data.map(function (d) {
+        return d.player;
+    }));
+    y.domain([0, d3.max(data, function (d) {
+        return d.points;
+    })]);
 
-        g.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .append("text")
-            .attr("y", 6)
-            .attr("dy", "2.5em")
-            .attr("dx", width / 2 - margin.left)
-            .attr("text-anchor", "start")
-            .text("Players");
+    g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .append("text")
+        .attr("y", 6)
+        .attr("dy", "2.5em")
+        .attr("dx", width / 2 - margin.left)
+        .attr("text-anchor", "start")
+        .text("Players");
 
-        g.append("g")
-            .attr("class", "axis axis--y")
-            .call(d3.axisLeft(y).ticks(10))
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("text-anchor", "end")
-            .text("Pooints Scored");
+    g.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(y).ticks(10))
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", "0.71em")
+        .attr("text-anchor", "end")
+        .text("Points Scored");
 
 
-        g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function (d) {
-                return x(d.player);
-            })
-            .attr("y", function (d) {
-                return y(d.points);
-            })
-            .attr("width", x.bandwidth())
-            .attr("height", function (d) {
-                return height - y(d.points)
-            })
-            .on("mouseover", function (d) {
-                return tip.text(d.points).style("visibility", "visible").style("top", y(d.points) - 13 + 'px').style("left", x(d.player) + x.bandwidth() - 12 + 'px')
-            })
-            //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
-            .on("mouseout", function () {
-                return tip.style("visibility", "hidden");
-            });
-    });
+    g.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) {
+            return x(d.player);
+        })
+        .attr("y", function (d) {
+            return y(d.points);
+        })
+        .attr("width", x.bandwidth())
+        .attr("height", function (d) {
+            return height - y(d.points)
+        })
+        .on("mouseover", function (d) {
+            return tip.text(d.points).style("visibility", "visible").style("top", y(d.points) - 13 + 'px').style("left", x(d.player) + x.bandwidth() - 12 + 'px')
+        })
+        //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+        .on("mouseout", function () {
+            return tip.style("visibility", "hidden");
+        });
+});
