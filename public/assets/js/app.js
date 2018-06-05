@@ -530,51 +530,78 @@ $(document).ready(function() {
         }
     
     function showGameStats(idOfGame,lockStatus){
-        console.log("lockStatus inside showGameStats", lockStatus)
         $(".content_hidden").show();
-        $("#result_table").text("");
-        console.log("Result Table Emptied")
+        $("#results_dark").text("");
+        $("#results_white").text("");
         $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
             console.log(dataFromAPI)
-            $("#result_table").append(`
-            <div id='table_content'>
-                <table>
-                <thead> 
-                    <tr id="table_content"> 
-                        <th>Player</th> 
-                        <th>Goals</th> 
-                        <th>Assists</th>
-                    </tr>
-                </thead>
-                </table>
-            </div>`)
-
-            var table = $('<table></table>').addClass('table_class');
-
+            let darkHeader = `
+            <table>
+                <div id='team_dark_content'> 
+                    <thead class="team_name"> 
+                        <h2>Dark Team</h2>
+                    </thead>
+                    <thead> 
+                        <tr id="table_header"> 
+                            <th class="table_col_name">Player</th> 
+                            <th class="table_col_name">Goals</th>
+                            <th class="table_col_name">Assists</th>
+                        </tr> 
+                    </thead>
+                </div>
+            
+                <tbody id="table_body_dark"> 
+                </tbody> 
+            </table>`
+            $("#results_dark").append(darkHeader)
+            
+            let whiteHeader = `
+            <table>
+                <div id='team_white_content'> 
+                    <thead id="team_name"> 
+                        <h2>White Team</h2>
+                    </thead>
+                    <thead> 
+                        <tr id="table_header"> 
+                            <th class="table_col_name">Player</th> 
+                            <th class="table_col_name">Goals</th>
+                            <th class="table_col_name">Assists</th>
+                        </tr> 
+                    </thead>
+                </div>
+                <tbody id="table_body_white"> 
+                    
+                </tbody>
+            </table>`
+            $("#results_white").append(whiteHeader)
+            
             for(i=0; i < dataFromAPI.length; i++){
                 let d = dataFromAPI[i];
+            
                 let plusGoalButton = `<i class="fa fa-plus-circle stat_button add_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
                 let plusAssistButton = `<i class="fa fa-plus-circle stat_button add_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}" ></i>`
                 let minusGoalButton = `<i class="fa fa-minus-circle stat_button substract_goal" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.goals}"></i>`
                 let minusAssistButton = `<i class="fa fa-minus-circle stat_button substract_assist" locked="${lockStatus}" player_id="${d.id}" player="${d.player}" game_id="${idOfGame}" team="${d.team}" current_tot="${d.assists}"></i>`
-                
-                let row = $('<tr></tr>').addClass('result_row').html(
-                `
-                <table>
-                    <tbody>
+            
+                if (d.team === "dark") {
+                    let rowDark = `
                         <tr> 
                             <td class="table_data name_in_table">${d.player}</td> 
-                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton}</h4></td> 
-                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data">${d.assists}</span> ${minusAssistButton}</h4></td>
-                        </tr>
-                    </tbody>
-                </table>
-                `);
-                table.append(row);
+                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton} </h4></td> 
+                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4></td>
+                        </tr>`
+                    $("#table_body_dark").append(rowDark)
+                    }
+                else {
+                    let rowWhite = `
+                        <tr> 
+                            <td class="table_data name_in_table">${d.player}</td> 
+                            <td class="table_data stats"> <h4> ${plusGoalButton} <span class="raw_data">${d.goals}</span> ${minusGoalButton} </h4></td> 
+                            <td class="table_data stats"> <h4> ${plusAssistButton} <span class="raw_data"> ${d.assists} </span> ${minusAssistButton} </h4></td>
+                        </tr>`
+                    $("#table_body_white").append(rowWhite)
+                    }
                 }
-
-            $('#table_content').append(table);
-            // toggleUpdatingMode(lockStatus);
             });            
         };
     
@@ -690,10 +717,6 @@ $(document).ready(function() {
                 showGameStats(gameId,locked)
                 })
             })
-
-
-
-    
 
     seeOnlyPastGames()
 }); //end of JQuery (document).ready
