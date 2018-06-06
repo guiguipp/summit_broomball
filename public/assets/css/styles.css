@@ -489,3 +489,32 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
         margin-top: 100px;
     }
 }
+/* Pick styles */
+.pick_check {
+    text-align: center;
+    /* padding-left: 2%; */
+    width: 100%;
+    min-width: 200px;
+    min-height: 49px;
+}
+.pick_dark {
+    left: 15px;
+    }
+.empty_button {
+    color: black;
+    text-align: left;
+    background-color: white;
+    border-bottom-style: dashed;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-radius: unset;
+    margin-top: 11px;
+    }
+.empty_button:hover {
+    color: black;
+    background-color: white;
+}
+.rank_num {
+    margin-left: -40px;
+}

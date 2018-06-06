@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    console.log("Ready to display awesome graphs!")
     var globalData = []
 
     function renderGameRecapButtons(dataArray) {

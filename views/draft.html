@@ -138,7 +138,7 @@
                 <br>
                 <div class="main content_hidden" id="draft_data"> <span id="js_content"></span>
                     <div class="container">
-                        <div class="row">
+                        <div class="row" id="list_with_players">
                             <div class="col"><h2>Dark Team</h2><span id="dark_draft_col"></span></div>
                             <div class="col"> <h2><br></h2> <span id="available_draft_col"></span></div>
                             <div class="col"><h2>White Team</h2><span id="white_draft_col"></span></div>
@@ -151,19 +151,22 @@
                     <div class="container">
                         <div class="row">
                             <div class="col text-center">
-                                <button class="btn btn-info navbar-btn light_grey menu_options" id="picks_dark">Set Dark Picks</button> 
+                                <button class="btn btn-info navbar-btn light_grey computer_draft menu_options" id="picks_dark">Set Dark Picks</button> 
                             </div>
                             <div class="col text-center">
-                                <button class="btn btn-info navbar-btn dark_grey menu_options" id="picks_white">Set White Picks</button> 
+                                <button class="btn btn-info navbar-btn dark_grey computer_draft menu_options" id="picks_white">Set White Picks</button> 
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col text-center">
-                                <button class="btn btn-info navbar-btn regular_grey locking_feature menu_options" id="alternate_draft">Alternate Draft</button> 
+                                <button class="btn btn-info navbar-btn regular_grey locking_feature computer_draft menu_options" id="alternate_draft">Alternate Draft</button> 
                             </div>
                             <div class="col text-center">
-                                <button class="btn btn-info navbar-btn regular_grey locking_feature menu_options" id="serpentine_draft">Serpentine Draft</button> 
+                                <button class="btn btn-info navbar-btn regular_grey locking_feature menu_options" id="manual_draft">Manual Draft</button> 
+                            </div>
+                            <div class="col text-center">
+                                <button class="btn btn-info navbar-btn regular_grey locking_feature computer_draft menu_options" id="serpentine_draft">Serpentine Draft</button> 
                             </div>
                         </div>
                     </div>
@@ -201,6 +204,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="./assets/js/navigation.js"></script>
+    <script src="./assets/js/draft.js"></script>
     <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
     <script src="./assets/js/app.js"></script>
     <script>
