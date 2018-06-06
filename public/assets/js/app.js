@@ -135,7 +135,28 @@ $(document).ready(function() {
         $("#picks_dark").attr("game_id",idOfGame)
         $("#picks_dark").attr("game_date",dateOfGame)
         $("#picks_dark").attr("locked",lockStatus)
+        $("#manual_draft").attr("game_id",idOfGame)
+        $("#manual_draft").attr("game_date",dateOfGame)
+        $("#manual_draft").attr("locked",lockStatus)
         }
+
+    // toggling computer and manual draft modes so that they don't keep appending
+    $("#manual_draft").click(function(){
+        $("#dark_draft_col").text("")
+        $("#white_draft_col").text("")
+        let gameId = $(this).attr("game_id");
+        let gameDate = $(this).attr("game_date")
+        let locked = $(this).attr("locked");
+        getAvailablePlayers(gameId,gameDate,locked);
+        // $("#list_with_players").show()
+        // $("#setting_the_picks").hide()
+        })
+    $("#computer_draft").click(function(){
+        $("#dark_draft_col").text("")
+        $("#white_draft_col").text("")
+        // $("#list_with_player").hide()
+        // $("#setting_the_picks").show()
+        })
 
     // helper function to create attributes dynamically
     /*
@@ -220,6 +241,8 @@ $(document).ready(function() {
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
             $("#js_content").text("")
+            $("#col1_title").text("Dark Team")
+            $("#col2_title").text("White Team")
             if (lockStatus === "true") {
                 lockStatus = true;
                 }

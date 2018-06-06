@@ -8,31 +8,42 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
         let locked = $(this).attr("locked");
-        console.log("id: ", gameId, "gameDate: ", gameDate, "locked: ", locked)
-        /* getCaptain1Picks(gameId) */
-        generatePlayerColumn(gameId,gameDate,"dark")
-        generateRanksColumn(gameId,gameDate,"dark")
+        generatePlayerColumn(gameId,gameDate)
+        generateRanksColumn(gameId,gameDate)
         });
         // getting available player to generate a list to draft from
-        const generatePlayerColumn = (idOfGame, dateOfGame,team) => {
+        const generatePlayerColumn = (idOfGame, dateOfGame) => {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
-            $("#js_content").text("")
+            $("#col1_title").text("Players to rank")
+            $("#col2_title").text("Ranked players")
+            // $("#js_content").text("")
+            /*
+            let gameDay = `<div class="game_day"><br> <h2>${dateOfGame}</h2>`
+            $("#js_content").append(gameDay)
+            */
             $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
                 // $("#list_with_players").hide()
                 dataFromAPI.forEach((e,i) => {
-                    let divPick = `<div class="pick_check" id="${e.id}" availability="${e.availability}">`
-                    let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
-                    let rightArrowButton = `<i class="fa fa-arrow-circle-o-right pick_dark arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
-                    let defaultSet = `${divPick} ${playerButton}${rightArrowButton}`
-                    $("#dark_draft_col").append(defaultSet)
+                    if(e.captain1Pick < 1) {
+                        let divPick = `<div class="pick_check" id="${e.id}" availability="${e.availability}">`
+                        let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
+                        let rightArrowButton = `<i class="fa fa-arrow-circle-o-right pick_dark arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                        let defaultSet = `${divPick} ${playerButton}${rightArrowButton}`
+                        $("#dark_draft_col").append(defaultSet)
+                        }
                     
                     })  
                 
             });
+            
         }
-        const generateRanksColumn = (idOfGame, dateOfGame,team) => {
+        const generateRanksColumn = (idOfGame, dateOfGame) => {
+            $("#available_draft_col").text("")
+            $("#dark_draft_col").text("")
+            $("#white_draft_col").text("")
+            // $("#js_content").text("")
             $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/players/captain1picks", method: "GET" }).then(function(dataFromAPI) {
                 console.log("result from Query: ", dataFromAPI)
                 // since non ranked players have a 0 value by default, they show before everyone in the sorted list, which we do not want 
@@ -60,27 +71,10 @@ $(document).ready(function() {
                     let emptySet = `${pickDiv}${buttonInfo}`
                     $("#white_draft_col").append(emptySet)
                     });
-                
                 })
-
-
-
-
-
-
-
             }
         
-    // toggling the features so that they don't keep appending
-    $("#manual_draft").click(function(){
-        console.log("Hiding setting the picks")
-        // $("#list_with_players").show()
-        // $("#setting_the_picks").remove()
-        })
-    $("#computer_draft").click(function(){
-        $("#list_with_player").hide()
-        $("#setting_the_picks").show()
-        })
+
 
     $(document).on("click", ".pick_dark", function (){
         let playerId = $(this).attr("id");
@@ -89,25 +83,24 @@ $(document).ready(function() {
         let gameDate = $(this).attr("game_date");
         let locked = $(this).attr("locked");
         console.log("playerId: ",playerId,"playerName: ",playerName,"gameId: ",gameId,"locked: ", locked)
-        $.ajax({ 
-            url: currentURL + "/api/rosters/" + playerId, 
-            method: "PUT",
-            data: jQuery.param({captain1Pick: 1, player: playerName}) 
-            }).then(function(dataFromAPI) {
-                
-                });
+        getCaptain1Picks(gameId,playerId,gameId)
+        
 
 
         })
 
-        function getCaptain1Picks(idOfGame){
-            console.log("Getting the picks")
+        function getCaptain1Picks(idOfGame,idOfPlayer,dateOfGame){
+            console.log("idOfGame: ", idOfGame,"\nidOfPlayer: ",idOfPlayer)
             $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/players/captain1picks", method: "GET" }).then(function(dataFromAPI) {
-            console.log(dataFromAPI)
-            console.log("Getting the latest pick")
-            let lastRank = dataFromAPI[dataFromAPI.length-1]
-            console.log("lastRank: ", lastRank)
-            
+            console.log("data from getCaptain1Picks: ", dataFromAPI)
+            let lastRank = dataFromAPI[dataFromAPI.length-1].captain1Pick
+            let nextRank = lastRank + 1;
+            console.log("NextRank: ",nextRank)
+            $.ajax({ url: currentURL + "/api/rosters/" + idOfPlayer + "/" + nextRank, method: "PUT"}).then(function(dataFromAPI) {
+                console.log("response from API", dataFromAPI)
+                generatePlayerColumn(idOfGame,dateOfGame)
+                generateRanksColumn(idOfGame,dateOfGame)
+                })
             })
         }
 

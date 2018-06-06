@@ -23,32 +23,15 @@ let dataFromAPI= [
 {id: 74, player: "Shalanah", captain1Pick: 3, gameId: 3},
 {id: 76, player: "Becca", captain1Pick: 4, gameId: 3}]
 
-let arrayOfRankedPlayers = []
+let alreadyRankedPlayers = []
     dataFromAPI.forEach((e,i) => {
         if(e.captain1Pick > 0) {
             arrayOfRankedPlayers.push(e)
         }
-        // console.log("i: ", i)
-    
-        });
-    console.log("arrayOfRankedPlayers: ", arrayOfRankedPlayers)
+    });
     let numOfRankedPlayers = arrayOfRankedPlayers.length
-    console.log("numOfRankedPlayers: ", numOfRankedPlayers)
-    console.log("dataFromAPI: ", "dataFromAPI", "(length is first: ",dataFromAPI.length,")")
-
     dataFromAPI.splice(dataFromAPI.length-arrayOfRankedPlayers.length, arrayOfRankedPlayers.length)
-    // console.log("dataFromApi after first splice: ", dataFromAPI)
-    console.log("dataFromAPI: ", "dataFromAPI", "(length is second: ",dataFromAPI.length,")")
-    /*
-    arrayOfRankedPlayers.forEach((e) => {
-        dataFromAPI.unshift(e)
-        })
-        */
-       /*
-    for (let i=0; i < arrayOfRankedPlayers.length; i++) {
-
-        }*/
-    let betterArray = arrayOfRankedPlayers.concat(dataFromAPI); 
+    let rankedArray = arrayOfRankedPlayers.concat(dataFromAPI); 
 
     
     console.log("dataFromAPI: ", "dataFromAPI", "(length is third: ",dataFromAPI.length,")")

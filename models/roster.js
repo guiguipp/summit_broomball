@@ -24,10 +24,12 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: 0
             },
         captain1Pick: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
             },
         captain2Pick: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
             },
         availability: {
             type: DataTypes.BOOLEAN

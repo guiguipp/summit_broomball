@@ -101,6 +101,19 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+  app.put("/api/rosters/:id/:rank", function(req, res) {
+    db.Roster.update({
+      // player: req.body.player, 
+      captain1Pick: req.params.rank
+      },
+      {
+      returning: true,
+      where: {id: req.params.id}
+      })
+      .then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
 
   app.delete("/api/rosters/:id", function(req, res) {
     db.Roster.destroy({
