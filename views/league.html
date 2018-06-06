@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Boogaloo|Yellowtail" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
+    <script src="./assets/js/recapButtons.js"></script>
     <title>Summit Broomball</title>
 </head>
 
@@ -21,16 +23,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                      
                         <section class="chart-container">
                             <svg width="460" height="320"></svg>
-                          </section>
-
-
+                        </section>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -39,25 +39,26 @@
             </div>
         </div>
     </div>
-        <!-- Header -->
 
-        <div class="row">
-            <!-- Positioning the logo via bootstrap grid properties -->
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col">
-                <img src="./images/logo.jpg" id="site-logo" alt="logo">
-            </div>
-            <div class="col"></div>
+    <!-- Header -->
+
+    <div class="row">
+        <!-- Positioning the logo via bootstrap grid properties -->
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col">
+            <img src="./images/logo.jpg" id="site-logo" alt="logo">
         </div>
+        <div class="col"></div>
+    </div>
 
-<!-- Sidebar -->
-<nav id="sidebar" class="active">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="active">
 
         <div id="dismiss">
-        <i class="far fa-arrow-alt-circle-left"></i>
+            <i class="far fa-arrow-alt-circle-left"></i>
         </div>
 
         <div class="sidebar-header">
@@ -99,21 +100,21 @@
     <!-- Page Content -->
     <div class="row">
         <div class="col-md-2">
-            
+
         </div>
         <div class="col-md-8" id="content">
             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                 <i class="far fa-arrow-alt-circle-left"></i>
                 Menu
             </button>
-            
+
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12" id="inner-main">
             <h2>League History</h2>
-
+            <div id="buttons-div"> </div>
         </div>
     </div>
     <div class="overlay"></div>
@@ -126,14 +127,19 @@
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="./assets/js/navigation.js"></script>
-    <script src="./assets/js/recapButtons.js"></script>
+    <!-- <script src="./assets/js/recapButtons.js"></script> -->
     <script src="./assets/js/app.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"> </script>
-    <script  src="./d3vis/teamStats.js"> </script> 
+    <script src="https://d3js.org/d3.v5.min.js">
+    </script>
+    <script src="./d3vis/teamStats.js">
+    </script>
 
 </body>
+
 </html>
