@@ -91,81 +91,102 @@
 
 
         <div class="row">
-            <div class="col-md-12" id="inner-main">
-                <h2>Add A Player</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="shortName">Short Name</label>
-                        <input type="text" class="form-control" id="exampleShortName" aria-describedby="shortNameHelp">
-                    </div>
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" class="form-control" id="exampleFullName">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleLevelSelect">Player Level</label>
-                        <select class="form-control" id="exampleLevelSelect">
-                            <option>A+</option>
-                            <option>A</option>
-                            <option>A-</option>
-                            <option>B+</option>
-                            <option>B</option>
-                            <option>B-</option>
-                            <option>C+</option>
-                            <option>C</option>
-                            <option>C-</option>
-                            <option>D+</option>
-                            <option>D</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="examplePositionSelect">Preferred Position</label>
-                        <select class="form-control" id="examplePositionSelect">
-                            <option>Forward</option>
-                            <option>Defense</option>
-                            <option>Goalie</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="examplePlayerStatus">Player Status</label>
-                        <select class="form-control" id="examplePlayerStatus">
-                            <option>Member</option>
-                            <option>Ten Bucker</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                    </div>
-                    <button type="submit" id="playerButton" class="btn btn-primary">Add Player</button>
-                </form>
+                <div class="col-md-12" id="inner-main">
+                <div class="player-container">
+                    <h2>Add A Player</h2>
+    
+                    <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Short Name</th>
+                                    <th>Full name</th>
+                                    <th>Player Level</th>
+                                    <th>Preferred Position</th>
+                                    <th>Player Status</th>
+                                    <th>Email</th>
+                                    <th>Delete Player</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                    </table>
+    
+                    <form id="player-form">
+                        <div class="form-group">
+                            <label for="shortName">Short Name</label>
+                            <input type="text" class="form-control" id="ShortName" aria-describedby="shortNameHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" class="form-control" id="FullName">
+                        </div>
+                        <div class="form-group">
+                            <label for="LevelSelect">Player Level</label>
+                            <select class="form-control" id="LevelSelect">
+                                <option>A+</option>
+                                <option>A</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B</option>
+                                <option>B-</option>
+                                <option>C+</option>
+                                <option>C</option>
+                                <option>C-</option>
+                                <option>D+</option>
+                                <option>D</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="PositionSelect">Preferred Position</label>
+                            <select class="form-control" id="PositionSelect">
+                                <option>Forward</option>
+                                <option>Defense</option>
+                                <option>Goalie</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="PlayerStatus">Player Status</label>
+                            <select class="form-control" id="PlayerStatus">
+                                <option>Member</option>
+                                <option>Ten Bucker</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="Email" aria-describedby="emailHelp">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Player</button>
+                    </form>
+                </div>
+                </div>
             </div>
+    
         </div>
-
-    </div>
-
-    </div>
-
-    <div class="overlay"></div>
-
-    </div>
-
-    <footer>
-
-    </footer>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="./assets/js/navigation.js"></script>
-    <!-- <script src="./assets/js/app.js"></script> -->
-    <!-- <script src="./assets/js/players_db.js"></script> -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    
+        </div>
+    
+        <div class="overlay"></div>
+    
+        </div>
+    
+        <footer>
+    
+        </footer>
+    
+    
+    
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="./assets/js/navigation.js"></script>
+        <script src="./assets/js/player.js"></script>
+        <!-- <script src="./assets/js/app.js"></script> -->
+        <!-- <script src="./assets/js/players_db.js"></script> -->
+        <script src="https://d3js.org/d3.v5.min.js"></script>
 
 </body>
 
