@@ -484,3 +484,7 @@ svg text{
     border-width: .5rem .5rem 0 .5rem;
     border-color: #444 transparent transparent transparent;
     }
+    .modal {
+        left: 10%;
+        right: 10%;
+    }
