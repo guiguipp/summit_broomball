@@ -112,45 +112,61 @@ $(document).ready(function() {
         })
     };
     // Helper function to reset the data attr for each game
+    
     const setDataAttr = (idOfGame,dateOfGame,lockStatus,cb) => {
         console.log(`Rerunning the setDataAttr with following lockstatus: ${lockStatus}`)
-        $("#autodraft").attr("game_id",idOfGame)
-        $("#autodraft").attr("game_date",dateOfGame)
-        $("#autodraft").attr("locked",lockStatus)
-        $("#reset").attr("game_id",idOfGame)
-        $("#reset").attr("game_date",dateOfGame)
-        $("#reset").attr("locked",lockStatus)
-        $("#unavailable").attr("game_id",idOfGame)
-        $("#unavailable").attr("game_date",dateOfGame)
-        $("#unavailable").attr("locked",lockStatus)
-        $("#ten_buckers").attr("game_id",idOfGame)
-        $("#ten_buckers").attr("game_date",dateOfGame)
-        $("#ten_buckers").attr("locked",lockStatus)
-        $("#unlock_all_info").attr("game_id",idOfGame)
-        $("#unlock_all_info").attr("game_date",dateOfGame)
-        $("#unlock_all_info").attr("locked",lockStatus)
-        $("#lock_all_info").attr("game_id",idOfGame)
-        $("#lock_all_info").attr("game_date",dateOfGame)
-        $("#lock_all_info").attr("locked",lockStatus)
-        $("#picks_dark").attr("game_id",idOfGame)
-        $("#picks_dark").attr("game_date",dateOfGame)
-        $("#picks_dark").attr("locked",lockStatus)
-        $("#picks_white").attr("game_id",idOfGame)
-        $("#picks_white").attr("game_date",dateOfGame)
-        $("#picks_white").attr("locked",lockStatus)
-        $("#manual_draft").attr("game_id",idOfGame)
-        $("#manual_draft").attr("game_date",dateOfGame)
-        $("#manual_draft").attr("locked",lockStatus)
+        $("#autodraft")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#reset")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#unavailable")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#ten_buckers")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#unlock_all_info")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#lock_all_info")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#picks_dark")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#picks_white")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#manual_draft")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
+        $("#serpentine_draft")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
         }
+
     // there has to be a way to automate this...
+    /*
     let elToUpdate = ["autodraft","reset","unavailable","ten_buckers","unlock_all_info","lock_all_info","picks_dark","picks_white","manual_draft"]
-    const updateMetaData = (array,idOfGame,dateOfGame,lockStatus) => {
-        arrayForEach((e) => {
-            return `$("#${e}.").attr("game_id",${idOfGame})
-                    $("#${e}.").attr("game_date",${dateOfGame})
-                    $("#${e}.").attr("locked",${lockStatus})`
+    const setDataAttr = (array,idOfGame,dateOfGame,lockStatus) => {
+        array.forEach((e) => {
+            let dynamicAttr = `$("#${e}").attr("game_id",${idOfGame}).attr("game_date",${dateOfGame}).attr("locked",${lockStatus})`
+                    console.log("Good try?: ", dynamicAttr)
         })
         }
+        */
 
     
     // toggling computer and manual draft modes so that they don't keep appending
@@ -306,13 +322,15 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         let locked = false;
+        
         console.log(`Data from the lock.\ngameId: ${gameId}\ngameDate:${gameDate}\nCurrently locked?: ${locked}`)
         $.ajax({    
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
                 setDataAttr(gameId,gameDate,locked)
-                getAvailablePlayers(gameId,gameDate,locked)   
+                getAvailablePlayers(gameId,gameDate,locked)
+                updateScoreDisplayed(gameId)   
             })
         })
     // unlock game
@@ -320,13 +338,15 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         let locked = true;
+        
         console.log(`Data from the lock.\ngameId: ${gameId}\ngameDate:${gameDate}\nCurrently locked?: ${locked}`)
         $.ajax({    
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
                 setDataAttr(gameId,gameDate,locked)
-                getAvailablePlayers(gameId,gameDate,locked)   
+                getAvailablePlayers(gameId,gameDate,locked)
+                updateScoreDisplayed(gameId)   
                 })
             })
 
@@ -558,6 +578,7 @@ $(document).ready(function() {
     $(document).on("click",".game_results", function (){
         let gameId = $(this).attr("game_id");
         let locked = $(this).attr("locked");
+        updateScoreDisplayed(gameId)
         lockStats(gameId,locked)
         showGameStats(gameId,locked)
         })
@@ -586,7 +607,7 @@ $(document).ready(function() {
             <table>
                 <div id='team_dark_content'> 
                     <thead class="team_name"> 
-                        <h2>Dark Team</h2>
+                        <h2 id="white_score_place">Dark Team></h2>
                     </thead>
                     <thead> 
                         <tr id="table_header"> 
@@ -606,7 +627,7 @@ $(document).ready(function() {
             <table>
                 <div id='team_white_content'> 
                     <thead id="team_name"> 
-                        <h2>White Team</h2>
+                        <h2 id="white_score_place">White Team></h2>
                     </thead>
                     <thead> 
                         <tr id="table_header"> 
@@ -658,7 +679,20 @@ $(document).ready(function() {
                 }
             });            
         };
-    
+    function updateScoreDisplayed(idOfGame){
+        $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/score/white", method: "GET" }).then(function(dataFromAPI) {
+            $("#results_white").empty()
+            let whiteScore = `<h2>${dataFromAPI[0].goals}</h2>`
+            $("#results_white").prepend(whiteScore)
+            console.log("whiteScore: ", whiteScore)
+            })
+        $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/score/dark", method: "GET" }).then(function(dataFromAPI) {
+            $("#results_dark").empty()
+            let darkScore = `<h2>${dataFromAPI[0].goals}</h2>`
+            console.log("darkScore: ", darkScore)
+            $("#results_dark").prepend(darkScore)
+            })
+        }
 
     // const toggleUpdatingMode = (lockStatus) => {
         
@@ -687,20 +721,24 @@ $(document).ready(function() {
                     case buttonClass = " add_goal":
                         console.log("Case add_goal")
                         newValue = currentValue + 1;
-                        updateGoal(playerId,newValue,showGameStats,gameId,lockStatus);
+                        // need to updateScore
+                            updateGoal(playerId,newValue,showGameStats,gameId,lockStatus,updateScoreDisplayed)
                         break;
                         
                     case buttonClass = " add_assist":
                         console.log("Case add_assist")
                         newValue = currentValue + 1;
-                        updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus);
+                        // updateScoreDisplayed(gameId)
+                        updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus,updateScoreDisplayed);
                         break;
 
                     case buttonClass = " substract_goal":    
                         console.log("Case substract_goal")
                         newValue = currentValue - 1;
                         if(newValue >= 0) {
-                            updateGoal(playerId,newValue,showGameStats,gameId,lockStatus);
+                            // need to updateScore
+                            updateGoal(playerId,newValue,showGameStats,gameId,lockStatus,updateScoreDisplayed)
+                        
                             }
                         break;
 
@@ -708,7 +746,8 @@ $(document).ready(function() {
                         console.log("Case substract_assist")
                         newValue = currentValue - 1;
                         if(newValue >= 0) {
-                            updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus);
+                            // updateScoreDisplayed(gameId)
+                            updateAssist(playerId,playerName,newValue,showGameStats,gameId,lockStatus,updateScoreDisplayed);
                             }
                         break;
                     }
@@ -720,26 +759,26 @@ $(document).ready(function() {
         // }
 
     // update # of goals
-    function updateGoal(idOfPlayer, newGoalTotal, cb,gameId,lockStatus) {
+    function updateGoal(idOfPlayer, newGoalTotal, cb,gameId,lockStatus,cb2) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/goals", 
             method: "PUT",
             data: jQuery.param({goals: newGoalTotal}) 
             }).then(function(dataFromAPI) {
                 if (dataFromAPI[1] === 1) {
-                    cb(gameId,lockStatus)
+                    cb(gameId,lockStatus,cb2(gameId))
                     }
                 })
             }
     // update # of assists
-    function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId,lockStatus) {
+    function updateAssist(idOfPlayer, playerName, newAssistTotal,cb,gameId,lockStatus,cb2) {
         $.ajax({ 
             url: currentURL + "/api/rosters/" + idOfPlayer + "/assists", 
             method: "PUT",
             data: jQuery.param({assists: newAssistTotal}) 
             }).then(function(dataFromAPI) {
                 if (dataFromAPI[1] === 1) {
-                    cb(gameId,lockStatus)
+                    cb(gameId,lockStatus,cb2(gameId))
                     }
                 })
             }
