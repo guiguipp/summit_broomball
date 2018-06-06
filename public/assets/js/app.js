@@ -135,11 +135,24 @@ $(document).ready(function() {
         $("#picks_dark").attr("game_id",idOfGame)
         $("#picks_dark").attr("game_date",dateOfGame)
         $("#picks_dark").attr("locked",lockStatus)
+        $("#picks_white").attr("game_id",idOfGame)
+        $("#picks_white").attr("game_date",dateOfGame)
+        $("#picks_white").attr("locked",lockStatus)
         $("#manual_draft").attr("game_id",idOfGame)
         $("#manual_draft").attr("game_date",dateOfGame)
         $("#manual_draft").attr("locked",lockStatus)
         }
+    // there has to be a way to automate this...
+    let elToUpdate = ["autodraft","reset","unavailable","ten_buckers","unlock_all_info","lock_all_info","picks_dark","picks_white","manual_draft"]
+    const updateMetaData = (array,idOfGame,dateOfGame,lockStatus) => {
+        arrayForEach((e) => {
+            return `$("#${e}.").attr("game_id",${idOfGame})
+                    $("#${e}.").attr("game_date",${dateOfGame})
+                    $("#${e}.").attr("locked",${lockStatus})`
+        })
+        }
 
+    
     // toggling computer and manual draft modes so that they don't keep appending
     $("#manual_draft").click(function(){
         $("#dark_draft_col").text("")

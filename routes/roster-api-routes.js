@@ -43,6 +43,15 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+  // find the picks by captain2 in a given game
+  app.get("/api/rosters/:game_id/players/captain2picks", function(req, res) {
+    db.sequelize.query('SELECT id, player, captain2Pick,gameId FROM rosters WHERE GameId=? AND availability=true ORDER BY captain2Pick ASC;',
+    {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
+      }).then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
+
 
   // create a roster for a game
   app.post("/api/rosters", function(req, res) {
@@ -101,7 +110,7 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
-  app.put("/api/rosters/:id/:rank", function(req, res) {
+  app.put("/api/rosters/:id/:rank/captain1picks", function(req, res) {
     db.Roster.update({
       // player: req.body.player, 
       captain1Pick: req.params.rank
@@ -114,6 +123,19 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+    app.put("/api/rosters/:id/:rank/captain2picks", function(req, res) {
+      db.Roster.update({
+        // player: req.body.player, 
+        captain2Pick: req.params.rank
+        },
+        {
+        returning: true,
+        where: {id: req.params.id}
+        })
+        .then(function(dbRoster) {
+          res.json(dbRoster);
+          });
+        });
 
   app.delete("/api/rosters/:id", function(req, res) {
     db.Roster.destroy({
