@@ -1,36 +1,55 @@
-let id = "This will be the id"
-let gameDate = "This will be the gameDate"
-let locked = "This will be the lock status"
-let arrayOfelements = ["#autodraft","#reset","#unavailable","#ten_buckers","#unlock_allInfo","#lock_all_info"]
-let infoToUpdate = [id, gameDate, locked]
-$("#autodraft").attr("game_id",id)
-$("#autodraft").attr("game_date",gameDate)
-$("#autodraft").attr("locked",locked)
-$("#reset").attr("game_id",id)
-$("#reset").attr("game_date",gameDate)
-$("#reset").attr("locked",locked)
-$("#unavailable").attr("game_id",id)
-$("#unavailable").attr("game_date",gameDate)
-$("#unavailable").attr("locked",locked)
-$("#ten_buckers").attr("game_id",id)
-$("#ten_buckers").attr("game_date",gameDate)
-$("#ten_buckers").attr("locked",locked)
-$("#unlock_all_info").attr("game_id",id)
-$("#unlock_all_info").attr("game_date",gameDate)
-$("#unlock_all_info").attr("locked",locked)
-$("#lock_all_info").attr("game_id",id)
-$("#lock_all_info").attr("game_date",gameDate)
-$("#lock_all_info").attr("locked",locked)
+let dataFromAPI= [
+{id: 63, player: "Carity", captain1Pick: 0, gameId: 3},
+{id: 64, player: "Foss", captain1Pick: 0, gameId: 3},
+{id: 65, player: "Grant", captain1Pick: 0, gameId: 3},
+{id: 67, player: "Kiemo", captain1Pick: 0, gameId: 3},
+{id: 69, player: "Vilks", captain1Pick: 0, gameId: 3},
+{id: 70, player: "Paul", captain1Pick: 0, gameId: 3},
+{id: 72, player: "Joe", captain1Pick: 0, gameId: 3},
+{id: 73, player: "Gui", captain1Pick: 0, gameId: 3},
+{id: 75, player: "Steve", captain1Pick: 0, gameId: 3},
+{id: 77, player: "Dane", captain1Pick: 0, gameId: 3},
+{id: 79, player: "Graham", captain1Pick: 0, gameId: 3},
+{id: 80, player: "Shawnski", captain1Pick: 0, gameId: 3},
+{id: 82, player: "Todd", captain1Pick: 0, gameId: 3},
+{id: 83, player: "Tony", captain1Pick: 0, gameId: 3},
+{id: 84, player: "Ben (G)", captain1Pick: 0, gameId: 3},
+{id: 85, player: "Moore (G)", captain1Pick: 0, gameId: 3},
+{id: 86, player: "Jason", captain1Pick: 0, gameId: 3},
+{id: 88, player: "Jamie", captain1Pick: 0, gameId: 3},
+{id: 91, player: "Stan", captain1Pick: 0, gameId: 3},
+{id: 68, player: "Weddie", captain1Pick: 1, gameId: 3},
+{id: 81, player: "Sheila", captain1Pick: 2, gameId: 3},
+{id: 74, player: "Shalanah", captain1Pick: 3, gameId: 3},
+{id: 76, player: "Becca", captain1Pick: 4, gameId: 3}]
 
-// helper function to create attributes dynamically
-const addAttr = (elements, updates) => {
-elements.forEach((e) => {
-console.log(e)
-updates.forEach((f) => {
-console.log(`$(${e}).attr`)
-})
-$(e).attr("game_id",updates[0])
-$(e).attr("game_date",updates[1])
-$(e).attr("locked",updates[2])
-})
-}
+let arrayOfRankedPlayers = []
+    dataFromAPI.forEach((e,i) => {
+        if(e.captain1Pick > 0) {
+            arrayOfRankedPlayers.push(e)
+        }
+        // console.log("i: ", i)
+    
+        });
+    console.log("arrayOfRankedPlayers: ", arrayOfRankedPlayers)
+    let numOfRankedPlayers = arrayOfRankedPlayers.length
+    console.log("numOfRankedPlayers: ", numOfRankedPlayers)
+    console.log("dataFromAPI: ", "dataFromAPI", "(length is first: ",dataFromAPI.length,")")
+
+    dataFromAPI.splice(dataFromAPI.length-arrayOfRankedPlayers.length, arrayOfRankedPlayers.length)
+    // console.log("dataFromApi after first splice: ", dataFromAPI)
+    console.log("dataFromAPI: ", "dataFromAPI", "(length is second: ",dataFromAPI.length,")")
+    /*
+    arrayOfRankedPlayers.forEach((e) => {
+        dataFromAPI.unshift(e)
+        })
+        */
+       /*
+    for (let i=0; i < arrayOfRankedPlayers.length; i++) {
+
+        }*/
+    let betterArray = arrayOfRankedPlayers.concat(dataFromAPI); 
+
+    
+    console.log("dataFromAPI: ", "dataFromAPI", "(length is third: ",dataFromAPI.length,")")
+    console.log("finally... if didn't push at last: ", betterArray)

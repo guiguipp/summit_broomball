@@ -436,7 +436,8 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 }
 .light_grey {
     background-color: #dedfe4;
-    border-color: #000
+    border-color: black;
+    color: black;
 }
 .light_grey:hover {
     background-color: #ffbe75;
@@ -474,10 +475,10 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
     margin-top: 10px;
 }
 /* other buttons */
-.locking_feature {
+/* .locking_feature {
     min-height: 75px;
     min-width: 75px;
-}
+} */
 .bigger_fa_lock {
     font-size: 150%;
 }
@@ -517,4 +518,11 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 }
 .rank_num {
     margin-left: -40px;
+}
+.not_that_empty {
+    text-align: center;
+    color: black;
+}
+.rank_num_picked {
+    margin-left: -30px;
 }

@@ -34,6 +34,16 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+
+  // find the picks by captain1 in a given game
+  app.get("/api/rosters/:game_id/players/captain1picks", function(req, res) {
+    db.sequelize.query('SELECT id, player, captain1Pick,gameId FROM rosters WHERE GameId=? AND availability=true ORDER BY captain1Pick ASC;',
+    {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
+      }).then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
+
   // create a roster for a game
   app.post("/api/rosters", function(req, res) {
     db.Roster.create({
