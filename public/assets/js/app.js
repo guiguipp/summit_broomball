@@ -132,16 +132,20 @@ $(document).ready(function() {
         $("#lock_all_info").attr("game_id",idOfGame)
         $("#lock_all_info").attr("game_date",dateOfGame)
         $("#lock_all_info").attr("locked",lockStatus)
+        $("#picks_dark").attr("game_id",idOfGame)
+        $("#picks_dark").attr("game_date",dateOfGame)
+        $("#picks_dark").attr("locked",lockStatus)
         }
 
     // helper function to create attributes dynamically
+    /*
     const addAttr = (thingsToUpdate, updates) => {
         thingsToUpdate.forEach((e) => {
             console.log(e)
 
         })
     }
-
+    */
 
 
     // sets the player as unavailable after a click on the "remove" icon 
