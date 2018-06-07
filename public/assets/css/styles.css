@@ -201,52 +201,7 @@ img {
         margin-left: 0;
     }
 }
-/* Draft page formatting */
-.roster_check {
-    text-align: center;
-    /* padding-left: 2%; */
-    width: 120%;
-    min-width: 200px;
-}
-.schedule_game {
-    border-color: #DE733A;
-}
-.unavailable {
-    background-color: #ACADB2;
-    margin-left: -15px;
-    }
-.not_a_member {
-    background-color: white;
-    color: #EA8D47;
-    margin-left: -15px;
-    }
-.arrows {
-    font-size: 30px;
-    position: relative;
-    top: 10px;   
-    }
-.arrows:hover {
-    color: #DE733A;
-    /* from: #EA8D47; */
-    }
-.left {
-    right: 3px;
-    }
-.right {
-    left: -15px;
-    }
-.remove {
-    position: relative;
-    top: -12px;
-    left: -12px;   
-    }
-.remove:hover {
-    color: red;
-    }
-.roster_check {
-    text-align: center;
-    padding-left: 2%;
-}
+
 .form-group {
     color: whitesmoke;
     text-shadow:
@@ -349,11 +304,6 @@ svg text{
   transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
-@media (max-width: 1199px) {
-    #team_white_content {
-        margin-top: 100px;
-    }
-}
 /* ---------------------------------D3 styling ----------------------------------------------- */
 
 @import 'https://fonts.googleapis.com/css?family=Paytone+One';

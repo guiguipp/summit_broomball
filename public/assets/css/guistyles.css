@@ -75,53 +75,52 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 }
 */
 /* games and players button styles */
+/* main colors */
 .dark_grey {
-    background-color: #7d7e83;
+    background-color: #FF5D00;
     border-color: black;
 }
 .dark_grey:hover {
-    background-color: #b35f19;
+    background-color: #7d7e83;
+    border-color: black;
+}
+.regular_grey {
+    border-color: black;
+    background-color: #F88833;
+    border-color: black;
+}
+.regular_grey:hover {
+    background-color: #acadb2;
+    border-color: black;
 }
 .light_grey {
-    background-color: #dedfe4;
+    background-color: #ffbe75;
     border-color: black;
     color: black;
 }
 .light_grey:hover {
-    background-color: #ffbe75;
+    background-color: #dedfe4;
+    border-color: black;
 }
+.not_a_member {
+    background-color: white;
+    color: #EA8D47;
+    margin-left: -15px;
+    }
+/* buttons size */
 .game_button {
     text-align: center;
     width: 150px;
     margin-top: 10px;
     margin-left: 150px;
     }
-.regular_grey {
-    background-color: #acadb2;
-    border-color: black;
-}
-.regular_grey:hover {
-    background-color: #ea8d47;
-}
-/*
-.game_button:hover {
-    background-color: #EA8D47;
-    }
-.menu_options:hover {
-    background-color: #EA8D47;
-    }
-.grey {
-    background-color: #ACADB2;
-    border-color: black;
-}
-.grey:hover {
-    background-color: #EA8D47
-}
-*/
+
 .player_button {   
-    width: 50%;
+    width: 55%;
     margin-top: 10px;
+    min-width: 150px;
 }
+
 /* other buttons */
 .locking_feature {
     min-height: 75px;
@@ -133,12 +132,8 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 .insecable {
     min-width: 120px;
 }
-@media (max-width: 1199px) {
-    #team_white_content {
-        margin-top: 100px;
-    }
-}
-/* Pick styles */
+
+/* Picking feature styles */
 .pick_check {
     text-align: center;
     padding-left: 2%;
@@ -149,6 +144,10 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 .pick_dark {
     left: 15px;
     }
+.pick_arrows {
+    right: -50px;
+}
+
 .empty_button {
     color: black;
     text-align: left;
@@ -160,10 +159,12 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
     border-radius: unset;
     margin-top: 11px;
     }
+
 .empty_button:hover {
     color: black;
     background-color: white;
 }
+
 .rank_num {
     margin-left: -40px;
 }
@@ -173,4 +174,59 @@ https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C0
 }
 .rank_num_picked {
     margin-left: -30px;
+}
+
+/* Draft columns formatting */
+/* divs */
+
+.roster_check {
+    text-align: center;
+    /* padding-left: 2%; */
+    width: 120%;
+    min-width: 200px;
+}
+.schedule_game {
+    border-color: #DE733A;
+}
+.unavailable {
+    background-color: #ACADB2;
+    margin-left: -15px;
+    }
+.arrows {
+    font-size: 30px;
+    position: relative;
+    top: 10px;   
+    }
+.arrows:hover {
+    color: #DE733A;
+    /* from: #EA8D47; */
+    }
+.left {
+    right: 3px;
+    }
+.right {
+    left: -10px;
+    }
+.remove {
+    position: relative;
+    top: -11px;
+    left: -9px;
+    font-size: 115%;
+    }
+.remove:hover {
+    color: red;
+    }
+.remove_game .remove {
+    top: -10px;
+    left: -13px;
+}
+.roster_check {
+    text-align: center;
+    padding-left: 2%;
+}
+/* Slipping one team under the other on smaller screens */
+@media (max-width: 1199px) {
+    #team_white_content {
+        margin-top: 100px;
+    }
 }
