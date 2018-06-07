@@ -252,8 +252,10 @@ var static_data = [{
 /* 
 This was deemed problematic by Github. Is this good or bad code? 
 */
+/*
         .attr("height", function(d) { return height - y(d.assits_count)})
         .on("mouseover", function(d) {return tip.text(d.assits_count).style("visibility", "visible").style("top", y(d.assits_count) - 13+ 'px' ).style("left", x(d.points_scored) + x.bandwidth() - 12 + 'px')})
           //.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
           .on("mouseout", function(){return tip.style("visibility", "hidden");});
-       });
+      });
+*/
