@@ -78,7 +78,7 @@ $(document).ready(function() {
         $("#game_list").text("");
         $.ajax({ url: currentURL + "/api/games/upcoming", method: "GET" }).then(function(dataFromAPI) {
             dataFromAPI.forEach((e) => {
-                let gameButton = `<div id=${e.id} class="future_game" locked="${e.lock_info}" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn dark_grey game_button">${e.game_date}</button>\n`
+                let gameButton = `<div id=${e.id} class="future_game" locked="${e.lock_info}" game_date="${e.game_date}"> <button class="btn btn-info navbar-btn regular_grey game_button">${e.game_date}</button>\n`
                 let removeButton = `<i class="fa fa-times-circle remove remove_game" id="${e.id}" game_date="${e.game_date}"></i>`
                 let gameDiv = `${gameButton} ${removeButton}`
                 $("#game_list").append(gameDiv);
@@ -428,6 +428,7 @@ $(document).ready(function() {
             });
     // add non-members to the list of draftable players
     $("#ten_buckers").click(function() {
+        $("#available_draft_col").empty()
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date");
         console.log("Click recorded\ngameId: ",gameId,"\ngameDate: ",gameDate)
@@ -798,10 +799,7 @@ $(document).ready(function() {
         let gameId = $(this).attr("game_id");
         let locked = false;
         console.log(`Data from the lock.\ngameId: ${gameId}\nCurrently locked?: ${locked}`)
-        /*
-        $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
-            //this function is executed after function1
-        */
+        
         $.ajax({    
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 

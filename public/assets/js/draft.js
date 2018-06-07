@@ -16,15 +16,22 @@ $(document).ready(function() {
     // clicking on "Set White Picks" should trigger the pick setting page
     $("#picks_dark").click(function (){
         $("#setting_the_picks").remove();
+        // resetting the array as we reset the column
+        team1Array = [];
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
         let locked = $(this).attr("locked");
-        generatePlayerColumn(gameId,gameDate,1)
-        generateRanksColumn(gameId,gameDate,1)
+        // will need to curry this
+        $.when($.ajax(generatePlayerColumn(gameId,gameDate,1))).then(function() {
+            // execute function 2 after function1
+            generateRanksColumn(gameId,gameDate,1)
+            });
         });
     // clicking on "Set White Picks" should trigger the pick setting page
     $("#picks_white").click(function (){
         $("#setting_the_picks").remove();
+        // resetting the array as we reset the column
+        team2Array = [];
         let gameId = $(this).attr("game_id");
         let gameDate = $(this).attr("game_date")
         let locked = $(this).attr("locked");
@@ -40,16 +47,14 @@ $(document).ready(function() {
             $("#col2_title").text("Ranks")
             
             console.log("idOfGame in generatePlayerColumn", idOfGame)
-            $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {
-                ultimateLength = dataFromAPI.length
-                
-                console.log(dataFromAPI)
+            $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" }).then(function(dataFromAPI) {        
+                // console.log("dataFromAPI in generatePlayerColumn: ", dataFromAPI)
                 dataFromAPI.forEach((e,i) => {
                     if (turn == 1) {
                         if(e.captain1Pick < 1) {
                             let divPick = `<div class="pick_check" id="${e.id}" availability="${e.availability}">`
                             let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
-                            let rightArrowButton = `<i class="fa fa-arrow-circle-o-right pick_dark arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                            let rightArrowButton = `<i class="fa fa-arrow-circle-o-right pick_dark pick_arrows arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                             let defaultSet = `${divPick} ${playerButton}${rightArrowButton}`
                             $("#dark_draft_col").append(defaultSet)
                             }
@@ -58,7 +63,7 @@ $(document).ready(function() {
                         if(e.captain2Pick < 1) {
                             let divPick = `<div class="pick_check" id="${e.id}" availability="${e.availability}">`
                             let playerButton = `<button class="btn btn-info navbar-btn player_button regular_grey" id="${e.id}" player="${e.player}">${e.player}</button>`
-                            let rightArrowButton = `<i class="fa fa-arrow-circle-right pick_white arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
+                            let rightArrowButton = `<i class="fa fa-arrow-circle-right pick_white pick_arrows arrows" id="${e.id}" player="${e.player}" game_date="${dateOfGame}" game_id="${e.GameId}"></i>`
                             let defaultSet = `${divPick} ${playerButton}${rightArrowButton}`
                             $("#dark_draft_col").append(defaultSet)
                             }
@@ -68,7 +73,7 @@ $(document).ready(function() {
             });
             
         }
-        const generateRanksColumn = (idOfGame, dateOfGame,turn) => {
+        const generateRanksColumn = (idOfGame, dateOfGame, turn) => {
             let picks;
             if (turn == 1) {
                 picks = "captain1picks"
@@ -79,73 +84,84 @@ $(document).ready(function() {
             $("#available_draft_col").text("")
             $("#dark_draft_col").text("")
             $("#white_draft_col").text("")
-            $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/players/"+ picks, method: "GET" }).then(function(dataFromAPI) {
-                console.log(dataFromAPI)
+            // getting sorted picks for capt1 and capt2 in their respective turns
+            // $.ajax({ url: currentURL + "/api/rosters/4/players/captain1picks", method: "GET" }).then(function(dataFromAPI) {
+            $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/players/" + picks, method: "GET" }).then(function(dataFromAPI) {
+                ultimateLength = dataFromAPI.length;
                 // since non ranked players have a 0 value by default, they show before everyone in the sorted list, which we do not want 
                 // therefore, we have to show the players who have a rank before the ones who have a rank of 0
                 let alreadyRankedPlayers = []
                 // determine which players already have a rank, and push them to a dedicated array
+                // we do this for the first captain
                 if (turn == 1) {
-                    console.log("in the if")
                     dataFromAPI.forEach((e,i) => {
                         if(e.captain1Pick > 0) {
                             alreadyRankedPlayers.push(e)
                         }
-                        });
-                    }
+                    });
+                }
+                // we do this as well (separately) for the second captain (not looking at same value in db)
                 else {
-                    console.log("in the else")
                     dataFromAPI.forEach((e,i) => {
                         if(e.captain2Pick > 0) {
                             alreadyRankedPlayers.push(e)
                         }
-                        });
-                    }
+                    });
+                }
                 
-
+                console.log("alreadyRankedPlayers after pushed to be separated from 0 rank: ", alreadyRankedPlayers)
                 let numOfRankedPlayers = alreadyRankedPlayers.length
-                // splice the players from the original array
-                dataFromAPI.splice(dataFromAPI.length-alreadyRankedPlayers.length, alreadyRankedPlayers.length)
-                // combine the array by "pushing" the numbered ones, before the 0 (unranked) players
-                let rankedArray = alreadyRankedPlayers.concat(dataFromAPI); 
+                let rankedArray = [];
                 
+                // if any player has a rank over 0 at all
+                if (numOfRankedPlayers > 0) {
+                    // splice the players from the original array
+                    dataFromAPI.splice(dataFromAPI.length-alreadyRankedPlayers.length, alreadyRankedPlayers.length)
+                    // combine the array by "pushing" the numbered ones, before the 0 (unranked) players
+                    rankedArray = alreadyRankedPlayers.concat(dataFromAPI);
+                    }
+                console.log("rankedArray after the splice: ", rankedArray)
+                // everything correct up to this point
+
+                // when all players are ranked, push them to the global variable to enable the computer draft
                 if (turn == 1) {
-                    if (ultimateLength === rankedArray.length) {
-                        for (let i = 0; i < rankedArray.length; i++) {
-                            team1Array.push(rankedArray[i].player)
+                    if (numOfRankedPlayers === ultimateLength) {
+                        for (let i = 0; i < alreadyRankedPlayers.length; i++) {
+                            team1Array.push(alreadyRankedPlayers[i].player)
+                            console.log("team1Array: ", team1Array)
                             }
                         }
                     }
                 else {
-                    if (ultimateLength === rankedArray.length) {
-                        for (let i = 0; i < rankedArray.length; i++) {
-                            team2Array.push(rankedArray[i].player)
+                    if (numOfRankedPlayers === ultimateLength) {
+                        for (let i = 0; i < alreadyRankedPlayers.length; i++) {
+                            team2Array.push(alreadyRankedPlayers[i].player)
+                            console.log("team2Array: ", team2Array)
                             }
                         }
                     }
-
+                    
                 rankedArray.forEach((e,i) => {
                     let buttonInfo = `<button class="btn btn-info navbar-btn player_button empty_button"><span class="rank_num">${i+1}</span></button>`
                     if (turn == 1) {
-                        if(e.captain1Pick > 0) {
-                            buttonInfo = `<span class="rank_num_picked">${i+1}</span>. <button class="btn btn-info navbar-btn player_button empty_button not_that_empty" id="${e.id}" player="${e.player}">${e.player}</button>`
-                        }
+                    if(e.captain1Pick > 0) {
+                        buttonInfo = `<span class="rank_num_picked">${i+1}</span>. <button class="btn btn-info navbar-btn player_button empty_button not_that_empty" id="${e.id}" player="${e.player}">${e.player}</button>`
                     }
-                    else {
-                        if(e.captain2Pick > 0) {
-                            buttonInfo = `<span class="rank_num_picked">${i+1}</span>. <button class="btn btn-info navbar-btn player_button empty_button not_that_empty" id="${e.id}" player="${e.player}">${e.player}</button>`
-                        }
+                }
+                else {
+                    if(e.captain2Pick > 0) {
+                        buttonInfo = `<span class="rank_num_picked">${i+1}</span>. <button class="btn btn-info navbar-btn player_button empty_button not_that_empty" id="${e.id}" player="${e.player}">${e.player}</button>`
                     }
-                    let pickDiv = `<div class="pick_check">`
-                    let divSet = `${pickDiv}${buttonInfo}`
-                    $("#white_draft_col").append(divSet)
+                }
+                let pickDiv = `<div class="pick_check">`
+                let divSet = `${pickDiv}${buttonInfo}`
+                $("#white_draft_col").append(divSet)
                     
                     });
                     
-                        console.log("Ranked array: ", rankedArray)
+                
                     
-                        console.log("team1Array: ", team1Array)
-                        console.log("team2Array: ", team2Array)
+                        
 
                         let TeamObject = function (name,picks) {
                             this.name = name,
@@ -211,6 +227,8 @@ $(document).ready(function() {
     $("#reset").click(function() {
         let team1Array = [];
         let team2Array = [];
+        console.log("team1Array: ", team1Array)
+        console.log("team2Array: ", team2Array)
     })
 
     
@@ -220,7 +238,13 @@ $(document).ready(function() {
         let locked = $(this).attr("locked");
         let team1Name = "dark";
         let team2Name = "white";
-        getAvailablePlayers(gameId,serpentineDraft,darkObject,whiteObject,arrayOfAvailablePlayers)
+        // launch only if teams have not been reset
+        if (team1Array.length !== 0 && team2Array.length !== 0) {
+            getAvailablePlayers(gameId,serpentineDraft,darkObject,whiteObject,arrayOfAvailablePlayers)
+            }
+        else {
+            console.log("Arrays are empty, send error message")
+        }
         })
         
         function getAvailablePlayers(idOfGame,cb,darkObj,whiteObj,availabilities) {

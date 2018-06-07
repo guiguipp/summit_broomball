@@ -50,13 +50,44 @@ let gettingAllArrays =
             capt1
             capt2
             */
-let gettingAllArrays = 
+
+/*
+let curriedFunction = 
     avail =>
         capt1=>
             capt2=>
                 avail + "trying"
                 capt1 + "to understand"
                 capt2 + "this thing"
+*/
+/*
+function sum3(x) {
+    return (y) => {
+      return (z) => {
+        console.log
+        return x + y + z;
+      };
+    };
+  }
+  sum3(1)(2)(3) // 6
+*/
+  function curryiedFunction(availabilies) {
+    return (capt1) => {
+      return (capt2) => {
+        console.log(availabilies, capt1, capt2)
+        return capt2 , "is different than" , "I got lost" + availabilities + " (no maths here...)";
+      };
+    };
+  }
+  console.log(curryiedFunction(availabilities("People"))(capt1("Here it is!"))(capt2("Everyone!!")))
 
-
-console.log(gettingAllArrays("name")("size")("anything"))
+function availabilities (availPlayers) {
+    console.log("availabilies: ", availPlayers)
+    return availPlayers
+    }
+function capt1 (capt1Picks) {
+    console.log("Capt 1 picks: ", capt1Picks)
+    }
+function capt2 (capt2Picks) {
+    console.log("Capt 2 Picks: ", capt2Picks)
+    }
