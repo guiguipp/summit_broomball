@@ -51,6 +51,22 @@ module.exports = function(app) {
         res.json(dbRoster);
         });
       });
+// function to get the dark score updated
+app.get("/api/rosters/:game_id/score/dark", function(req, res) {
+  db.sequelize.query('SELECT sum(goals) AS goals FROM rosters WHERE GameId=? and team="dark";',
+  {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
+    }).then(function(dbRoster) {
+      res.json(dbRoster);
+      });
+    });
+// function to get the white score updated
+app.get("/api/rosters/:game_id/score/white", function(req, res) {
+  db.sequelize.query('SELECT sum(goals) AS goals FROM rosters WHERE GameId=? and team="white";',
+  {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
+    }).then(function(dbRoster) {
+      res.json(dbRoster);
+      });
+    });
 
 
   // create a roster for a game
