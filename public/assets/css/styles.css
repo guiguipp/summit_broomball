@@ -9,7 +9,6 @@ body {
     background-color: #EA8D47;
     border-color: #000;
 }
-
 h1 {
     font-family: 'Yellowtail', cursive;
     position: absolute;
@@ -20,12 +19,12 @@ h1 {
 h2.draft_page {
     color: black;
     text-shadow:
-    -1px -1px 0 white,
-    1px -1px 0 white,
-    -1px 1px 0 white,
-    1px 1px 0 white;
+    -0.5px -0.5px 0 #EA8D47,
+    0.5px -0.5px 0 #EA8D47,
+    -0.5px 0.5px 0 #EA8D47,
+    0.5px 0.5px 0 #EA8D47;
+    margin-top: 1.5%;
 }
-
 h2 {
     font-family: 'Yellowtail', cursive;
     text-align: center;
@@ -40,7 +39,6 @@ h2 {
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
-
 .welcomeText {
     color: black;
     font-family: 'Boogaloo', cursive;
@@ -53,11 +51,9 @@ h2 {
     -0.5px 0.5px 0 whitesmoke,
     0.5px 0.5px 0 whitesmoke;
 }
-
 .wrapper {
     display: block;
 }
-
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
@@ -76,9 +72,7 @@ a, a:hover, a:focus {
     background: #EA8D47;
     color: #fff;
     transition: all 0.3s;
-
 }
-
 .overlay {
     /* full screen */
     width: 100vw;
@@ -92,7 +86,6 @@ a, a:hover, a:focus {
     /* middle layer */
     z-index: 9998;
 }
-
 #dismiss {
     width: 35px;
     height: 35px;
@@ -101,48 +94,39 @@ a, a:hover, a:focus {
     top: 10px;
     right: 10px;
 }
-
 #sidebar .sidebar-header {
     padding: 20px;
     background: #DE733A;
 }
-
 #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #EA8D47;
 }
-
 #sidebar ul p {
     color: #fff;
     padding: 10px;
 }
-
 #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
-
 #sidebar ul li a:hover {
     color: #ACADB2;
     background: #fff;
 }
-
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
     background: #DE733A;
 }
-
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #DE733A;
 }
-
 #sidebar.active {
     margin-left: -250px;
 }
-
 a[data-toggle="collapse"] {
     position: relative;
 }
@@ -153,17 +137,14 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     right: 20px;
     font-size: 0.6em;
 }
-
 a[aria-expanded="true"]::before {
     content: '\e260';
 }
-
 .site-logo {
     position: relative;
     /* right: 900%; */
     margin-top: 2.5%;
 }
-
 .main {
     background: #FFFFFF;
     border-style: solid;
@@ -173,19 +154,16 @@ a[aria-expanded="true"]::before {
     margin: 0;
     left: 300px;
 }
-
 #inner-main {
     background: #EA8D47;
     padding: 100px;
     margin: 0
 }
-
 img {
     width: 205px;
     /* margin-left: 1175px; */
     margin-top: 3%;
 }
-
 #button-one {
     color: black;
     position: relative;
@@ -201,7 +179,6 @@ img {
         -0.5px 0.5px 0 #EA8D47,
         0.5px 0.5px 0 #EA8D47;
     }
-
 #button-two {
     color: black;
     position: relative;
@@ -216,7 +193,6 @@ img {
         -0.5px 0.5px 0 #EA8D47,
         0.5px 0.5px 0 #EA8D47;
     }
-
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
@@ -225,17 +201,16 @@ img {
         margin-left: 0;
     }
 }
-
 /* Draft page formatting */
-
 .roster_check {
     text-align: center;
     /* padding-left: 2%; */
     width: 120%;
     min-width: 200px;
 }
-
-
+.schedule_game {
+    border-color: #DE733A;
+}
 .unavailable {
     background-color: #ACADB2;
     margin-left: -15px;
@@ -260,22 +235,18 @@ img {
 .right {
     left: -15px;
     }
-
 .remove {
     position: relative;
     top: -12px;
     left: -12px;   
     }
-
 .remove:hover {
     color: red;
     }
-
 .roster_check {
     text-align: center;
     padding-left: 2%;
 }
-
 .form-group {
     color: whitesmoke;
     text-shadow:
@@ -284,8 +255,6 @@ img {
     -0.5px 0.5px 0 black,
     0.5px 0.5px 0 black;
 }
-
-
 #playerButton, #contactSubmit {
     background-color: #ACADB2;
     border-style: none;
@@ -295,7 +264,6 @@ img {
     -0.5px 0.5px 0 #000,
     0.5px 0.5px 0 #000;
 }
-
 #recap-button {
     position: relative;
     font-size: 20px;
@@ -306,13 +274,11 @@ img {
     border-color: black;
     text-shadow: -0.5px -0.5px 0 #EA8D47, 0.5px -0.5px 0 #EA8D47, -0.5px 0.5px 0 #EA8D47, 0.5px 0.5px 0 #EA8D47;
 }
-
 .game-text {
     font-size: 24px;
     position: relative;
     left: 40%;
 }
-
     
 #date_text {
     color: black;
@@ -322,35 +288,27 @@ img {
 #game_text {
     margin-bottom: 38px;
 }
-
 /* table formatting */
 table {
     border-collapse: collapse;
     width: 100%;
 }
-
 td, th {
 padding: 8px;
 }
-
 th {
-	text-align: center;
+    text-align: center;
 }
-
 td {
     text-align: left;
 }
-
 tr:nth-child(even) {
     background-color: #dddddd;
 }
-
 thead > th {
     font-variant: small-caps;
     font-weight: bold;
 }
-
-
 
 /* ---------------------------------D3 styling ----------------------------------------------- */
 
@@ -390,6 +348,51 @@ svg text{
   border: 2px solid #444;
   transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
+
+@media (max-width: 1199px) {
+    #team_white_content {
+        margin-top: 100px;
+    }
+}
+/* ---------------------------------D3 styling ----------------------------------------------- */
+
+@import 'https://fonts.googleapis.com/css?family=Paytone+One';
+
+.chart-container{
+  position: relative;
+}
+
+svg{
+  box-shadow: 0px 20px 50px -18px #aaa;
+  border-radius: .123rem;
+}
+.bar {
+  fill: #1888d6;
+  transition: all 150ms ease;
+}
+
+.bar:hover {
+  fill: #09163d;
+}
+
+.axis--x path {
+  visibility: hidden;
+}
+
+svg text{
+  fill: black;
+}
+
+/* tip */
+.tip{
+  width: 3rem;
+  background-color: #eee;
+  text-align: center;
+    box-shadow: 0px 2px 10px -2px #aaa;
+  border: 2px solid #444;
+  transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
 .tip::after{
     content: " ";
     position: absolute;

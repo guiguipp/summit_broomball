@@ -1,7 +1,13 @@
 $(document).ready(function() {
 
       // Getting references to the name input and player container, as well as the table body
-    var nameInput = $("#player-name");
+    var shortNameInput = $("#ShortName");
+    var fullNameInput = $("#FullName");
+    var playerLevelInput = $("#LevelSelect");
+    var preferredPositionInput = $("#PositionSelect");
+    var playerStatusInput = $("#PlayerStatus");
+    var emailInput = $("#Email");
+
     var playerList = $("tbody");
     var playerContainer = $(".player-container");
 
@@ -16,15 +22,23 @@ $(document).ready(function() {
         // A function to handle what happens when the form is submitted to create a new Player
     function handlePlayerFormSubmit(event) {
         event.preventDefault();
+        console.log(shortNameInput);
         // Don't do anything if the name fields hasn't been filled out
-        if (!nameInput.val().trim().trim()) {
+        if (
+            !shortNameInput.val().trim().trim(),
+            !fullNameInput.val().trim().trim(),
+            !emailInput.val().trim().trim()
+        ) {
         return;
         }
         // Calling the upsertPlayer function and passing in the value of the name input
         upsertPlayer({
-        name: nameInput
-            .val()
-            .trim()
+        shortname: shortNameInput .val() .trim(),
+        full_name: fullNameInput .val() .trim(),
+        player_level: playerLevelInput .val() .trim(),
+        preferred_position: preferredPositionInput .val() .trim(),
+        player_status: playerStatusInput .val() .trim(),
+        email: emailInput .val() .trim()
         });
     }
 
