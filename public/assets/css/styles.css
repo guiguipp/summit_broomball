@@ -309,128 +309,46 @@ thead > th {
     font-variant: small-caps;
     font-weight: bold;
 }
-.table_data {
-    width: 25%;
+
+/* ---------------------------------D3 styling ----------------------------------------------- */
+
+@import 'https://fonts.googleapis.com/css?family=Paytone+One';
+
+.chart-container{
+  position: relative;
 }
-.stats {
-    text-align: center;
+
+svg{
+  box-shadow: 0px 20px 50px -18px #aaa;
+  border-radius: .123rem;
 }
-.stat_button {
-    margin: 0,5px,0,5px;
-    font-size: 150%;
-    color: #EA8D47;
+.bar {
+  fill: #1888d6;
+  transition: all 150ms ease;
 }
-.stat_button:hover {
-    color: #DE733A;
-} 
-tr {
-    font-size: 100%;
+
+.bar:hover {
+  fill: #09163d;
 }
-.raw_data {
-    font-size: 95%;
-    margin: 5px;
-    padding: 10px;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    background-color: white;
+
+.axis--x path {
+  visibility: hidden;
 }
-.name_in_table {
-    font-size: 150%;
-    font-variant: small-caps;
-    font-weight: bold;
+
+svg text{
+  fill: black;
 }
-#game_records {
-    min-height: 500px;
+
+/* tip */
+.tip{
+  width: 3rem;
+  background-color: #eee;
+  text-align: center;
+    box-shadow: 0px 2px 10px -2px #aaa;
+  border: 2px solid #444;
+  transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
-/* lists in draft.html & stats.html */
-#list_of_games {
-    max-height: 200px;
-    overflow: scroll;
-}
-#game_list {
-    max-height: 200px;
-    overflow: scroll;
-}
-#bottom_lock_feature {
-    min-height: 50px;
-    background-color: white;
-    padding: 5%;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px; 
-}
-/* Other colors to use (according to material.io 
-https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=FB8C00&secondary.color=9E9E9E 
-.orange {
-    base-color: #ea8d47;
-    light: #ffbe75;
-    dark: #b35f19;
-}
-.grey {
-    base-color: #acadb2;
-    light: #dedfe4;
-    dark: #7d7e83;
-}
-*/
-/* games and players button styles */
-.dark_grey {
-    background-color: #7d7e83;
-    border-color: black;
-}
-.dark_grey:hover {
-    background-color: #b35f19;
-}
-.light_grey {
-    background-color: #dedfe4;
-    border-color: #000
-}
-.light_grey:hover {
-    background-color: #ffbe75;
-}
-.game_button {
-    text-align: center;
-    width: 150px;
-    margin-top: 10px;
-    margin-left: 150px;
-    }
-.regular_grey {
-    background-color: #acadb2;
-    border-color: black;
-}
-.regular_grey:hover {
-    background-color: #ea8d47;
-}
-/*
-.game_button:hover {
-    background-color: #EA8D47;
-    }
-.menu_options:hover {
-    background-color: #EA8D47;
-    }
-.grey {
-    background-color: #ACADB2;
-    border-color: black;
-}
-.grey:hover {
-    background-color: #EA8D47
-}
-*/
-.player_button {   
-    width: 50%;
-    margin-top: 10px;
-}
-/* other buttons */
-.locking_feature {
-    min-height: 75px;
-    min-width: 75px;
-}
-.bigger_fa_lock {
-    font-size: 150%;
-}
-.insecable {
-    min-width: 120px;
-}
+
 @media (max-width: 1199px) {
     #team_white_content {
         margin-top: 100px;
@@ -474,6 +392,7 @@ svg text{
   border: 2px solid #444;
   transition: all 160ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
+
 .tip::after{
     content: " ";
     position: absolute;
