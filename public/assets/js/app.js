@@ -330,7 +330,7 @@ $(document).ready(function() {
             method: "PUT" }).then(function(dataFromAPI) {
                 setDataAttr(gameId,gameDate,locked)
                 getAvailablePlayers(gameId,gameDate,locked)
-                updateScoreDisplayed(gameId)   
+                // updateScoreDisplayed(gameId)   
             })
         })
     // unlock game
@@ -346,7 +346,7 @@ $(document).ready(function() {
             method: "PUT" }).then(function(dataFromAPI) {
                 setDataAttr(gameId,gameDate,locked)
                 getAvailablePlayers(gameId,gameDate,locked)
-                updateScoreDisplayed(gameId)   
+                // updateScoreDisplayed(gameId)   
                 })
             })
 
@@ -578,11 +578,15 @@ $(document).ready(function() {
     $(document).on("click",".game_results", function (){
         let gameId = $(this).attr("game_id");
         let locked = $(this).attr("locked");
-        updateScoreDisplayed(gameId)
-        lockStats(gameId,locked)
-        showGameStats(gameId,locked)
+        // updateScoreDisplayed(gameId)
+        $.when($.ajax(updateScoreDisplayed(gameId))).then(function(){
+            showGameStats(gameId,locked)
+            lockStats(gameId,locked)
+            })
+        // lockStats(gameId,locked,updateScoreDisplayed)
+        // showGameStats(gameId,locked)
         })
-        
+    // sending the attr to the lock and unlock buttons 
     const lockStats = (idOfGame,lockStatus) => {
         $("#unlock_all_info_stats").attr("game_id",idOfGame)
         $("#unlock_all_info_stats").attr("locked",lockStatus)
@@ -590,10 +594,11 @@ $(document).ready(function() {
         $("#lock_all_info_stats").attr("locked",lockStatus)
         }
     
-    function showGameStats(idOfGame,lockStatus){
+    function showGameStats(idOfGame,lockStatus,cb){
         $(".content_hidden").show();
         $("#results_dark").text("");
         $("#results_white").text("");
+        
         if (lockStatus === "true") {
             lockStatus = true;
             }
@@ -677,7 +682,8 @@ $(document).ready(function() {
                     $("#table_body_white").append(rowWhite)
                     }
                 }
-            });            
+            });
+            // cb(idOfGame)            
         };
     function updateScoreDisplayed(idOfGame){
         $.ajax({ url: currentURL + "/api/rosters/" + idOfGame + "/score/white", method: "GET" }).then(function(dataFromAPI) {
@@ -782,16 +788,30 @@ $(document).ready(function() {
                     }
                 })
             }
+    /*
+    function oneAfterTheOther(func, idOfGame,lockStatus,cb) {
+        func(idOfGame,lockStatus,cb)
+            cb(idOfGame)
+        }
+    */
     $("#unlock_all_info_stats").click(function(){
         let gameId = $(this).attr("game_id");
         let locked = false;
         console.log(`Data from the lock.\ngameId: ${gameId}\nCurrently locked?: ${locked}`)
+        /*
+        $.when($.ajax(autoDraft(dataFromAPI))).then(function() {
+            //this function is executed after function1
+        */
         $.ajax({    
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
-                lockStats(gameId,locked)
-                showGameStats(gameId,locked)
+                $.when($.ajax(updateScoreDisplayed(gameId))).then(function(){
+                    showGameStats(gameId,locked)
+                    lockStats(gameId,locked)
+                })
+                // showGameStats(gameId,locked)//,updateScoreDisplayed)
+                // showGameStats(gameId,locked)
             })
         })
     // unlock game
@@ -803,10 +823,12 @@ $(document).ready(function() {
             url: currentURL + "/api/game/" + gameId + "/lock", 
             data: jQuery.param({lock_info: locked}), 
             method: "PUT" }).then(function(dataFromAPI) {
-                lockStats(gameId,locked)
-                showGameStats(gameId,locked)
+                $.when($.ajax(updateScoreDisplayed(gameId))).then(function(){
+                    showGameStats(gameId,locked)
+                    lockStats(gameId,locked)
                 })
             })
+        })
 
     seeOnlyPastGames()
 }); //end of JQuery (document).ready
