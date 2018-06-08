@@ -71,6 +71,18 @@ function sum3(x) {
   }
   sum3(1)(2)(3) // 6
 */
+
+generatePlayerColumn(gameId,gameDate,1)
+    // execute function 2 after function1
+    generateRanksColumn(gameId,gameDate,1)
+
+let ranksAfterColumn = 
+  playerCol =>
+    ranksCol
+
+ranksAfterColumn(generatePlayerColumn(gameId,gameDate,2))(generateRanksColumn(gameId,gameDate,1))
+
+
   function curryiedFunction(availabilies) {
     return (capt1) => {
       return (capt2) => {
