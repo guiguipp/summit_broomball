@@ -218,6 +218,10 @@ $(document).ready(function() {
             .attr("game_id",idOfGame)
             .attr("game_date",dateOfGame)
             .attr("locked",lockStatus)
+        $("#alternate_draft")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
         $("#draftingFeature")
             .attr("game_id",idOfGame)
             .attr("game_date",dateOfGame)
@@ -264,17 +268,17 @@ $(document).ready(function() {
         let locked = $(this).attr("locked");
         if (locked === "false") {
             $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1/player/asc", method: "GET" }).then(function(dataFromAPI) {
-                function PlayerObj (id,name,team,captain1Pick,captain2Pick) {
+                function PlayerObj (id) {
                     this.id = id,
-                    this.name = name,
-                    this.team = team,
-                    this.captain1Pick = 0,
-                    this.captain2Pick = 0 
-                    updateTeam(this)
+                    // this.name = name,
+                    // this.team = team,
+                    // this.captain1Pick = captain1Pick,
+                    // this.captain2Pick = captain2Pick 
+                    hardReset(this)
                     }
                     dataFromAPI.forEach((e) => {
                         // resetting the team (using "unavailable" as the team, not the status...)
-                        let newPlayerObj = new PlayerObj(e.id,e.player,"unavailable")
+                        let newPlayerObj = new PlayerObj(e.id,e.player,0,0,"unavailable")
                     })
                     getAvailablePlayers(gameId,gameDate,locked)
                 })
@@ -435,11 +439,30 @@ $(document).ready(function() {
                 let locked = $(this).attr("locked");
                 let team1Name = "dark";
                 let team2Name = "white";
-                $.when($.ajax(serpentineDraft(darkObject,whiteObject,arrayOfAvailablePlayers))).then(function() {
-                    //this function is executed after function1
-                    getAvailablePlayers(gameId,gameDate,locked)
-                    })
+                if (locked === "false") {
+                    $.when($.ajax(serpentineDraft(darkObject,whiteObject,arrayOfAvailablePlayers))).then(function() {
+                        //this function is executed after function1
+                        getAvailablePlayers(gameId,gameDate,locked)
+                        })
+                    }
+                });
+            $("#alternate_draft").click(function() {
+                console.log("click recorded")
+                let gameId = $(this).attr("game_id");
+                let gameDate = $(this).attr("game_date");
+                let locked = $(this).attr("locked");
+                let team1Name = "dark";
+                let team2Name = "white";
+                console.log("locked needs to be false: ", locked)
+                if (locked === "false") {
+                    $.when($.ajax(alternateDraft(darkObject,whiteObject,arrayOfAvailablePlayers))).then(function() {
+                        //this function is executed after function1
+                        getAvailablePlayers(gameId,gameDate,locked)
+                        })
+                    }
                 })
+
+
             }
         });   
 
@@ -859,6 +882,15 @@ seeUpcomingGames()
             }).then(function(dataFromAPI) {
                 });
         }
+    // helper function to update a player's pick in the db
+    // We pass it the player's information in the constructor 
+    const hardReset = (player) => {
+        $.ajax({ 
+            url: currentURL + "/api/rosters/" + player.id + "/reset", 
+            method: "PUT",
+            }).then(function(dataFromAPI) {
+                });
+        }
 
 // helper function to test if a pick is eligble to be pushed to the roster array. If not, moves on to the next pick. 
 const testPick = (inputArray,outputIds,outputNames) => {
@@ -952,39 +984,53 @@ const serpentineDraft = (team1, team2) => {
 // function to create an "alternate" type draft 
 // Aka: captain #1 drafts first pick, then captain #2 drafts, etc. until everyone is drafted
 const alternateDraft = (team1, team2) => {
-    let mixedRosters = [];
-    let num = team1.picks.length;
-    // there are 4 turns to complete a round
+    let arrayOfIds = []
+    let mixedRosters = [];  
+    let num;
+    let num1 = team1.picks.length;
+    let num2 = team2.picks.length;
+    // the function will error if we try to run it more times than players have been picked
+    if (num1 > num2) {
+        num = num2
+        }
+    else {
+        num = num1
+        }
+    // there are 2 turns to complete a round
     let turns = 2;
     let modulo = num % turns;
     let completeRounds = (num - modulo)/turns
+    
     if (modulo === 0) {
         // if the num of players allows for complete rounds of serpentine draft
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
             }
         }
     else {
         // if not, we have to run as many complete rounds as possible
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters)
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
             }
         // and complete the rosters with one more pick
-            testPick(team1,mixedRosters);
+        testPick(team1,arrayOfIds,mixedRosters);
         }
-        function PlayerObj (name,id,team) {
+        function PlayerObj (name,id,team, captain1Pick,captain2Pick) {
             this.name = name,
             this.id = id,
-            this.team = team
+            this.team = team,
+            this.captain1Pick = captain1Pick,
+            this.captain2Pick = captain2Pick,
             updateTeam(this)
             }
+        // Resend info to db via an object constructor (which solves asynchronicity pb)
+        // we have to send the picks as well, otherwise it's overwritten by the default value (0)
+        // and it gets reset
         mixedRosters.forEach((e) => {
-            let newPlayerObj = new PlayerObj (e.player,e.id,e.team)
+            let newPlayerObj = new PlayerObj (e.shortname,e.id,e.team,e.captain1Pick,e.captain2Pick)
             })
-        filterTeams(mixedRosters)
+    filterTeams(mixedRosters)
     }
-
-
 });

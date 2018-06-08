@@ -82,7 +82,6 @@ app.get("/api/rosters/:game_id/score/white", function(req, res) {
         });
       });
   // edit player for a game
-  // might need to take some data off to avoid accidental overwrite
   app.put("/api/rosters/:id/", function(req, res) {
     db.Roster.update({
       player: req.body.player, 
@@ -92,6 +91,20 @@ app.get("/api/rosters/:game_id/score/white", function(req, res) {
       // captain1Pick: req.body.captain1Pick,
       // captain2Pick: req.body.captain2Pick,
       team: req.body.team
+      },
+      {
+      returning: true,
+      where: {id: req.params.id}
+      })
+      .then(function(dbRoster) {
+        res.json(dbRoster);
+        });
+      });
+  app.put("/api/rosters/:id/reset", function(req, res) {
+    db.Roster.update({
+      captain1Pick: 0,
+      captain2Pick: 0,
+      team: "unavailable"
       },
       {
       returning: true,
