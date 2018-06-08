@@ -155,6 +155,10 @@ $(document).ready(function() {
             .attr("game_id",idOfGame)
             .attr("game_date",dateOfGame)
             .attr("locked",lockStatus)
+        $("#draftingFeature")
+            .attr("game_id",idOfGame)
+            .attr("game_date",dateOfGame)
+            .attr("locked",lockStatus)
         }
 
     // there has to be a way to automate this...

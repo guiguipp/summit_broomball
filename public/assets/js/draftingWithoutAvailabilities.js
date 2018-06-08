@@ -28,6 +28,7 @@ const pick = (index,inputArray, outputArray) => {
     
     // assigns the name of the team to the drafted player (to filter later on)
     picks[index].team = name;
+    // console.log("picks[index].team", picks[index].team)
     // takes the pick, pushes it to the output array
     outputArray.push(picks[index]);
 
@@ -39,17 +40,18 @@ const pick = (index,inputArray, outputArray) => {
 
 
 // utility function to test if a pick is eligble to be pushed to the roster array. If not, moves on to the next pick. 
-const testPick = (inputArray,outputArray,availabilities) => {
+const testPick = (inputArray,outputArray) => {
+    n ++
+    console.log("see how many times this is running...: ", n)
     let index = 0;
     let picks = inputArray.picks;
-    console.log("player evaluated: ", picks[index],"\n(should have no team)\n")
-    console.log(outputArray,"\nIn this array above, players shouldn't have team either to be evaluated equally\n\n")
+
     // check availability of player (that might have changed since he was picked), and if he was pick already).
-    if (availabilities.indexOf(picks[index]) == -1 || outputArray.indexOf(picks[index]) !== -1) {
+    if (outputArray.indexOf(picks[index]) !== -1) {
         // Either of these conditions is not met, player is removed from array
         picks.splice(index,1);
         // function is called recursively on the next element of the array
-        testPick(inputArray,outputArray,availabilities);
+        testPick(inputArray,outputArray);
         }
     else { 
         // Player is drafted           
@@ -69,10 +71,9 @@ const randomize = (inputArray, outputArray) => {
     }
 // function to create a "serpentine" type draft 
 // Aka: captain #1 drafts first pick, then captain #2 has the next 2 picks, etc. until everyone is drafted
-const serpentineDraft = (team1, team2, availabilities) => {
-    console.log(team1.picks[0])
+const serpentineDraft = (team1, team2) => {
     let mixedRosters = [];    
-    let num = availabilities.length;
+    let num = team1.picks.length;
     // there are 4 turns to complete a round
     let turns = 4;
     let modulo = num % turns;
@@ -81,33 +82,33 @@ const serpentineDraft = (team1, team2, availabilities) => {
     if (modulo === 0) {
         // if the num of players allows for complete rounds of serpentine draft
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities);
-            testPick(team1,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters);
+            testPick(team2,mixedRosters);
+            testPick(team1,mixedRosters);
             }
         }
     else {
         // if not, we have to run as many complete rounds as possible
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities)
-            testPick(team2,mixedRosters,availabilities)
-            testPick(team1,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters)
+            testPick(team2,mixedRosters)
+            testPick(team1,mixedRosters);
             }
         // and complete the rosters one player at a time
         switch (modulo !== 0) {
             case modulo === 1:
-            testPick(team1,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
             break;
             case modulo === 2:
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters);
             break;
             case modulo === 3:
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities);
-            testPick(team1,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters);
+            testPick(team1,mixedRosters);
             break;
             }
         }
@@ -132,9 +133,9 @@ const serpentineDraft = (team1, team2, availabilities) => {
     }
 // function to create an "alternate" type draft 
 // Aka: captain #1 drafts first pick, then captain #2 drafts, etc. until everyone is drafted
-const alternateDraft = (team1, team2, availabilities) => {
+const alternateDraft = (team1, team2) => {
     let mixedRosters = [];
-    let num = availabilities.length;
+    let num = team1.picks.length;
     // there are 4 turns to complete a round
     let turns = 2;
     let modulo = num % turns;
@@ -142,18 +143,18 @@ const alternateDraft = (team1, team2, availabilities) => {
     if (modulo === 0) {
         // if the num of players allows for complete rounds of serpentine draft
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters);
             }
         }
     else {
         // if not, we have to run as many complete rounds as possible
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters,availabilities);
-            testPick(team2,mixedRosters,availabilities)
+            testPick(team1,mixedRosters);
+            testPick(team2,mixedRosters)
             }
         // and complete the rosters with one more pick
-            testPick(team1,mixedRosters,availabilities);
+            testPick(team1,mixedRosters);
         }
         filterTeams(mixedRosters)
     }
@@ -217,9 +218,9 @@ const autoDraft = (arrayOfAvailablePlayers) => {
 // CHECK: CALL THE SERPENTINE DRAFT FUNCTION:
 // ******************************************
 // ******************************************
-// serpentineDraft(easyExPicksTeam1,easyExPicksTeam2, easyEx) // worst case scenario (exact same picks)
+serpentineDraft(easyExPicksTeam1,easyExPicksTeam2) // worst case scenario (exact same picks)
 // serpentineDraft(easyExPicksTeam1,easyExPicksTeam3, easyEx)
-serpentineDraft(exPicksTeam1,exPicksTeam2,availablePlayers) // worst case scenario (exact same picks)
+// serpentineDraft(exPicksTeam1,exPicksTeam2) // worst case scenario (exact same picks)
 // serpentineDraft(exPicksTeam1,exPicksTeam3,availablePlayers)
 
 

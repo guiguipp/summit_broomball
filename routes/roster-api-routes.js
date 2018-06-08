@@ -37,7 +37,7 @@ module.exports = function(app) {
 
   // find the picks by captain1 in a given game
   app.get("/api/rosters/:game_id/players/captain1picks", function(req, res) {
-    db.sequelize.query('SELECT id, player, captain1Pick,gameId FROM rosters WHERE GameId=? AND availability=true ORDER BY captain1Pick ASC;',
+    db.sequelize.query('SELECT id, player, captain1Pick, captain2Pick FROM rosters WHERE GameId=? AND availability=true ORDER BY captain1Pick ASC;',
     {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
       }).then(function(dbRoster) {
         res.json(dbRoster);
@@ -45,7 +45,7 @@ module.exports = function(app) {
       });
   // find the picks by captain2 in a given game
   app.get("/api/rosters/:game_id/players/captain2picks", function(req, res) {
-    db.sequelize.query('SELECT id, player, captain2Pick,gameId FROM rosters WHERE GameId=? AND availability=true ORDER BY captain2Pick ASC;',
+    db.sequelize.query('SELECT id, player, captain1Pick, captain2Pick FROM rosters WHERE GameId=? AND availability=true ORDER BY captain2Pick ASC;',
     {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
       }).then(function(dbRoster) {
         res.json(dbRoster);
