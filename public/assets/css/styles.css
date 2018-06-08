@@ -393,3 +393,27 @@ svg text{
 .rank_num_picked {
     margin-left: -30px;
 }
+/* -------------mobile responsive------------------------------------------------- */
+@media (max-width: 600px) {
+    .mobile {display: none;
+    }
+    .button-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mobile-button{
+        float: right !important;
+    }
+    .mobile-heading{
+        float: left !important;
+        padding: 10%;
+    }
+    .player-container{
+        overflow-x:scroll;
+    }
+    .mobile-htwo{
+        padding-top: 10%;
+        float: left;
+    }
+}
