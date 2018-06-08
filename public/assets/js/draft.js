@@ -264,10 +264,12 @@ $(document).ready(function() {
         let locked = $(this).attr("locked");
         if (locked === "false") {
             $.ajax({ url: currentURL + "/api/rosters/game/"+ gameId +"/availability/1/player/asc", method: "GET" }).then(function(dataFromAPI) {
-                function PlayerObj (id,name,team) {
+                function PlayerObj (id,name,team,captain1Pick,captain2Pick) {
                     this.id = id,
                     this.name = name,
                     this.team = team,
+                    this.captain1Pick = 0,
+                    this.captain2Pick = 0 
                     updateTeam(this)
                     }
                     dataFromAPI.forEach((e) => {
@@ -649,9 +651,11 @@ $(document).ready(function() {
                 // combine the array by "pushing" the numbered ones, before the 0 (unranked) players
                 rankedArray = alreadyRankedPlayers.concat(dataFromAPI);
                 }
-                function Player(id,shortname) {
+                function Player(id,shortname,captain1Pick,captain2Pick) {
                     this.id = id,
-                    this.shortname = shortname
+                    this.shortname = shortname,
+                    this.captain1Pick = captain1Pick,
+                    this.captain2Pick = captain2Pick
                     }
 
 
@@ -660,10 +664,12 @@ $(document).ready(function() {
                 if (numOfRankedPlayers === ultimateLength) {
                     console.log("Should create object and push to team1Array")
                     for (let i = 0; i < alreadyRankedPlayers.length; i++ ) {
-                        
+                        let d = alreadyRankedPlayers[i]
                         let playerForArray = new Player (
-                            alreadyRankedPlayers[i].id,
-                            alreadyRankedPlayers[i].player
+                            d.id,
+                            d.player,
+                            d.captain1Pick,
+                            d.captain2Pick
                             )
                             team1Array.push(playerForArray)
                         }   
@@ -673,9 +679,12 @@ $(document).ready(function() {
                 if (numOfRankedPlayers === ultimateLength) {
                     console.log("Should create the object")
                     for (let i = 0; i < alreadyRankedPlayers.length; i++ ) {
+                        let d = alreadyRankedPlayers[i]
                         let playerForArray = new Player (
-                            alreadyRankedPlayers[i].id,
-                            alreadyRankedPlayers[i].player
+                            d.id,
+                            d.player,
+                            d.captain1Pick,
+                            d.captain2Pick
                             )
                             team2Array.push(playerForArray)
                         }
@@ -764,7 +773,9 @@ seeUpcomingGames()
             levels[player.level].push({
                 shortname: player.shortname,
                 id: player.id,
-                level: player.level
+                level: player.level,
+                captain1Pick: player.captain1Pick,
+                captain2Pick: player.captain2Pick
             });
             return levels;
         },[])
@@ -811,7 +822,7 @@ seeUpcomingGames()
                 console.log(`${e.shortname} (${e.level})`);
                 }
             else {
-                console.log(`${e.shortname}`);
+                console.log(`${e.shortname} (picked in position ${e.captain1Pick})`);
                 }
             })
         // filter player objects according to name of the team #2
@@ -823,7 +834,7 @@ seeUpcomingGames()
                 console.log(`${e.shortname} (${e.level})`);
                 }
             else {
-                console.log(`${e.shortname}`);
+                console.log(`${e.shortname} (picked in position ${e.captain2Pick})`);
                 }
             })
         }
@@ -844,14 +855,13 @@ seeUpcomingGames()
         $.ajax({ 
             url: currentURL + "/api/rosters/" + participant.id, 
             method: "PUT",
-            data: jQuery.param({team: participant.team, player: participant.name}) 
+            data: jQuery.param({team: participant.team, player: participant.name, captain1Pick: participant.captain1Pick, captain2Pick: participant.captain2Pick}) 
             }).then(function(dataFromAPI) {
                 });
         }
 
 // helper function to test if a pick is eligble to be pushed to the roster array. If not, moves on to the next pick. 
 const testPick = (inputArray,outputIds,outputNames) => {
-    console.log("/////////////////////")
     let index = 0;
     let picks = inputArray.picks;
     if (outputIds.indexOf(picks[index].id) != -1) {
@@ -865,8 +875,6 @@ const testPick = (inputArray,outputIds,outputNames) => {
         // takes the pick, pushes it to the output array
         outputIds.push(picks[index].id);
         outputNames.push(picks[index]);
-        console.log("array with just the ids: ",outputIds)
-        console.log("array with the objects: ",outputNames)
         // removes the pick from the array of picks
         picks.splice(index,1);
         }
@@ -925,15 +933,19 @@ const serpentineDraft = (team1, team2) => {
             break;
             }
         }
-        function PlayerObj (name,id,team) {
+        function PlayerObj (name,id,team, captain1Pick,captain2Pick) {
             this.name = name,
             this.id = id,
-            this.team = team
+            this.team = team,
+            this.captain1Pick = captain1Pick,
+            this.captain2Pick = captain2Pick,
             updateTeam(this)
             }
+        // Resend info to db via an object constructor (which solves asynchronicity pb)
+        // we have to send the picks as well, otherwise it's overwritten by the default value (0)
+        // and it gets reset
         mixedRosters.forEach((e) => {
-            console.log("\nChecking e to see if we could add the picks: \n", e)
-            let newPlayerObj = new PlayerObj (e.shortname,e.id,e.team)
+            let newPlayerObj = new PlayerObj (e.shortname,e.id,e.team,e.captain1Pick,e.captain2Pick)
             })
     filterTeams(mixedRosters)
     }
