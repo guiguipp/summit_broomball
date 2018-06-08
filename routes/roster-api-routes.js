@@ -28,7 +28,7 @@ module.exports = function(app) {
     });
   // find level info from "players" on a join of all available players for a given game. Sorted alphabetically
   app.get("/api/rosters/game/:game_id/players", function(req, res) {
-    db.sequelize.query('SELECT DISTINCT shortname,Rosters.id,player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true ORDER BY shortname ASC',
+    db.sequelize.query('SELECT DISTINCT shortname,Rosters.id, Rosters.captain1Pick, Rosters.captain2Pick, player_level AS level FROM rosters INNER JOIN players ON rosters.player = players.shortname WHERE GameId=? AND availability=true ORDER BY shortname ASC',
     {replacements: [req.params.game_id], type: db.sequelize.QueryTypes.SELECT
       }).then(function(dbRoster) {
         res.json(dbRoster);
@@ -82,14 +82,15 @@ app.get("/api/rosters/:game_id/score/white", function(req, res) {
         });
       });
   // edit player for a game
+  // might need to take some data off to avoid accidental overwrite
   app.put("/api/rosters/:id/", function(req, res) {
     db.Roster.update({
       player: req.body.player, 
       goals: req.body.goals,
       assists: req.body.assists,
       availability: req.body.availability,
-      captain1Pick: req.body.captain1Pick,
-      captain2Pick: req.body.captain2Pick,
+      // captain1Pick: req.body.captain1Pick,
+      // captain2Pick: req.body.captain2Pick,
       team: req.body.team
       },
       {
