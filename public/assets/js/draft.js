@@ -2,7 +2,7 @@ $(document).ready(function() {
     console.log("Executing code 402: kill all humans")
  
     const currentURL = window.location.origin;
-    let n = 0;
+    
     let team1Array = [];
     let team2Array = [];
     let arrayOfAvailablePlayers = [];
@@ -137,7 +137,6 @@ $(document).ready(function() {
                                 alreadyRankedPlayers[i].player
                                 )
                                 team1Array.push(playerForArray)
-                                console.log("player for array: ", playerForArray)
                             }   
                         }
                     }                    
@@ -150,7 +149,6 @@ $(document).ready(function() {
                                 alreadyRankedPlayers[i].player
                                 )
                                 team2Array.push(playerForArray)
-                                console.log("player for array: ", playerForArray)
                             }
                         }
                     }
@@ -246,12 +244,6 @@ $(document).ready(function() {
             name: team2Name,
             picks: team2Array
             }
-        console.log("team1Array: ", team1Array)
-        console.log("Checking the object", darkObject.picks[0])
-        console.log("Checking the object", whiteObject.picks[0])
-        
-        console.log("darkObject: ", darkObject);
-        console.log("whiteObject: ", whiteObject);
         // launch only if teams have not been reset
         if (team1Array.length === 0 || team2Array.length === 0) {
             console.log("Arrays are empty, send error message")
@@ -259,7 +251,7 @@ $(document).ready(function() {
         else {
             console.log("will push the availabilities")
             getAvailablePlayers(gameId)
-            console.log("Checking format of objects in availabilities ", arrayOfAvailablePlayers[0])
+            // console.log("Checking format of objects in availabilities ", arrayOfAvailablePlayers[0])
             $("#serpentine_draft").click(function() {
                 console.log("click recorded")
                 let gameId = $(this).attr("game_id");
@@ -267,10 +259,9 @@ $(document).ready(function() {
                 let locked = $(this).attr("locked");
                 let team1Name = "dark";
                 let team2Name = "white";
-                console.log("arrayOfAvailablePlayers at this point: ", arrayOfAvailablePlayers)
                 console.log("darkObject: ", darkObject, " (passed to serpentine function)")
                 console.log("whiteObject: ",whiteObject," (passed to serpentine function)")
-                    serpentineDraft(darkObject,whiteObject)
+                    serpentineDraft(darkObject,whiteObject,arrayOfAvailablePlayers)
                 
                 })
             }
@@ -280,17 +271,8 @@ $(document).ready(function() {
         
             $.ajax({ url: currentURL + "/api/rosters/game/" + idOfGame + "/availability/1/player/ASC", method: "GET" })
                 .then(function(dataFromAPI) {
-                    function Player(id,player,captain1Pick,captain2Pick,gameId) {
-                        this.id = id,
-                        this.player = player,
-                        arrayOfAvailablePlayers.push(this)
-                        }
-
                     dataFromAPI.forEach((e) => {
-                        let playerForArray = new Player (
-                            e.id,
-                            e.player,
-                            )
+                        arrayOfAvailablePlayers.push(e.id)
                         })
                     })
                 }
@@ -321,53 +303,26 @@ $(document).ready(function() {
 /// Machine Drafting functions //
 /////////////////////////////////
 
-// utility function to get a player from a "pick" array, and push it to the roster array
-const pick = (index,inputArray, outputArray) => {
-    let name = inputArray.name;
-    let picks = inputArray.picks;
-    
-    // assigns the name of the team to the drafted player (to filter later on)
-    picks[index].team = name;
-    // console.log("picks[index].team", picks[index].team)
-    // takes the pick, pushes it to the output array
-    console.log(picks[index])
-    outputArray.push(picks[index]);
-    console.log("output array in pick",outputArray)
-    // removes the pick from the array of picks
-    picks.splice(index,1);
-    }   
-
-
-
 // utility function to test if a pick is eligble to be pushed to the roster array. If not, moves on to the next pick. 
-const testPick = (inputArray,outputArray) => {
+const testPick = (inputArray,outputIds,outputNames) => {
     console.log("/////////////////////")
-    console.log("Console logging the two arrays")
-    console.log("input")
-    console.log(inputArray)
-    console.log("output")
-    console.log(outputArray);
-    
-    console.log("/////////////////////")
-    n ++
-    console.log("see how many times this is running...: ", n)
     let index = 0;
     let picks = inputArray.picks;
-    console.log("If that guy is also in the array below, I don't get it... ", picks[index])
-    console.log("output array in testPick", outputArray)
-
-    // check if player was pick already)
-    if (outputArray.indexOf(picks[index]) !== -1) {
-        console.log("This should detect that the player has already been drafted")
-        // If so player is removed from array
-        
+    if (outputIds.indexOf(picks[index].id) != -1) {
         picks.splice(index,1);
-        // function is called recursively on the next element of the array
-        testPick(inputArray,outputArray);
+        testPick(inputArray,outputIds,outputNames);
         }
-    else { 
-        // Player is drafted           
-        pick(index,inputArray,outputArray);        
+    else {
+        let nameOfTeam = inputArray.name;
+        // assigns the name of the team to the drafted player (to filter later on)
+        picks[index].team = nameOfTeam;
+        // takes the pick, pushes it to the output array
+        outputIds.push(picks[index].id);
+        outputNames.push(picks[index]);
+        console.log("array with just the ids: ",outputIds)
+        console.log("array with the objects: ",outputNames)
+        // removes the pick from the array of picks
+        picks.splice(index,1);
         }
     }
 
@@ -383,9 +338,9 @@ const randomize = (inputArray, outputArray) => {
     }
 // function to create a "serpentine" type draft 
 // Aka: captain #1 drafts first pick, then captain #2 has the next 2 picks, etc. until everyone is drafted
-const serpentineDraft = (team1, team2) => {
+const serpentineDraft = (team1, team2, availabilities) => {
+    let arrayOfIds = []
     let mixedRosters = [];  
-    console.log("mixedRosters before anything is called: ", mixedRosters)  
     let num = team1.picks.length;
     // there are 4 turns to complete a round
     let turns = 4;
@@ -395,54 +350,37 @@ const serpentineDraft = (team1, team2) => {
     if (modulo === 0) {
         // if the num of players allows for complete rounds of serpentine draft
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters);
-            testPick(team2,mixedRosters);
-            testPick(team1,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
             }
         }
     else {
         // if not, we have to run as many complete rounds as possible
         for (let i = 1; i <= completeRounds; i++) {
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters)
-            testPick(team2,mixedRosters)
-            testPick(team1,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters)
+            testPick(team2,arrayOfIds,mixedRosters)
+            testPick(team1,arrayOfIds,mixedRosters);
             }
         // and complete the rosters one player at a time
         switch (modulo !== 0) {
             case modulo === 1:
-            testPick(team1,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
             break;
             case modulo === 2:
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
             break;
             case modulo === 3:
-            testPick(team1,mixedRosters);
-            testPick(team2,mixedRosters);
-            testPick(team1,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
+            testPick(team2,arrayOfIds,mixedRosters);
+            testPick(team1,arrayOfIds,mixedRosters);
             break;
             }
         }
-        console.log("mixedRoster[0]: ", mixedRosters[0])
-        console.log("mixedRoster[1]: ", mixedRosters[1])
-        console.log("mixedRoster[2]: ", mixedRosters[2])
     filterTeams(mixedRosters)
-
-
-    // console.log("Testing");
-    /*
-    for (let i = 0; i < rosterTeam1.length; i++){
-        if (rosterTeam2.indexOf(rosterTeam1[i].fullname) !== -1) {
-            console.log("warning!!")
-        }
-        else {
-            console.log("As you would expect...");
-            
-        }
-    } 
-    */
     }
 // function to create an "alternate" type draft 
 // Aka: captain #1 drafts first pick, then captain #2 drafts, etc. until everyone is drafted
