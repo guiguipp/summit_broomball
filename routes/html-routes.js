@@ -35,5 +35,9 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../views/contact.html"));
   });
 
+  app.get("/about", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/about.html"));
+  });
+
 };
 
