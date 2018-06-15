@@ -1,4 +1,4 @@
-d3.json('http://localhost:8080/api/rosters', function (data) {
+d3.json('/api/rosters', function (data) {
  console.log(data);
  
   var tip = d3.select(".chart-container")
